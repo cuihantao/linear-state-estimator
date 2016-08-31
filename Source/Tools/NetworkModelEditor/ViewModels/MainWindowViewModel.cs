@@ -31,6 +31,7 @@ using System.Windows.Forms;
 using NetworkModelEditor.Commands;
 using SynchrophasorAnalytics.Networks;
 using SynchrophasorAnalytics.Modeling;
+using SynchrophasorAnalytics.Testing;
 
 namespace NetworkModelEditor.ViewModels
 {
@@ -40,12 +41,14 @@ namespace NetworkModelEditor.ViewModels
         private NetworkTreeViewModel m_networkTreeViewModel;
         private RecordDetailViewModel m_recordDetail;
         private Network m_network;
+        private RawMeasurements m_rawMeasurements;
         private RelayCommand m_openFileCommand;
         private RelayCommand m_saveFileCommand;
         private RelayCommand m_changeSelectedElementCommand;
         private RelayCommand m_viewDetailCommand;
         private RelayCommand m_refreshNetworkTreeCommand;
         private string m_actionStatus;
+        private RelayCommand m_openMeasurementSampleFileCommand;
 
         public NetworkTreeViewModel NetworkTree
         {
@@ -100,6 +103,42 @@ namespace NetworkModelEditor.ViewModels
                     m_openFileCommand = new RelayCommand(param => this.OpenFile(), param => true);
                 }
                 return m_openFileCommand;
+            }
+        }
+
+        public ICommand OpenMeasuremrentSampleFileCommand
+        {
+            get
+            {
+                if (m_openMeasurementSampleFileCommand == null)
+                {
+                    m_openMeasurementSampleFileCommand = new RelayCommand(param => this.OpenMeasurementSampleFile(), param => true);
+                }
+                return m_openMeasurementSampleFileCommand;
+            }
+        }
+
+        private void OpenMeasurementSampleFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.DefaultExt = ".xml";
+            openFileDialog.Filter = "Measurement Sample (.xml)|*.xml";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    m_rawMeasurements = RawMeasurements.DeserializeFromXml(openFileDialog.FileName);
+                    
+                }
+                catch (Exception exception)
+                {
+                    if (exception != null)
+                    {
+                        System.Windows.MessageBox.Show(exception.ToString(), "Failed to load selected file.");
+                    }
+                }
             }
         }
 
@@ -179,6 +218,7 @@ namespace NetworkModelEditor.ViewModels
             MenuItemViewModel fileMenuItem = new MenuItemViewModel("File", null);
             MenuItemViewModel openMenuItem = new MenuItemViewModel("Open", null);
             openMenuItem.AddMenuItem(new MenuItemViewModel("Xml Network Model", OpenFileCommand));
+            openMenuItem.AddMenuItem(new MenuItemViewModel("Xml Measurement Sample", OpenFileCommand));
             fileMenuItem.AddMenuItem(openMenuItem);
             fileMenuItem.AddMenuItem(new MenuItemViewModel("Save", SaveFileCommand));
             fileMenuItem.AddMenuItem(new MenuItemViewModel("Exit", null));

@@ -65,6 +65,12 @@
         <Feature Id="DNP3ConfigGeneratorFeature" Title="DNP3 Configuration Generator">
           <ComponentRef Id="DNP3ConfigGenerator" />
         </Feature>
+        <Feature Id="NetworkModelEditorFeature" Title="Network Model Editor">
+          <ComponentGroupRef Id="NetworkModelEditorComponents" />
+        </Feature>
+        <Feature Id="LseOfflineModuleFeature" Title="Linear State Estimator Offline Module">
+          <ComponentGroupRef Id="LseOfflineModuleComponents"/>
+        </Feature>
 
         
         <ComponentGroupRef Id="GSFDependencyComponents" />
@@ -93,6 +99,8 @@
     <Icon Id="ConfigurationSetupUtility.ico.exe" SourceFile="$(var.ConfigurationSetupUtility.TargetPath)" />
     <Icon Id="DataMigrationUtility.ico.exe" SourceFile="$(var.ProjectDir)\DataMigrationUtility.exe" />
     <Icon Id="ConfigCrypter.ico.exe" SourceFile="$(var.ProjectDir)\ConfigCrypter.exe" />
+    <Icon Id="NetworkModelEditor.ico.exe" SourceFile="$(var.NetworkModelEditor.TargetPath)" />
+    <Icon Id="LseOfflineModule.ico.exe" SourceFile="$(var.LseOfflineModule.TargetPath)" />
     <Icon Id="ConfigurationEditor.ico.exe" SourceFile="$(var.ProjectDir)\ConfigurationEditor.exe" />
     <Icon Id="HistorianPlaybackUtility.ico.exe" SourceFile="$(var.ProjectDir)\HistorianPlaybackUtility.exe" />
     <Icon Id="HistorianView.ico.exe" SourceFile="$(var.ProjectDir)\HistorianView.exe" />
@@ -300,7 +308,9 @@
       <ComponentGroupRef Id="ConfigurationEditorComponents" />
       <ComponentGroupRef Id="HistorianPlaybackUtilityComponents" />
       <ComponentGroupRef Id="HistorianViewComponents" />
-
+      <ComponentGroupRef Id="NetworkModelEditorComponents"/>
+      <ComponentGroupRef Id="LseOfflineModuleComponents" />
+      
       <Component Id="NoInetFixUtil">
         <File Id="NoInetFixUtil.exe" Name="NoInetFixUtil.exe" Source="$(var.ProjectDir)\NoInetFixUtil.exe" />
         <Shortcut Id="NoInetFixUtilStartMenuShortcut" Name="No-Internet Fix Utility" Icon="NoInetFixUtil.ico.exe" Description="Tool used to fix long timeouts on systems with no internet access available." WorkingDirectory="INSTALLFOLDER" Directory="ApplicationProgramsFolder" Advertise="yes" />
@@ -310,6 +320,22 @@
         <File Id="DNP3ConfigGenerator.exe" Name="DNP3ConfigGenerator.exe" Source="$(var.ProjectDir)\DNP3ConfigGenerator.exe" />
       </Component>
 
+    </ComponentGroup>
+    
+    <ComponentGroup Id="NetworkModelEditorComponents" Directory="INSTALLFOLDER">
+      <Component Id="NetworkModelEditor">
+        <File Id="NetworkModelEditor.exe" Name="NetworkModelEditor.exe" Source="$(var.NetworkModelEditor.TargetPath)"/>
+        <Shortcut Id="NetworkModelEditorStartMenuShortcut" Name="Network Model Editor" Icon="NetworkModelEditor.ico.exe" Description="Tool used to build and modify network models for use with the LSE." WorkingDirectory="INSTALLFOLDER" Directory="ApplicationProgramsFolder" Advertise="yes" />
+      </Component>
+      <ComponentGroupRef Id="SynchrophasorAnalyticsComponents"/>
+    </ComponentGroup>
+
+    <ComponentGroup Id="LseOfflineModuleComponents" Directory="INSTALLFOLDER">
+      <Component Id="LseOfflineModule">
+        <File Id="LseOfflineModule.exe" Name="LseOfflineModule.exe" Source="$(var.LseOfflineModule.TargetPath)"/>
+        <Shortcut Id="LseOfflineModuleStartMenuShortcut" Name="Linear State Estimator Offline Module" Icon="LseOfflineModule.ico.exe" Description="Tool used to perform LSE offline for troubleshooting during model building." WorkingDirectory="INSTALLFOLDER" Directory="ApplicationProgramsFolder" Advertise="yes" />
+      </Component>
+      <ComponentGroupRef Id="SynchrophasorAnalyticsComponents"/>
     </ComponentGroup>
     
     <ComponentGroup Id="ConfigCrypterComponents" Directory="INSTALLFOLDER">
@@ -551,13 +577,20 @@
       </Component>
     </ComponentGroup>
 
+    <!-- Synchrophasor Analytics Dependencies -->
+    <ComponentGroup Id="SynchrophasorAnalyticsComponents" Directory="INSTALLFOLDER">
+      <Component Id="SynchrophasorAnalytics">
+        <File Id="SynchrophasorAnalytics.dll" Name="SynchrophasorAnalytics.dll" Source="$(var.SynchrophasorAnalytics.TargetPath)" />
+      </Component>
+      <Component Id="MathNet">
+        <File Id="MathNet.Numerics.dll" Name="MathNet.Numerics.dll" Source="$(var.SolutionDir)\packages\MathNet.Numerics.3.13.0\lib\net40\MathNet.Numerics.dll" />
+      </Component>
+    </ComponentGroup>
+    
     <!-- SQLite Dependencies -->
     <ComponentGroup Id="SQLiteDependencyComponents" Directory="INSTALLFOLDER">
       <Component Id="System.Data.SQLite">
-        <File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="$(var.SolutionDir)\Dependencies\SQLite\System.Data.SQLite.dll" />
-      </Component>
-      <Component Id="System.Data.SQLite.Linq">
-        <File Id="System.Data.SQLite.Linq.dll" Name="System.Data.SQLite.Linq.dll" Source="$(var.SolutionDir)\Dependencies\SQLite\System.Data.SQLite.Linq.dll" />
+        <File Id="System.Data.SQLite.dll" Name="System.Data.SQLite.dll" Source="$(var.SolutionDir)\Dependencies\GSF\System.Data.SQLite.dll" />
       </Component>
     </ComponentGroup>
 

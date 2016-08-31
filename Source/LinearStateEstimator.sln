@@ -113,8 +113,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Help Me Choose Diagrams", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{53255BB7-2046-4606-BF76-7B5C13F49819}"
 	ProjectSection(SolutionItems) = preProject
-		_InitialDataSet.sql = _InitialDataSet.sql
-		_SampleDataSet.sql = _SampleDataSet.sql
+		Data\SQLite\_InitialDataSet.sql = Data\SQLite\_InitialDataSet.sql
+		Data\SQLite\_SampleDataSet.sql = Data\SQLite\_SampleDataSet.sql
 		Data\SQLite\InitialDataSet.sql = Data\SQLite\InitialDataSet.sql
 		Data\SQLite\LinearStateEstimator-InitialDataSet.db = Data\SQLite\LinearStateEstimator-InitialDataSet.db
 		Data\SQLite\LinearStateEstimator-SampleDataSet.db = Data\SQLite\LinearStateEstimator-SampleDataSet.db

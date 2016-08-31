@@ -42,9 +42,33 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\SynchrophasorAnalytics\SynchrophasorAnalytics.csproj">
+      <Name>SynchrophasorAnalytics</Name>
+      <Project>{7e806a7d-20c8-4cde-a1f8-4a92d1bc89f4}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Tools\ConfigurationSetupUtility\ConfigurationSetupUtility.csproj">
       <Name>ConfigurationSetupUtility</Name>
       <Project>{2a74eacf-8291-47c7-a2ed-0d58771f24e2}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Tools\LseOfflineModule\LseOfflineModule.csproj">
+      <Name>LseOfflineModule</Name>
+      <Project>{5df49ccf-8d2c-4a52-9d0d-2e7d32cf0ae1}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Tools\NetworkModelEditor\NetworkModelEditor.csproj">
+      <Name>NetworkModelEditor</Name>
+      <Project>{d3dbe8f4-2674-4ac3-bd41-846288f103a7}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
