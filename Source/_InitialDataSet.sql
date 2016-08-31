@@ -1,0 +1,3 @@
+﻿INSERT INTO CustomActionAdapter(NodeID, AdapterName, AssemblyName, TypeName, ConnectionString, Enabled) VALUES (NULL, 'MEASUREMENT!SAMPLER', 'GsfAdapters.dll', 'SynchrophasorAnalytics.Adapters.MeasurementSampler', '', 1)
+INSERT INTO CustomActionAdapter(NodeID, AdapterName, AssemblyName, TypeName, ConnectionString, Enabled) VALUES (NULL, 'SNAPSHOT!MANAGER', 'GsfAdapters.dll', 'SynchrophasorAnalytics.Adapters.SnapshotManager', '', 0)
+INSERT INTO CustomActionAdapter(NodeID, AdapterName, AssemblyName, TypeName, ConnectionString, Enabled) VALUES (NULL, 'LINEAR!STATE!ESTIMATOR', 'GsfAdapters.dll', 'SynchrophasorAnalytics.Adapters.LinearStateEstimator', '', 0)
