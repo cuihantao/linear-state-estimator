@@ -114,6 +114,20 @@
     <Compile Include="Graphs\VertexAdjacencyList.cs" />
     <Compile Include="Graphs\VertexAdjacencyRow.cs" />
     <Compile Include="Graphs\VertexCluster.cs" />
+    <Compile Include="Hdb\Area.cs" />
+    <Compile Include="Hdb\CircuitBreaker.cs" />
+    <Compile Include="Hdb\Company.cs" />
+    <Compile Include="Hdb\Context.cs" />
+    <Compile Include="Hdb\Division.cs" />
+    <Compile Include="Hdb\LineSegment.cs" />
+    <Compile Include="Hdb\ModelFiles.cs" />
+    <Compile Include="Hdb\Node.cs" />
+    <Compile Include="Hdb\Reader.cs" />
+    <Compile Include="Hdb\Shunt.cs" />
+    <Compile Include="Hdb\Station.cs" />
+    <Compile Include="Hdb\Transformer.cs" />
+    <Compile Include="Hdb\TransformerTap.cs" />
+    <Compile Include="Hdb\TransmissionLine.cs" />
     <Compile Include="Matrices\CovarianceMatrix.cs" />
     <Compile Include="Matrices\CurrentFlowMeasurementBusIncidenceMatrix.cs" />
     <Compile Include="Matrices\MatrixCalculationExtensions.cs" />
@@ -186,7 +200,9 @@
     <Compile Include="Testing\SnapshotPeriodicity.cs" />
     <Compile Include="Testing\SnapshotRequest.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Hdb\Scripts\placeholder.txt" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
