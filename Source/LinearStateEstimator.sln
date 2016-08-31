@@ -319,7 +319,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "Applications
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{90D0185A-1118-43D0-AD4B-3648B0FE043F}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SynchrophasorAnalyticsDatabase", "Libraries\SynchrophasorAnalyticsDatabase\SynchrophasorAnalyticsDatabase.sqlproj", "{469AFE96-1707-47D1-81E2-F017E4DFF4B5}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SynchrophasorAnalyticsDatabase", "Libraries\Database\SynchrophasorAnalyticsDatabase.sqlproj", "{469AFE96-1707-47D1-81E2-F017E4DFF4B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
