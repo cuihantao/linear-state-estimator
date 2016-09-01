@@ -31,6 +31,7 @@ using NetworkModelEditor.ViewModels;
 using SynchrophasorAnalytics.Networks;
 using SynchrophasorAnalytics.Modeling;
 using SynchrophasorAnalytics.Measurements;
+using SynchrophasorAnalytics.Testing;
 
 namespace NetworkModelEditor
 {
@@ -144,6 +145,14 @@ namespace NetworkModelEditor
                     else if (m_element is List<TapConfiguration>)
                     {
                         return "Tap Configurations";
+                    }
+                    else if (m_element is List<RawMeasurements>)
+                    {
+                        return "Measurement Samples";
+                    }
+                    else if (m_element is RawMeasurements)
+                    {
+                        return "Sample File";
                     }
                     else
                     {
@@ -283,6 +292,10 @@ namespace NetworkModelEditor
             {
                 return new List<NetworkElement>((from child in (m_element as List<TapConfiguration>) select new NetworkElement(child)).ToList<NetworkElement>());
             }
+            else if (m_element is List<RawMeasurements>)
+            {
+                return new List<NetworkElement>((from child in (m_element as List<RawMeasurements>) select new NetworkElement(child)).ToList<NetworkElement>());
+            }
             else
             {
                 return null;
@@ -414,6 +427,18 @@ namespace NetworkModelEditor
             else if (m_element is Transformer)
             {
                 m_elementType = typeof(Transformer);
+            }
+            else if (m_element is RawMeasurements)
+            {
+                m_elementType = typeof(RawMeasurements);
+            }
+            else if (m_element is RawMeasurementsMeasurement)
+            {
+                m_elementType = typeof(RawMeasurementsMeasurement);
+            }
+            else if (m_element is List<RawMeasurements>)
+            {
+                m_elementType = typeof(List<RawMeasurements>);
             }
             else
             {

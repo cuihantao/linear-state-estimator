@@ -61,6 +61,10 @@ namespace SynchrophasorAnalytics.Testing
             }
         }
 
+        public RawMeasurements()
+        {
+            this.itemsField = new RawMeasurementsMeasurement[0];
+        }
         /// <summary>
         /// Deserializes the collection of raw measurement key-value pairs from the *.xml file.
         /// </summary>

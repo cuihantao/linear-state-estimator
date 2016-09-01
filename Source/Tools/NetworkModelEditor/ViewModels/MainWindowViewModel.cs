@@ -41,7 +41,7 @@ namespace NetworkModelEditor.ViewModels
         private NetworkTreeViewModel m_networkTreeViewModel;
         private RecordDetailViewModel m_recordDetail;
         private Network m_network;
-        private RawMeasurements m_rawMeasurements;
+        private List<RawMeasurements> m_measurementSamples;
         private RelayCommand m_openFileCommand;
         private RelayCommand m_saveFileCommand;
         private RelayCommand m_changeSelectedElementCommand;
@@ -106,7 +106,7 @@ namespace NetworkModelEditor.ViewModels
             }
         }
 
-        public ICommand OpenMeasuremrentSampleFileCommand
+        public ICommand OpenMeasurementSampleFileCommand
         {
             get
             {
@@ -129,7 +129,7 @@ namespace NetworkModelEditor.ViewModels
             {
                 try
                 {
-                    m_rawMeasurements = RawMeasurements.DeserializeFromXml(openFileDialog.FileName);
+                    m_measurementSamples.Add(RawMeasurements.DeserializeFromXml(openFileDialog.FileName));
                     
                 }
                 catch (Exception exception)
@@ -207,6 +207,7 @@ namespace NetworkModelEditor.ViewModels
         {
             InitializeMenuBar();
             InitializeNetworkTree();
+            InitializeMeasurementTree();
             InitializeRecordDetail();
             
         }
@@ -218,7 +219,7 @@ namespace NetworkModelEditor.ViewModels
             MenuItemViewModel fileMenuItem = new MenuItemViewModel("File", null);
             MenuItemViewModel openMenuItem = new MenuItemViewModel("Open", null);
             openMenuItem.AddMenuItem(new MenuItemViewModel("Xml Network Model", OpenFileCommand));
-            openMenuItem.AddMenuItem(new MenuItemViewModel("Xml Measurement Sample", OpenFileCommand));
+            openMenuItem.AddMenuItem(new MenuItemViewModel("Xml Measurement Sample", OpenMeasurementSampleFileCommand));
             fileMenuItem.AddMenuItem(openMenuItem);
             fileMenuItem.AddMenuItem(new MenuItemViewModel("Save", SaveFileCommand));
             fileMenuItem.AddMenuItem(new MenuItemViewModel("Exit", null));
@@ -234,10 +235,15 @@ namespace NetworkModelEditor.ViewModels
 
         private void InitializeNetworkTree()
         {
+            m_measurementSamples = new List<RawMeasurements>();
             m_network = new Network();
             m_network.Initialize();
             m_network.Model = new NetworkModel();
-            m_networkTreeViewModel = new NetworkTreeViewModel(this, m_network);
+            m_networkTreeViewModel = new NetworkTreeViewModel(this, m_network, m_measurementSamples);
+        }
+
+        private void InitializeMeasurementTree()
+        {
         }
 
         private void InitializeRecordDetail()

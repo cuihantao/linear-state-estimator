@@ -79,6 +79,7 @@
     <Compile Include="ViewModels\DivisionDetailViewModel.cs" />
     <Compile Include="ViewModels\LineSegmentDetailViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MeasurementSampleViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\NetworkDetailViewModel.cs" />
     <Compile Include="ViewModels\NetworkElementViewModel.cs" />

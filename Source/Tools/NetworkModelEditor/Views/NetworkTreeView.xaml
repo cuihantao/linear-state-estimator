@@ -36,9 +36,34 @@
             <TextBox x:Name="searchTextBox" Margin="6,0" Text="{Binding SearchText}" Width="150" FontFamily="Segoe UI" FontSize="14" FontWeight="Light" />
             <Button Command="{Binding SearchCommand}" Content="_Find" Margin="10,0" Padding="8,0" FontFamily="Segoe UI" FontSize="14" FontWeight="Light"/>
         </StackPanel>-->
+        <TreeView DockPanel.Dock="Top" ItemsSource="{Binding FirstGeneration}" FontWeight="Light" SelectedValuePath="">
+            <TreeView.ItemContainerStyle >
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="FontFamily" Value="Segoe UI" />
+                    <Setter Property="FontWeight" Value="Light" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
 
+            <TreeView.ItemTemplate   >
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}" >
+                    <TextBlock Text="{Binding Name}" commandBehaviors:MouseDoubleClickBehavior.DoubleClickCommand="{Binding Path=OnMouseDoubleClick}">
+                        <TextBlock.ContextMenu>
+                            <ContextMenu ItemsSource="{Binding ContextMenuItems}" />
+                        </TextBlock.ContextMenu>
+                    </TextBlock>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
         <!-- NETWORK TREE -->
-        <TreeView ItemsSource="{Binding FirstGeneration}" FontWeight="Light" SelectedValuePath="">
+        <TreeView DockPanel.Dock="Bottom" ItemsSource="{Binding SecondGeneration}" FontWeight="Light" SelectedValuePath="">
             <TreeView.ItemContainerStyle >
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />

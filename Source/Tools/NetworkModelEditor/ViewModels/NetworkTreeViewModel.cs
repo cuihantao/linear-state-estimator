@@ -27,6 +27,7 @@ using System.Windows.Input;
 using NetworkModelEditor.Commands;
 using SynchrophasorAnalytics.Networks;
 using SynchrophasorAnalytics.Modeling;
+using SynchrophasorAnalytics.Testing;
 
 namespace NetworkModelEditor.ViewModels
 {
@@ -37,8 +38,11 @@ namespace NetworkModelEditor.ViewModels
 
         private MainWindowViewModel m_mainWindow;
         private Network m_network;
-        private NetworkElementViewModel m_root;
+        private List<RawMeasurements> m_measurementSamples;
+        private NetworkElementViewModel m_networkModelRoot;
+        private NetworkElementViewModel m_measurementSamplesRoot;
         private ObservableCollection<NetworkElementViewModel> m_firstGeneration;
+        private ObservableCollection<NetworkElementViewModel> m_secondGeneration;
         private RelayCommand m_viewDetailCommand;
         private NetworkElementViewModel m_selectedElement;
         
@@ -58,6 +62,26 @@ namespace NetworkModelEditor.ViewModels
             }
         }
 
+        public ObservableCollection<NetworkElementViewModel> SecondGeneration
+        {
+            get
+            {
+                return m_secondGeneration;
+            }
+        }
+
+        public List<RawMeasurements> MeasurementSamples
+        {
+            get
+            {
+                return m_measurementSamples;
+            }
+            set
+            {
+                m_measurementSamples = value;
+            }
+        }
+        
         public Network Network
         {
             get
@@ -128,21 +152,36 @@ namespace NetworkModelEditor.ViewModels
         #region Constructor
 
         public NetworkTreeViewModel(MainWindowViewModel mainWindow)
-            :this(mainWindow, null)
+            :this(mainWindow, null, null)
         {
         }
 
-        public NetworkTreeViewModel(MainWindowViewModel mainWindow, Network network)
+        public NetworkTreeViewModel(MainWindowViewModel mainWindow, Network network, List<RawMeasurements> measurementSamples)
         {
             m_mainWindow = mainWindow;
             if (network != null)
             {
                 InitializeNetworkTree(network);
+
+                m_measurementSamples = new List<RawMeasurements>();
+                InitializeMeasurementTree(m_measurementSamples);
             }
             else
             {
                 m_network = new Network();
                 InitializeNetworkTree(m_network);
+
+                m_measurementSamples = new List<RawMeasurements>();
+                InitializeMeasurementTree(m_measurementSamples);
+            }
+            if (measurementSamples != null)
+            {
+                InitializeMeasurementTree(measurementSamples);
+            }
+            else
+            {
+                m_measurementSamples = new List<RawMeasurements>();
+                InitializeMeasurementTree(m_measurementSamples);
             }
         }
 
@@ -150,10 +189,18 @@ namespace NetworkModelEditor.ViewModels
         {
             network.Initialize();
 
-            m_root = new NetworkElementViewModel(this, new NetworkElement(network));
+            m_networkModelRoot = new NetworkElementViewModel(this, new NetworkElement(network));
             
-            m_firstGeneration = new ObservableCollection<NetworkElementViewModel>(new NetworkElementViewModel[] { m_root });
+            m_firstGeneration = new ObservableCollection<NetworkElementViewModel>(new NetworkElementViewModel[] { m_networkModelRoot });
             OnPropertyChanged("FirstGeneration");
+        }
+
+        private void InitializeMeasurementTree(List<RawMeasurements> measurementSamples)
+        {
+            m_measurementSamplesRoot = new NetworkElementViewModel(this, new NetworkElement(measurementSamples));
+
+            m_secondGeneration = new ObservableCollection<NetworkElementViewModel>(new NetworkElementViewModel[] { m_measurementSamplesRoot });
+            OnPropertyChanged("SecondGeneration");
         }
         
         #endregion // Constructor
@@ -174,6 +221,7 @@ namespace NetworkModelEditor.ViewModels
         public void RefreshNetworkTree()
         {
             InitializeNetworkTree(m_network);
+            InitializeMeasurementTree(m_measurementSamples);
         }
     }
 }
