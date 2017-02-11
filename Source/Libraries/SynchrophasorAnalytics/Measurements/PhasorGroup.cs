@@ -733,6 +733,16 @@ namespace SynchrophasorAnalytics.Measurements
             return m_shouldSerializeEstimatedNegativeSequenceToPositiveSequenceRatio;
         }
 
+        public void Keyify(string rootKey)
+        {
+            PositiveSequence.Keyify($"{rootKey}.+");
+            NegativeSequence.Keyify($"{rootKey}.-");
+            ZeroSequence.Keyify($"{rootKey}.0");
+            PhaseA.Keyify($"{rootKey}.A");
+            PhaseB.Keyify($"{rootKey}.B");
+            PhaseC.Keyify($"{rootKey}.C");
+        }
+
         #endregion
 
         #region [ Private Methods ]

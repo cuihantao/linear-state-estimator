@@ -272,8 +272,14 @@ namespace SynchrophasorAnalytics.Measurements
         [XmlAttribute("Key")]
         public string Key
         {
-            get { return m_inputMeasurementKey; }
-            set { m_inputMeasurementKey = value; }
+            get
+            {
+                return m_inputMeasurementKey;
+            }
+            set
+            {
+                m_inputMeasurementKey = value;
+            }
         }
 
         /// <summary>
@@ -779,6 +785,10 @@ namespace SynchrophasorAnalytics.Measurements
             m_statusWordWasReported = false;
         }
 
+        public void Keyify(string rootKey)
+        {
+            Key = $"{rootKey}.Status";
+        }
         #endregion
 
     }

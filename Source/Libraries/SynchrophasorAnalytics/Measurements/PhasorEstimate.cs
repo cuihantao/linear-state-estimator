@@ -133,6 +133,12 @@ namespace SynchrophasorAnalytics.Measurements
             return stringBuilder.ToString();
         }
 
+        public void Keyify(string rootKey)
+        {
+            AngleKey = $"{rootKey}.Ang.Est";
+            MagnitudeKey = $"{rootKey}.Mag.Est";
+        }
+
         #endregion
     }
 }

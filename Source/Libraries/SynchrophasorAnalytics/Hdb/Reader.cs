@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SynchrophasorAnalytics.Hdb.Records;
 
-namespace Synchrophasor.Hdb
+namespace SynchrophasorAnalytics.Hdb
 {
     public class HdbReader
     {
@@ -26,7 +27,8 @@ namespace Synchrophasor.Hdb
 
         private const string m_nodeNumberHeader = "%SUBSCRIPT";
         private const string m_nodeIdHeader = "id_nd";
-        private const string m_nodeBaseKvHeader = "id_kv";
+        private const string m_nodeBaseKvIdHeader = "id_kv";
+        private const string m_nodeBaseKvHeader = "vl_kv";
         private const string m_nodeCompanyHeader = "id_co";
         private const string m_nodeDivisionHeader = "id_dv";
         private const string m_nodeStationHeader = "id_st";
@@ -89,6 +91,28 @@ namespace Synchrophasor.Hdb
         private const string m_transformerReactanceHeader = "x_xf";
         private const string m_transformerMagnetizingConductanceHeader = "gmag_xf";
         private const string m_transformerMagnetizingSusceptanceHeader = "bmag_xf";
+
+
+        private const string m_parentTransformerNumberHeader = "%SUBSCRIPT";
+        private const string m_parentTransformerIdHeader = "id_xfmr";
+
+        public static List<ParentTransformer> ReadParentTransformerFile(string hdbExportFile)
+        {
+            List<Dictionary<string, string>> records = ReadAndParameterizeAttributes(hdbExportFile);
+
+            List<ParentTransformer> parentTransformers = new List<ParentTransformer>();
+
+            foreach (Dictionary<string, string> record in records)
+            {
+                parentTransformers.Add(new ParentTransformer()
+                {
+                    Number = Convert.ToInt32(record[m_parentTransformerNumberHeader]),
+                    Id = record[m_parentTransformerIdHeader],
+                });
+            }
+            return parentTransformers;
+
+        }
 
         public static List<Transformer> ReadTransformerFile(string hdbExportFile)
         {
@@ -245,6 +269,7 @@ namespace Synchrophasor.Hdb
                     Number = Convert.ToInt32(record[m_nodeNumberHeader]),
                     Id = record[m_nodeIdHeader],
                     BaseKv = Convert.ToDouble(record[m_nodeBaseKvHeader]),
+                    BaseKvId = Convert.ToDouble(record[m_nodeBaseKvIdHeader]),
                     CompanyName = record[m_nodeCompanyHeader],
                     DivisionName = record[m_nodeDivisionHeader],
                     StationName = record[m_nodeStationHeader],
@@ -322,6 +347,7 @@ namespace Synchrophasor.Hdb
             }
             return companies;
         }
+
 
         public static List<Dictionary<string, string>> ReadAndParameterizeAttributes(string hdbExportFile)
         {

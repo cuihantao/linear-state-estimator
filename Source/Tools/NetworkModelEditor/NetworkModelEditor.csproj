@@ -71,6 +71,9 @@
     <Compile Include="NetworkElementDestroyer.cs" />
     <Compile Include="NetworkElementFactory.cs" />
     <Compile Include="RecordDetailHelper.cs" />
+    <Compile Include="Resources\Data Templates\MeasurementSampleDetailDataTemplate.xaml.cs">
+      <DependentUpon>MeasurementSampleDetailDataTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BreakerStatusDetailViewModel.cs" />
     <Compile Include="ViewModels\CircuitBreakerDetailViewModel.cs" />
     <Compile Include="ViewModels\CompanyDetailViewModel.cs" />
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Data Templates\LineSegmentDetailDataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Data Templates\MeasurementSampleDetailDataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

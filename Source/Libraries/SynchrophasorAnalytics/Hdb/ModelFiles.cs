@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Synchrophasor.Hdb
+namespace SynchrophasorAnalytics.Hdb
 {
     [Serializable()]
     public class ModelFiles
@@ -19,9 +20,11 @@ namespace Synchrophasor.Hdb
         private string m_shuntFile;
         private string m_stationFile;
         private string m_transformerFile;
+        private string m_parentTransformerFile;
         private string m_transformerTapFile;
         private string m_transmissionLineFile;
 
+        [XmlElement("area")]
         public string AreaFile
         {
             get
@@ -34,6 +37,7 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("cb")]
         public string CircuitBreakerFile
         {
             get
@@ -46,6 +50,7 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("co")]
         public string CompanyFile
         {
             get
@@ -58,6 +63,7 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("dv")]
         public string DivisionFile
         {
             get
@@ -70,6 +76,7 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("ln")]
         public string LineSegmentFile
         {
             get
@@ -82,6 +89,7 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("nd")]
         public string NodeFile
         {
             get
@@ -94,6 +102,7 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("cp")]
         public string ShuntFile
         {
             get
@@ -106,6 +115,7 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("st")]
         public string StationFile
         {
             get
@@ -118,6 +128,7 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("xf")]
         public string TransformerFile
         {
             get
@@ -130,6 +141,20 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("xfmr")]
+        public string ParentTransformerFile
+        {
+            get
+            {
+                return m_parentTransformerFile;
+            }
+            set
+            {
+                m_parentTransformerFile = value;
+            }
+        }
+
+        [XmlElement("tapty")]
         public string TransformerTapFile
         {
             get
@@ -142,6 +167,7 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        [XmlElement("line")]
         public string TransmissionLineFile
         {
             get
@@ -158,6 +184,76 @@ namespace Synchrophasor.Hdb
         {
         }
 
+
+        public override string ToString()
+        {
+            string modelFileString = "";
+            modelFileString += $"              Area: {AreaFile}\n";
+            modelFileString += $"   Circuit Breaker: {CircuitBreakerFile}\n";
+            modelFileString += $"           Company: {CompanyFile}\n";
+            modelFileString += $"          Division: {DivisionFile}\n";
+            modelFileString += $"      Line Segment: {LineSegmentFile}\n";
+            modelFileString += $"              Node: {NodeFile}\n";
+            modelFileString += $"             Shunt: {ShuntFile}\n";
+            modelFileString += $"            Station: {StationFile}\n";
+            modelFileString += $"       Transformer: {TransformerFile}\n";
+            modelFileString += $"Parent Transformer: {TransformerFile}\n";
+            modelFileString += $"               Tap: {TransformerTapFile}\n";
+            modelFileString += $" Transmission Line: {TransmissionLineFile}\n";
+            return modelFileString;
+        }
+        #region [ Xml Serialization/Deserialization methods ]
+
+        public static ModelFiles DeserializeFromXml(string pathName)
+        {
+            try
+            {
+                // Create an empy ModelFiles object reference.
+                ModelFiles modelFiles = null;
+
+                // Create an XmlSerializer with the type of ModelFiles.
+                XmlSerializer deserializer = new XmlSerializer(typeof(ModelFiles));
+
+                // Read the data in from the file.
+                StreamReader reader = new StreamReader(pathName);
+
+                // Cast the deserialized data as a ModelFiles object.
+                modelFiles = (ModelFiles)deserializer.Deserialize(reader);
+
+                // Close the connection.
+                reader.Close();
+
+                return modelFiles;
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Failed to Deserialize the ModelFiles from the Configuration File: " + exception.ToString());
+            }
+        }
+
+        public void SerializeToXml(string pathName)
+        {
+            try
+            {
+                // Create an XmlSerializer with the type of ModelFiles
+                XmlSerializer serializer = new XmlSerializer(typeof(ModelFiles));
+
+                // Open a connection to the file and path.
+                TextWriter writer = new StreamWriter(pathName);
+
+                // Serialize this instance of ModelFiles
+                serializer.Serialize(writer, this);
+
+                // Close the connection
+                writer.Close();
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Failed to Serialize the ModelFiles to the Configuration File: " + exception.ToString());
+            }
+        }
+
+        #endregion
 
     }
 }

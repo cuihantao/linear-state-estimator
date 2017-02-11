@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synchrophasor.Hdb
+namespace SynchrophasorAnalytics.Hdb.Records
 {
-    public class TransformerTap
+    public class Shunt
     {
         private int m_number;
         private string m_id;
-        private int m_maximumPosition;
-        private int m_minimumPosition;
-        private int m_nominalPosition;
-        private double m_stepSize;
+        private string m_stationName;
+        private string m_nodeId;
+        private double m_nominalMvar;
+        private string m_isOpen;
 
         public int Number
         {
@@ -39,62 +39,61 @@ namespace Synchrophasor.Hdb
             }
         }
 
-        public int MaximumPosition
+        public string StationName
         {
             get
             {
-                return m_maximumPosition;
+                return m_stationName;
             }
             set
             {
-                m_maximumPosition = value;
+                m_stationName = value;
             }
         }
 
-        public int MinimumPosition
+        public string NodeId
         {
             get
             {
-                return m_minimumPosition;
+                return m_nodeId;
             }
             set
             {
-                m_minimumPosition = value;
+                m_nodeId = value;
             }
         }
 
-        public int NominalPosition
+        public double NominalMvar
         {
             get
             {
-                return m_nominalPosition;
+                return m_nominalMvar;
             }
             set
             {
-                m_nominalPosition = value;
+                m_nominalMvar = value;
             }
         }
 
-        public double StepSize
+        public string IsOpen
         {
             get
             {
-                return m_stepSize;
+                return m_isOpen;
             }
             set
             {
-                m_stepSize = value;
+                m_isOpen = value;
             }
         }
 
-        public TransformerTap()
+        public Shunt()
         {
         }
 
         public override string ToString()
         {
-            return Id;
+            return "Shunt:\n      Number:" + Convert.ToString(Number) + "\n          Id:" + Id + "\n     Station:" + StationName + "\n         Node:" + NodeId + "\nNominal Mvar:" + Convert.ToString(NominalMvar);
         }
-
     }
 }

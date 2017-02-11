@@ -144,12 +144,10 @@ namespace NetworkModelEditor.ViewModels
                 }
             }
         }
-
         
-
         #endregion
 
-        #region Constructor
+        #region [ Constructor ]
 
         public NetworkTreeViewModel(MainWindowViewModel mainWindow)
             :this(mainWindow, null, null)

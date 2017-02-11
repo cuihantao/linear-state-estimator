@@ -306,6 +306,12 @@ namespace SynchrophasorAnalytics.Measurements
             return copy;
         }
 
+        public void Keyify(string rootKey)
+        {
+            base.Keyify($"{rootKey}.V");
+        }
+
+
         #endregion
 
         #region [ Private Methods ]

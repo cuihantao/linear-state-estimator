@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synchrophasor.Hdb
+namespace SynchrophasorAnalytics.Hdb.Records
 {
-    public class Company
+    public class ParentTransformer
     {
         private int m_number;
-        private string m_name;
+        private string m_id;
 
         public int Number
         {
@@ -23,25 +23,26 @@ namespace Synchrophasor.Hdb
             }
         }
 
-        public string Name
+        public string Id
         {
             get
             {
-                return m_name;
+                return m_id;
             }
             set
             {
-                m_name = value;
+                m_id = value;
             }
         }
+        
 
-        public Company()
+        public ParentTransformer()
         {
         }
 
         public override string ToString()
         {
-            return "Company:\n  Number:" + Convert.ToString(Number) + "\n    Name:" + Name;
+            return Id;
         }
     }
 }

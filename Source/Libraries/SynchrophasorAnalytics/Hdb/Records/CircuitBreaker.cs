@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synchrophasor.Hdb
+namespace SynchrophasorAnalytics.Hdb.Records
 {
     public class CircuitBreaker
     {
@@ -119,7 +119,7 @@ namespace Synchrophasor.Hdb
 
         public override string ToString()
         {
-            return Id;
+            return $"{StationName}_{Id} ({Type})";
         }
     }
 }

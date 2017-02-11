@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synchrophasor.Hdb
+namespace SynchrophasorAnalytics.Hdb.Records
 {
     public class Node
     {
         private int m_number;
         private string m_id;
         private double m_baseKv;
+        private double m_baseKvId;
         private string m_companyName;
         private string m_divisionName;
         private string m_stationName;
@@ -49,6 +50,18 @@ namespace Synchrophasor.Hdb
             set
             {
                 m_baseKv = value;
+            }
+        }
+
+        public double BaseKvId
+        {
+            get
+            {
+                return m_baseKvId;
+            }
+            set
+            {
+                m_baseKvId = value;
             }
         }
 

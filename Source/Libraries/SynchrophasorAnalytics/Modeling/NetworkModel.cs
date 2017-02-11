@@ -1469,7 +1469,7 @@ namespace SynchrophasorAnalytics.Modeling
         /// </summary>
         private void LinkTransmissionLineReferencesToSubstations()
         {
-            // Transmission Line From and To Substations
+            //Transmission Line From and To Substations
             Dictionary<int, Substation> substations = new Dictionary<int, Substation>();
 
             foreach (Company company in m_companies)
@@ -1483,24 +1483,19 @@ namespace SynchrophasorAnalytics.Modeling
                 }
             }
 
-            foreach (Company company in m_companies)
+            foreach (TransmissionLine transmissionLine in m_transmissionLines)
             {
-                foreach (Division division in company.Divisions)
+                Substation value = null;
+
+                if (substations.TryGetValue(transmissionLine.FromSubstationID, out value))
                 {
-                    foreach (TransmissionLine transmissionLine in division.TransmissionLines)
-                    {
-                        Substation value = null;
-                        if (substations.TryGetValue(transmissionLine.FromSubstationID, out value))
-                        {
-                            transmissionLine.FromSubstation = value;
-                            value = null;
-                        }
-                        if (substations.TryGetValue(transmissionLine.ToSubstationID, out value))
-                        {
-                            transmissionLine.ToSubstation = value;
-                            value = null;
-                        }
-                    }
+                    transmissionLine.FromSubstation = value;
+                    value = null;
+                }
+                if (substations.TryGetValue(transmissionLine.ToSubstationID, out value))
+                {
+                    transmissionLine.ToSubstation = value;
+                    value = null;
                 }
             }
         }
@@ -1921,7 +1916,7 @@ namespace SynchrophasorAnalytics.Modeling
 
                 if (voltagePhasorGroup.StatusWordID != 0 && statusWords.TryGetValue(voltagePhasorGroup.StatusWordID, out value))
                 {
-                    voltagePhasorGroup.Status = value;
+                    voltagePhasorGroup.Status = m_statusWords.Find(x => x.InternalID == voltagePhasorGroup.StatusWordID);
                     value = null;
                 }
                 else
@@ -1935,7 +1930,7 @@ namespace SynchrophasorAnalytics.Modeling
                 StatusWord value = null;
                 if (currentPhasorGroup.StatusWordID != 0 && statusWords.TryGetValue(currentPhasorGroup.StatusWordID, out value))
                 {
-                    currentPhasorGroup.Status = value;
+                    currentPhasorGroup.Status = m_statusWords.Find(x => x.InternalID == currentPhasorGroup.StatusWordID);
                     value = null;
                 }
                 else
@@ -1951,66 +1946,12 @@ namespace SynchrophasorAnalytics.Modeling
         /// </summary>
         private void LinkVoltageLevelsToPhasorGroups()
         {
-            Dictionary<int, VoltageLevel> voltageLevels = m_voltageLevels.ToDictionary(x => x.InternalID, x => x);
-
-            foreach (VoltagePhasorGroup voltagePhasorGroup in m_voltages)
+            foreach (VoltagePhasorGroup voltage in m_voltages)
             {
-                VoltageLevel value = null;
-                // Positive Sequence
-                if (voltageLevels.TryGetValue(voltagePhasorGroup.PositiveSequence.Measurement.VoltageLevelID, out value))
-                {
-                    voltagePhasorGroup.PositiveSequence.Measurement.BaseKV = value;
-                    value = null;
-                }
-                if (voltageLevels.TryGetValue(voltagePhasorGroup.PositiveSequence.Estimate.VoltageLevelID, out value))
-                {
-                    voltagePhasorGroup.PositiveSequence.Estimate.BaseKV = value;
-                    value = null;
-                }
-
+                voltage.PositiveSequence.Measurement.BaseKV = voltage.MeasuredNode.BaseKV;
+                voltage.PositiveSequence.Estimate.BaseKV = voltage.MeasuredNode.BaseKV;
                 if (m_phaseSelection == PhaseSelection.ThreePhase)
                 {
-                    // Phase A
-                    if (voltageLevels.TryGetValue(voltagePhasorGroup.PhaseA.Measurement.VoltageLevelID, out value))
-                    {
-                        voltagePhasorGroup.PhaseA.Measurement.BaseKV = value;
-                        value = null;
-                    }
-                    if (voltageLevels.TryGetValue(voltagePhasorGroup.PhaseA.Estimate.VoltageLevelID, out value))
-                    {
-                        voltagePhasorGroup.PhaseA.Estimate.BaseKV = value;
-                        value = null;
-                    }
-
-                    // Phase B
-                    if (voltageLevels.TryGetValue(voltagePhasorGroup.PhaseB.Measurement.VoltageLevelID, out value))
-                    {
-                        voltagePhasorGroup.PhaseB.Measurement.BaseKV = value;
-                        value = null;
-                    }
-                    if (voltageLevels.TryGetValue(voltagePhasorGroup.PhaseB.Estimate.VoltageLevelID, out value))
-                    {
-                        voltagePhasorGroup.PhaseB.Estimate.BaseKV = value;
-                        value = null;
-                    }
-
-                    // Phase C
-                    if (voltageLevels.TryGetValue(voltagePhasorGroup.PhaseC.Measurement.VoltageLevelID, out value))
-                    {
-                        voltagePhasorGroup.PhaseC.Measurement.BaseKV = value;
-                        value = null;
-                    }
-                    if (voltageLevels.TryGetValue(voltagePhasorGroup.PhaseC.Estimate.VoltageLevelID, out value))
-                    {
-                        voltagePhasorGroup.PhaseC.Estimate.BaseKV = value;
-                        value = null;
-                    }
-                }
-
-                foreach (VoltagePhasorGroup voltage in m_voltages)
-                {
-                    voltage.PositiveSequence.Measurement.BaseKV = voltage.MeasuredNode.BaseKV;
-                    voltage.PositiveSequence.Estimate.BaseKV = voltage.MeasuredNode.BaseKV;
                     voltage.PhaseA.Measurement.BaseKV = voltage.MeasuredNode.BaseKV;
                     voltage.PhaseA.Estimate.BaseKV = voltage.MeasuredNode.BaseKV;
                     voltage.PhaseB.Measurement.BaseKV = voltage.MeasuredNode.BaseKV;
@@ -2018,11 +1959,14 @@ namespace SynchrophasorAnalytics.Modeling
                     voltage.PhaseC.Measurement.BaseKV = voltage.MeasuredNode.BaseKV;
                     voltage.PhaseC.Estimate.BaseKV = voltage.MeasuredNode.BaseKV;
                 }
+            }
 
-                foreach (CurrentFlowPhasorGroup current in m_currentFlows)
+            foreach (CurrentFlowPhasorGroup current in m_currentFlows)
+            {
+                current.PositiveSequence.Measurement.BaseKV = current.MeasuredFromNode.BaseKV;
+                current.PositiveSequence.Estimate.BaseKV = current.MeasuredFromNode.BaseKV;
+                if (m_phaseSelection == PhaseSelection.ThreePhase)
                 {
-                    current.PositiveSequence.Measurement.BaseKV = current.MeasuredFromNode.BaseKV;
-                    current.PositiveSequence.Estimate.BaseKV = current.MeasuredFromNode.BaseKV;
                     current.PhaseA.Measurement.BaseKV = current.MeasuredFromNode.BaseKV;
                     current.PhaseA.Estimate.BaseKV = current.MeasuredFromNode.BaseKV;
                     current.PhaseB.Measurement.BaseKV = current.MeasuredFromNode.BaseKV;
@@ -2030,72 +1974,20 @@ namespace SynchrophasorAnalytics.Modeling
                     current.PhaseC.Measurement.BaseKV = current.MeasuredFromNode.BaseKV;
                     current.PhaseC.Estimate.BaseKV = current.MeasuredFromNode.BaseKV;
                 }
+            }
 
-                foreach (CurrentInjectionPhasorGroup current in m_currentInjections)
+            foreach (CurrentInjectionPhasorGroup current in m_currentInjections)
+            {
+                current.PositiveSequence.Measurement.BaseKV = current.MeasuredConnectedNode.BaseKV;
+                current.PositiveSequence.Estimate.BaseKV = current.MeasuredConnectedNode.BaseKV;
+                if (m_phaseSelection == PhaseSelection.ThreePhase)
                 {
-                    current.PositiveSequence.Measurement.BaseKV = current.MeasuredConnectedNode.BaseKV;
-                    current.PositiveSequence.Estimate.BaseKV = current.MeasuredConnectedNode.BaseKV;
                     current.PhaseA.Measurement.BaseKV = current.MeasuredConnectedNode.BaseKV;
                     current.PhaseA.Estimate.BaseKV = current.MeasuredConnectedNode.BaseKV;
                     current.PhaseB.Measurement.BaseKV = current.MeasuredConnectedNode.BaseKV;
                     current.PhaseB.Estimate.BaseKV = current.MeasuredConnectedNode.BaseKV;
                     current.PhaseC.Measurement.BaseKV = current.MeasuredConnectedNode.BaseKV;
                     current.PhaseC.Estimate.BaseKV = current.MeasuredConnectedNode.BaseKV;
-                }
-            }
-
-            foreach (CurrentFlowPhasorGroup currentPhasorGroup in m_currentFlows)
-            {
-                VoltageLevel value = null;
-                // Positive Sequence
-                if (voltageLevels.TryGetValue(currentPhasorGroup.PositiveSequence.Measurement.VoltageLevelID, out value))
-                {
-                    currentPhasorGroup.PositiveSequence.Measurement.BaseKV = value;
-                    value = null;
-                }
-                if (voltageLevels.TryGetValue(currentPhasorGroup.PositiveSequence.Estimate.VoltageLevelID, out value))
-                {
-                    currentPhasorGroup.PositiveSequence.Estimate.BaseKV = value;
-                    value = null;
-                }
-
-                if (m_phaseSelection == PhaseSelection.ThreePhase)
-                {
-                    // Phase A
-                    if (voltageLevels.TryGetValue(currentPhasorGroup.PhaseA.Measurement.VoltageLevelID, out value))
-                    {
-                        currentPhasorGroup.PhaseA.Measurement.BaseKV = value;
-                        value = null;
-                    }
-                    if (voltageLevels.TryGetValue(currentPhasorGroup.PhaseA.Estimate.VoltageLevelID, out value))
-                    {
-                        currentPhasorGroup.PhaseA.Estimate.BaseKV = value;
-                        value = null;
-                    }
-
-                    // Phase B
-                    if (voltageLevels.TryGetValue(currentPhasorGroup.PhaseB.Measurement.VoltageLevelID, out value))
-                    {
-                        currentPhasorGroup.PhaseB.Measurement.BaseKV = value;
-                        value = null;
-                    }
-                    if (voltageLevels.TryGetValue(currentPhasorGroup.PhaseB.Estimate.VoltageLevelID, out value))
-                    {
-                        currentPhasorGroup.PhaseB.Estimate.BaseKV = value;
-                        value = null;
-                    }
-
-                    // Phase C
-                    if (voltageLevels.TryGetValue(currentPhasorGroup.PhaseC.Measurement.VoltageLevelID, out value))
-                    {
-                        currentPhasorGroup.PhaseC.Measurement.BaseKV = value;
-                        value = null;
-                    }
-                    if (voltageLevels.TryGetValue(currentPhasorGroup.PhaseC.Estimate.VoltageLevelID, out value))
-                    {
-                        currentPhasorGroup.PhaseC.Estimate.BaseKV = value;
-                        value = null;
-                    }
                 }
             }
         }
@@ -2371,23 +2263,13 @@ namespace SynchrophasorAnalytics.Modeling
         /// </summary>
         private void InitializeComplexPowerCalculations()
         {
-            foreach (Company company in m_companies)
+            foreach (Transformer transformer in m_transformers)
             {
-                foreach (Division division in company.Divisions)
-                {
-                    foreach (Substation substation in division.Substations)
-                    {
-                        foreach (Transformer transformer in substation.Transformers)
-                        {
-                            transformer.InitializeComplexPower();
-                        }
-                    }
-
-                    foreach (TransmissionLine transmissionLine in division.TransmissionLines)
-                    {
-                        transmissionLine.InitializeComplexPower();
-                    }
-                }
+                transformer.InitializeComplexPower();
+            }
+            foreach (TransmissionLine transmissionLine in m_transmissionLines)
+            {
+                transmissionLine.InitializeComplexPower();
             }
         }
 

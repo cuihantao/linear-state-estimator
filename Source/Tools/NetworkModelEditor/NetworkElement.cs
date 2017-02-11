@@ -474,6 +474,5 @@ namespace NetworkModelEditor
             return GetNetworkElementXmlSource();
         }
 
-
     }
 }

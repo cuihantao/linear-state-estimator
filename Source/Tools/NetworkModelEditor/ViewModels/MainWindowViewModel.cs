@@ -32,6 +32,8 @@ using NetworkModelEditor.Commands;
 using SynchrophasorAnalytics.Networks;
 using SynchrophasorAnalytics.Modeling;
 using SynchrophasorAnalytics.Testing;
+using SynchrophasorAnalytics.Psse;
+
 
 namespace NetworkModelEditor.ViewModels
 {
@@ -49,6 +51,8 @@ namespace NetworkModelEditor.ViewModels
         private RelayCommand m_refreshNetworkTreeCommand;
         private string m_actionStatus;
         private RelayCommand m_openMeasurementSampleFileCommand;
+        private RelayCommand m_openPsseRawFileCommand;
+        private RelayCommand m_openHdbExportFilesCommand;
 
         public NetworkTreeViewModel NetworkTree
         {
@@ -115,6 +119,82 @@ namespace NetworkModelEditor.ViewModels
                     m_openMeasurementSampleFileCommand = new RelayCommand(param => this.OpenMeasurementSampleFile(), param => true);
                 }
                 return m_openMeasurementSampleFileCommand;
+            }
+        }
+
+        public ICommand OpenPsseRawFileCommand
+        {
+            get
+            {
+                if (m_openPsseRawFileCommand == null)
+                {
+                    m_openPsseRawFileCommand = new RelayCommand(param => this.OpenPsseRawFile(), param => true);
+                }
+                return m_openPsseRawFileCommand;
+            }
+        }
+
+        public ICommand OpenHdbExportFilesCommand
+        {
+            get
+            {
+                if (m_openHdbExportFilesCommand == null)
+                {
+                    m_openHdbExportFilesCommand = new RelayCommand(param => this.OpenHdbExportFiles(), param => true);
+                }
+                return m_openHdbExportFilesCommand;
+            }
+
+        }
+
+        private void OpenHdbExportFiles()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.DefaultExt = ".xml";
+            openFileDialog.Filter = "Hdb Export List File (.xml)|*.xml";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    m_network = Network.FromHdbExport(openFileDialog.FileName, true);
+
+                    m_networkTreeViewModel.Network = m_network;
+                }
+                catch (Exception exception)
+                {
+                    if (exception != null)
+                    {
+                        System.Windows.MessageBox.Show(exception.ToString(), "Failed to load selected file.");
+                    }
+                }
+            }
+        }
+
+        private void OpenPsseRawFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.DefaultExt = ".raw";
+            openFileDialog.Filter = "PSSE (.raw)|*.raw";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    RawFile rawFile = RawFile.Read(openFileDialog.FileName);
+                    m_network = Network.FromPsseRawFile(openFileDialog.FileName, rawFile.Version.ToString());
+
+                    m_networkTreeViewModel.Network = m_network;
+                }
+                catch (Exception exception)
+                {
+                    if (exception != null)
+                    {
+                        System.Windows.MessageBox.Show(exception.ToString(), "Failed to load selected file.");
+                    }
+                }
             }
         }
 
@@ -220,6 +300,8 @@ namespace NetworkModelEditor.ViewModels
             MenuItemViewModel openMenuItem = new MenuItemViewModel("Open", null);
             openMenuItem.AddMenuItem(new MenuItemViewModel("Xml Network Model", OpenFileCommand));
             openMenuItem.AddMenuItem(new MenuItemViewModel("Xml Measurement Sample", OpenMeasurementSampleFileCommand));
+            openMenuItem.AddMenuItem(new MenuItemViewModel("PSSE *.raw File", OpenPsseRawFileCommand));
+            openMenuItem.AddMenuItem(new MenuItemViewModel("Hdb Export List File", OpenHdbExportFilesCommand));
             fileMenuItem.AddMenuItem(openMenuItem);
             fileMenuItem.AddMenuItem(new MenuItemViewModel("Save", SaveFileCommand));
             fileMenuItem.AddMenuItem(new MenuItemViewModel("Exit", null));
@@ -277,7 +359,6 @@ namespace NetworkModelEditor.ViewModels
                 }
             }
         }
-
 
         private void ChangeSelectedElement()
         {

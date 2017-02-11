@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Synchrophasor.Hdb
+namespace SynchrophasorAnalytics.Hdb.Records
 {
-    public class Station
+    public class Company
     {
         private int m_number;
         private string m_name;
@@ -35,13 +35,13 @@ namespace Synchrophasor.Hdb
             }
         }
 
-        public Station()
+        public Company()
         {
         }
 
         public override string ToString()
         {
-            return "Station:\n  Number:" + Convert.ToString(Number) + "\n    Name:" + Name;
+            return "Company:\n  Number:" + Convert.ToString(Number) + "\n    Name:" + Name;
         }
     }
 }

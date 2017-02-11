@@ -821,6 +821,11 @@ namespace SynchrophasorAnalytics.Modeling
 
         }
 
+        public void Keyify(string rootKey)
+        {
+            TapPositionInputKey = $"{rootKey}.Tap.Meas";
+            TapPositionOutputKey = $"{rootKey}.Tap.Est";
+        }
         #endregion
 
         #region [ Private Methods ]

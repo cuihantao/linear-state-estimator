@@ -5,22 +5,22 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SynchrophasorAnalytics")]
+[assembly: AssemblyTitle("TestConsole")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Kevin D. Jones")]
-[assembly: AssemblyProduct("SynchrophasorAnalytics")]
-[assembly: AssemblyCopyright("Copyright © Kevin D. Jones 2013")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("TestConsole")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(true)]
+[assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a2b0649a-4e27-4fc9-9251-73fe3563bdf1")]
+[assembly: Guid("1a21b771-7d00-4f99-b163-f97585beea2a")]
 
 // Version information for an assembly consists of the following four values:
 //

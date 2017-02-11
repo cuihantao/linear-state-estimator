@@ -113,6 +113,10 @@ namespace NetworkModelEditor
                 {
                     return element.FindResource("TapConfigurationDetailTemplate") as DataTemplate;
                 }
+                else if (item is MeasurementSampleViewModel)
+                {
+                    return element.FindResource("MeasurementSampleDetailTemplate") as DataTemplate;
+                }
             }
 
             return null;

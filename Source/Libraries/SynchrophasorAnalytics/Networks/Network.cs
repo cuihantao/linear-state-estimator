@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.IO;
 using System.Xml.Serialization;
 using MathNet.Numerics;
@@ -37,6 +38,8 @@ using SynchrophasorAnalytics.Modeling;
 using SynchrophasorAnalytics.Measurements;
 using SynchrophasorAnalytics.Matrices;
 using SynchrophasorAnalytics.Calibration;
+using SynchrophasorAnalytics.Psse;
+using SynchrophasorAnalytics.Hdb;
 
 namespace SynchrophasorAnalytics.Networks
 {
@@ -1298,6 +1301,1000 @@ namespace SynchrophasorAnalytics.Networks
         public static Network FromTextFile(string pathName)
         {
             throw new NotImplementedException();
+        }
+        
+        public static Network FromPsseRawFile(string pathName, string version)
+        {
+            try
+            {
+                if (version == "33")
+                {
+
+                    // Read the raw file from the disk
+                    RawFile rawFile = RawFile.Read(pathName);
+
+                    // Create some placeholder objects
+                    List<VoltageLevel> voltageLevels = new List<VoltageLevel>();
+                    List<Node> nodes = new List<Node>();
+                    List<LineSegment> lineSegments = new List<LineSegment>();
+                    List<Switch> switches = new List<Switch>();
+                    List<CircuitBreaker> breakers = new List<CircuitBreaker>();
+                    List<Substation> substations = new List<Substation>();
+                    List<TransmissionLine> transmissionLines = new List<TransmissionLine>();
+                    List<Company> companies = new List<Company>();
+                    List<Division> divisions = new List<Division>();
+                    List<Double> baseKvs = new List<Double>();
+
+                    #region [ Modeling VoltageLevels ]
+
+                    foreach (Bus bus in rawFile.Buses)
+                    {
+                        if (!baseKvs.Contains(bus.BaseKv))
+                        {
+                            baseKvs.Add(bus.BaseKv);
+                        }
+                    }
+
+                    for (int i = 0; i < baseKvs.Count(); i++)
+                    {
+                        voltageLevels.Add(new VoltageLevel()
+                        {
+                            InternalID = i + 1,
+                            Value = baseKvs[i]
+                        });
+                    }
+
+                    #endregion
+
+                    #region [ Modeling Nodes]
+
+                    foreach (Bus bus in rawFile.Buses)
+                    {
+                        VoltageLevel baseKv = null;
+
+                        foreach (VoltageLevel voltageLevel in voltageLevels)
+                        {
+                            if (bus.BaseKv == voltageLevel.Value)
+                            {
+                                baseKv = voltageLevel;
+                            }
+                        }
+
+                        string name = bus.Name.Trim().ToLower();
+                        name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(name);
+
+                        Node node = new Node()
+                        {
+                            InternalID = bus.Number,
+                            Number = bus.Number,
+                            Acronym = name.ToUpper().Trim(),
+                            Name = name,
+                            Description = name,
+                            BaseKV = baseKv
+                        };
+
+                        VoltagePhasorGroup voltage = new VoltagePhasorGroup()
+                        {
+                            InternalID = bus.Number,
+                            Number = bus.Number,
+                            Acronym = bus.Name.ToUpper().Trim(),
+                            Name = bus.Name.Trim() + " Voltage Phasor Group",
+                            Description = bus.Name.Trim() + " Voltage Phasor Group",
+                            IsEnabled = true,
+                            UseStatusFlagForRemovingMeasurements = true,
+                            MeasuredNode = node,
+                        };
+
+                        voltage.ZeroSequence.Measurement.BaseKV = node.BaseKV;
+                        voltage.ZeroSequence.Estimate.BaseKV = node.BaseKV;
+                        voltage.NegativeSequence.Measurement.BaseKV = node.BaseKV;
+                        voltage.NegativeSequence.Estimate.BaseKV = node.BaseKV;
+                        voltage.PositiveSequence.Measurement.BaseKV = node.BaseKV;
+                        voltage.PositiveSequence.Estimate.BaseKV = node.BaseKV;
+                        voltage.PhaseA.Measurement.BaseKV = node.BaseKV;
+                        voltage.PhaseA.Estimate.BaseKV = node.BaseKV;
+                        voltage.PhaseB.Measurement.BaseKV = node.BaseKV;
+                        voltage.PhaseB.Estimate.BaseKV = node.BaseKV;
+                        voltage.PhaseC.Measurement.BaseKV = node.BaseKV;
+                        voltage.PhaseC.Estimate.BaseKV = node.BaseKV;
+
+                        node.Voltage = voltage;
+
+                        nodes.Add(node);
+                    }
+
+                    #endregion
+
+                    #region [ Modeling Circuit Breakers, Switches, and Line Segments ]
+
+                    foreach (Branch branch in rawFile.Branches)
+                    {
+                        Node fromNode = null;
+                        Node toNode = null;
+
+                        foreach (Node node in nodes)
+                        {
+                            if (node.InternalID == branch.FromBusNumber)
+                            {
+                                fromNode = node;
+                            }
+                            if (node.InternalID == branch.ToBusNumber)
+                            {
+                                toNode = node;
+                            }
+                        }
+
+                        if (branch.IsBreaker)
+                        {
+                            CircuitBreaker breaker = new CircuitBreaker()
+                            {
+                                InternalID = rawFile.Branches.IndexOf(branch) + 1,
+                                Number = rawFile.Branches.IndexOf(branch) + 1,
+                                Name = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
+                                Description = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
+                                NormalState = SwitchingDeviceNormalState.Closed,
+                                MeasurementKey = "Undefined",
+                                FromNode = fromNode,
+                                ToNode = toNode,
+                            };
+                            breakers.Add(breaker);
+                        }
+                        else if (branch.IsSwitch)
+                        {
+                            Switch switchingDevice = new Switch()
+                            {
+                                InternalID = rawFile.Branches.IndexOf(branch) + 1,
+                                Number = rawFile.Branches.IndexOf(branch) + 1,
+                                Name = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
+                                Description = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
+                                NormalState = SwitchingDeviceNormalState.Closed,
+                                MeasurementKey = "Undefined",
+                                FromNode = fromNode,
+                                ToNode = toNode,
+                            };
+                            switches.Add(switchingDevice);
+                        }
+                        else
+                        {
+                            Impedance impedance = new Impedance()
+                            {
+                                R1 = branch.Resistance,
+                                X1 = branch.Reactance,
+                                B1 = branch.Charging,
+                                R3 = branch.Resistance,
+                                X3 = branch.Reactance,
+                                B3 = branch.Charging,
+                                R6 = branch.Resistance,
+                                X6 = branch.Reactance,
+                                B6 = branch.Charging,
+                            };
+
+                            // a line segment
+                            LineSegment lineSegment = new LineSegment()
+                            {
+                                InternalID = rawFile.Branches.IndexOf(branch),
+                                Number = rawFile.Branches.IndexOf(branch),
+                                Name = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
+                                Description = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
+                                RawImpedanceParameters = impedance,
+                                FromNode = fromNode,
+                                ToNode = toNode,
+                            };
+
+                            lineSegments.Add(lineSegment);
+                        }
+                    }
+
+                    #endregion
+
+                    #region [ Modeling Substations ] 
+
+                    List<List<int>> substationBusNumberGroups = rawFile.SubstationBusNumberGroups;
+
+                    foreach (List<int> substationGroup in substationBusNumberGroups)
+                    {
+                        List<Node> substationNodes = new List<Node>();
+                        List<CircuitBreaker> substationBreakers = new List<CircuitBreaker>();
+                        List<Switch> substationSwitches = new List<Switch>();
+
+                        foreach (int busNumber in substationGroup)
+                        {
+                            foreach (Node node in nodes)
+                            {
+                                if (node.InternalID == busNumber)
+                                {
+                                    substationNodes.Add(node);
+                                }
+                            }
+
+                            foreach (CircuitBreaker breaker in breakers)
+                            {
+                                if (breaker.FromNode.InternalID == busNumber)
+                                {
+                                    substationBreakers.Add(breaker);
+                                }
+                                else if (breaker.ToNode.InternalID == busNumber)
+                                {
+                                    substationBreakers.Add(breaker);
+                                }
+                            }
+
+                            foreach (Switch switchingDevice in switches)
+                            {
+                                if (switchingDevice.FromNode.InternalID == busNumber)
+                                {
+                                    substationSwitches.Add(switchingDevice);
+                                }
+                                else if (switchingDevice.ToNode.InternalID == busNumber)
+                                {
+                                    substationSwitches.Add(switchingDevice);
+                                }
+                            }
+                        }
+
+                        string name = substationNodes[0].Name.Split('_')[0].ToLower();
+                        name = Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(name);
+                        substations.Add(new Substation()
+                        {
+                            InternalID = substationBusNumberGroups.IndexOf(substationGroup) + 1,
+                            Number = substationBusNumberGroups.IndexOf(substationGroup) + 1,
+                            Acronym = name.ToUpper(),
+                            Name = name,
+                            Description = $"{name} Substation",
+                            Nodes = substationNodes,
+                            CircuitBreakers = substationBreakers,
+                            Switches = substationSwitches,
+                        });
+
+                        foreach (Node node in substationNodes)
+                        {
+                            node.Name = node.Name.Replace('_', ' ');
+                            node.Acronym = node.Acronym.Replace('_', ' ');
+                            node.Description = node.Description.Replace('_', ' ');
+                            node.Voltage.Acronym = node.Acronym + "-V";
+                            node.Voltage.Name = node.Name + " Voltage Phasor Group";
+                            node.Voltage.Description = node.Name + " Voltage Phasor Group";
+                        }
+                    }
+
+                    #endregion
+
+                    #region [ Modeling TransmissionLines ]
+
+                    int currentFlowIntegerIndex = 1;
+
+                    foreach (LineSegment lineSegment in lineSegments)
+                    {
+                        TransmissionLine transmissionLine = new TransmissionLine()
+                        {
+                            InternalID = lineSegment.InternalID,
+                            Number = lineSegment.Number,
+                            Acronym = lineSegment.Acronym,
+                            Name = lineSegment.Name,
+                            Description = lineSegment.Description,
+                            FromNode = lineSegment.FromNode,
+                            ToNode = lineSegment.ToNode,
+                            FromSubstation = lineSegment.FromNode.ParentSubstation,
+                            ToSubstation = lineSegment.ToNode.ParentSubstation,
+                        };
+
+                        transmissionLine.LineSegments.Add(lineSegment);
+
+                        transmissionLine.FromNode.ParentTransmissionLine = transmissionLine;
+                        transmissionLine.ToNode.ParentTransmissionLine = transmissionLine;
+
+                        transmissionLine.FromSubstationCurrent = new CurrentFlowPhasorGroup()
+                        {
+                            InternalID = currentFlowIntegerIndex,
+                            Number = currentFlowIntegerIndex,
+                            Acronym = transmissionLine.FromNode.Acronym + "-I",
+                            Name = transmissionLine.FromNode.Name + " Current Phasor Group",
+                            Description = transmissionLine.FromNode.Name + " Current Phasor Group",
+                            IsEnabled = true,
+                            UseStatusFlagForRemovingMeasurements = true,
+                            MeasuredBranch = transmissionLine,
+                            MeasuredFromNode = transmissionLine.FromNode,
+                            MeasuredToNode = transmissionLine.ToNode
+                        };
+
+                        transmissionLine.FromSubstationCurrent.ZeroSequence.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.ZeroSequence.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.NegativeSequence.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.NegativeSequence.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.PositiveSequence.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.PositiveSequence.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.PhaseA.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.PhaseA.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.PhaseB.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.PhaseB.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.PhaseC.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                        transmissionLine.FromSubstationCurrent.PhaseC.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+
+                        transmissionLine.ToSubstationCurrent = new CurrentFlowPhasorGroup()
+                        {
+                            InternalID = currentFlowIntegerIndex + 1,
+                            Number = currentFlowIntegerIndex + 1,
+                            Acronym = transmissionLine.ToNode.Acronym + "-I",
+                            Name = transmissionLine.ToNode.Name + " Current Phasor Group",
+                            Description = transmissionLine.ToNode.Name + " Current Phasor Group",
+                            IsEnabled = true,
+                            UseStatusFlagForRemovingMeasurements = true,
+                            MeasuredBranch = transmissionLine,
+                            MeasuredFromNode = transmissionLine.ToNode,
+                            MeasuredToNode = transmissionLine.FromNode
+                        };
+
+                        transmissionLine.ToSubstationCurrent.ZeroSequence.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.ZeroSequence.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.NegativeSequence.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.NegativeSequence.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.PositiveSequence.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.PositiveSequence.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.PhaseA.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.PhaseA.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.PhaseB.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.PhaseB.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.PhaseC.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                        transmissionLine.ToSubstationCurrent.PhaseC.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+
+
+                        transmissionLines.Add(transmissionLine);
+
+                        currentFlowIntegerIndex += 2;
+                    }
+
+
+
+                    #endregion
+
+                    #region [ Modeling Divisions ]
+
+                    divisions.Add(new Division()
+                    {
+                        InternalID = 1,
+                        Number = 1,
+                        Acronym = "SUPREMEDIV",
+                        Name = "Division Supreme",
+                        Description = "The Division with ALL the Toppings",
+                        Substations = substations,
+                        TransmissionLines = transmissionLines,
+                    });
+
+                    #endregion
+
+                    #region [ Modeling Companies ] 
+
+                    companies.Add(new Company()
+                    {
+                        InternalID = 1,
+                        Number = 1,
+                        Acronym = "AWESOMECO",
+                        Name = "Company Awesome",
+                        Description = "The Most Awesome Company Ever",
+                        Divisions = divisions
+                    });
+
+                    #endregion
+
+                    #region [ Composing the Network Model ] 
+
+                    NetworkModel networkModel = new NetworkModel();
+                    networkModel.Name = rawFile.FileName;
+                    networkModel.Description = $"{rawFile.FirstTitleLine} {rawFile.SecondTitleLine}";
+                    networkModel.VoltageLevels = voltageLevels;
+                    networkModel.Companies = companies;
+
+                    #endregion
+
+                    Network network = new Network(networkModel);
+
+                    return network;
+                }
+                else
+                {
+                    throw new Exception("Unsupported raw file version.");
+                }
+            }
+            catch (Exception exception)
+            {
+                throw new Exception("Failed to Deserialize the Network from the Configuration File: " + exception.ToString());
+            }
+            
+        }
+
+        public static void ConvertFromPsseRawFile(string xmlPathName, string rawPathName, string version)
+        {
+            FromPsseRawFile(rawPathName, version).SerializeToXml(xmlPathName);
+        }
+
+        public static Network FromHdbExport(string modelFilesConfigPathName, bool keyify)
+        {
+            // Deserialize the list of model files from the xml file
+            ModelFiles modelFiles = ModelFiles.DeserializeFromXml(modelFilesConfigPathName);
+
+            // Aggregate the data from all of the files into the context
+            HdbContext context = new HdbContext(modelFiles);
+
+            // Create some placeholder objects for the model build
+            NetworkModel networkModel = new NetworkModel();
+            List<Company> companies = new List<Company>();
+            List<Division> divisions = new List<Division>();
+            List<Substation> substations = new List<Substation>();
+            List<Node> nodes = new List<Node>();
+            List<VoltageLevel> voltageLevels = new List<VoltageLevel>();
+            List<CircuitBreaker> breakers = new List<CircuitBreaker>();
+            List<Switch> switches = new List<Switch>();
+            List<ShuntCompensator> shunts = new List<ShuntCompensator>();
+            List<LineSegment> lineSegments = new List<LineSegment>();
+            List<TransmissionLine> transmissionLines = new List<TransmissionLine>();
+            List<Transformer> transformers = new List<Transformer>();
+            List<TapConfiguration> taps = new List<TapConfiguration>();
+            List<BreakerStatus> breakerStatuses = new List<BreakerStatus>();
+
+            #region [ Modeling Companies ]
+
+            for (int i = 0; i < context.Companies.Count; i++)
+            {
+                companies.Add(new Company()
+                {
+                    InternalID = context.Companies[i].Number,
+                    Number = context.Companies[i].Number,
+                    Acronym = context.Companies[i].Name.ToUpper(),
+                    Name = context.Companies[i].Name,
+                    Description = context.Companies[i].ToString(),
+                });
+            }
+
+            #endregion
+
+            #region [ Modeling Divisions ]
+
+            for (int i = 0; i < context.Divisions.Count; i++)
+            {
+                Division division = new Division()
+                {
+                    InternalID = context.Divisions[i].Number,
+                    Number = context.Divisions[i].Number,
+                    Acronym = context.Divisions[i].Name.ToUpper(),
+                    Name = context.Divisions[i].Name,
+                    Description = context.Divisions[i].Name,
+                };
+
+                divisions.Add(division);
+            }
+
+            #endregion
+
+            #region [ Modeling Substations ]
+
+            for (int i = 0; i < context.Stations.Count; i++)
+            {
+                substations.Add(new Substation()
+                {
+                    InternalID = context.Stations[i].Number,
+                    Number = context.Stations[i].Number,
+                    Acronym = context.Stations[i].Name.ToUpper(),
+                    Name = context.Stations[i].Name,
+                    Description = $"{context.Stations[i].Name} Substation"
+                });
+            }
+
+            #endregion
+
+            #region [ Modeling Nodes, Voltage Phasor Groups,  & Voltage Levels ]
+
+            for (int i = 0; i < context.Nodes.Count; i++)
+            {
+                Substation parentSubstation = substations.Find(x => x.Name == context.Nodes[i].StationName);
+                Division parentDivision = divisions.Find(x => x.Name == context.Nodes[i].DivisionName);
+                Company parentCompany = companies.Find(x => x.Name == context.Nodes[i].CompanyName);
+
+                VoltageLevel voltageLevel = voltageLevels.Find(x => x.Value == context.Nodes[i].BaseKv);
+
+                if (voltageLevel == null)
+                {
+                    voltageLevel = new VoltageLevel(voltageLevels.Count + 1, context.Nodes[i].BaseKv);
+                    voltageLevels.Add(voltageLevel);
+                }
+
+                Node node = new Node()
+                {
+                    InternalID = context.Nodes[i].Number,
+                    Number = context.Nodes[i].Number,
+                    Acronym = context.Nodes[i].Id.ToUpper(),
+                    Name = context.Nodes[i].StationName + "_" + context.Nodes[i].Id,
+                    Description = context.Nodes[i].StationName + "_" + context.Nodes[i].Id,
+                    ParentSubstation = parentSubstation,
+                    BaseKV = voltageLevel
+                };
+
+                VoltagePhasorGroup voltage = new VoltagePhasorGroup()
+                {
+                    InternalID = node.InternalID,
+                    Number = node.Number,
+                    Acronym = node.Name.ToUpper() + "-V",
+                    Name = node.Name + " Voltage Phasor Group",
+                    Description = node.Description + " Voltage Phasor Group",
+                    IsEnabled = true,
+                    UseStatusFlagForRemovingMeasurements = true,
+                    MeasuredNode = node,
+                };
+
+                voltage.ZeroSequence.Measurement.BaseKV = node.BaseKV;
+                voltage.ZeroSequence.Estimate.BaseKV = node.BaseKV;
+                voltage.NegativeSequence.Measurement.BaseKV = node.BaseKV;
+                voltage.NegativeSequence.Estimate.BaseKV = node.BaseKV;
+                voltage.PositiveSequence.Measurement.BaseKV = node.BaseKV;
+                voltage.PositiveSequence.Estimate.BaseKV = node.BaseKV;
+                voltage.PhaseA.Measurement.BaseKV = node.BaseKV;
+                voltage.PhaseA.Estimate.BaseKV = node.BaseKV;
+                voltage.PhaseB.Measurement.BaseKV = node.BaseKV;
+                voltage.PhaseB.Estimate.BaseKV = node.BaseKV;
+                voltage.PhaseC.Measurement.BaseKV = node.BaseKV;
+                voltage.PhaseC.Estimate.BaseKV = node.BaseKV;
+
+                if (keyify)
+                {
+                    voltage.Keyify(node.Name);
+                }
+
+                node.Voltage = voltage;
+                nodes.Add(node);
+
+                parentSubstation.Nodes.Add(node);
+                if (!parentDivision.Substations.Contains(parentSubstation))
+                {
+                    parentDivision.Substations.Add(parentSubstation);
+                }
+                if (!parentCompany.Divisions.Contains(parentDivision))
+                {
+                    parentCompany.Divisions.Add(parentDivision);
+                }
+            }
+
+
+            #endregion
+
+            #region [ Modeling Circuit Breakers & Switches ]
+
+            for (int i = 0; i < context.CircuitBreakers.Count; i++)
+            {
+                string fromNodeName = context.CircuitBreakers[i].StationName + "_" + context.CircuitBreakers[i].FromNodeId;
+                string toNodeName = context.CircuitBreakers[i].StationName + "_" + context.CircuitBreakers[i].ToNodeId;
+
+                Node fromNode = nodes.Find(x => x.Name == fromNodeName);
+                Node toNode = nodes.Find(x => x.Name == toNodeName);
+
+                string measurementKey = "Undefined";
+
+                if (keyify)
+                {
+                    measurementKey = $"{context.CircuitBreakers[i].StationName}.{context.CircuitBreakers[i].Id}.{context.CircuitBreakers[i].Type}";
+                }
+
+                if (context.CircuitBreakers[i].Type == "CB")
+                {
+
+                    CircuitBreaker circuitBreaker = new CircuitBreaker()
+                    {
+                        InternalID = context.CircuitBreakers[i].Number,
+                        Number = context.CircuitBreakers[i].Number,
+                        Name = context.CircuitBreakers[i].StationName + "_" + context.CircuitBreakers[i].Id,
+                        Description = context.CircuitBreakers[i].ToString(),
+                        FromNode = fromNode,
+                        ToNode = toNode,
+                        ParentSubstation = fromNode.ParentSubstation,
+                        NormalState = SwitchingDeviceNormalState.Closed,
+                        ActualState = SwitchingDeviceActualState.Closed,
+                        MeasurementKey = measurementKey,
+                    };
+
+                    if (context.CircuitBreakers[i].IsNormallyOpen == "T")
+                    {
+                        circuitBreaker.NormalState = SwitchingDeviceNormalState.Open;
+                    }
+
+                    BreakerStatus breakerStatus = new BreakerStatus()
+                    {
+                        InternalID = circuitBreaker.InternalID,
+                        Number = circuitBreaker.Number,
+                        Name = circuitBreaker.Name,
+                        Description = circuitBreaker.Description,
+                        BitPosition = BreakerStatusBit.PSV64,
+                        ParentCircuitBreaker = circuitBreaker,
+                        IsEnabled = false,
+                    };
+
+                    if (keyify)
+                    {
+                        breakerStatus.Keyify($"{circuitBreaker.Name}");
+                    }
+
+                    circuitBreaker.Status = breakerStatus;
+
+                    breakerStatuses.Add(breakerStatus);
+
+                    fromNode.ParentSubstation.CircuitBreakers.Add(circuitBreaker);
+                    breakers.Add(circuitBreaker);
+                }
+                else
+                {
+                    // switch
+                    Switch circuitSwitch = new Switch()
+                    {
+                        InternalID = context.CircuitBreakers[i].Number,
+                        Number = context.CircuitBreakers[i].Number,
+                        Name = context.CircuitBreakers[i].StationName + "_" + context.CircuitBreakers[i].Id,
+                        Description = context.CircuitBreakers[i].ToString(),
+                        FromNode = fromNode,
+                        ToNode = toNode,
+                        ParentSubstation = fromNode.ParentSubstation,
+                        NormalState = SwitchingDeviceNormalState.Closed,
+                        ActualState = SwitchingDeviceActualState.Closed,
+                        MeasurementKey = measurementKey,
+                    };
+
+                    if (context.CircuitBreakers[i].IsNormallyOpen == "T")
+                    {
+                        circuitSwitch.NormalState = SwitchingDeviceNormalState.Open;
+                    }
+
+                    fromNode.ParentSubstation.Switches.Add(circuitSwitch);
+                    switches.Add(circuitSwitch);
+                }
+            }
+
+
+
+            #endregion
+
+            #region [ Modeling Shunt Compensators ]
+
+            for (int i = 0; i < context.Shunts.Count; i++)
+            {
+                string nodeName = context.Shunts[i].StationName + "_" + context.Shunts[i].NodeId;
+
+                Node node = nodes.Find(x => x.Name == nodeName);
+
+                ShuntCompensator shunt = new ShuntCompensator()
+                {
+                    InternalID = context.Shunts[i].Number,
+                    Number = context.Shunts[i].Number,
+                    Name = context.Shunts[i].StationName + "_" + context.Shunts[i].Id,
+                    Description = $"{context.Shunts[i].StationName}_{context.Shunts[i].Id} ({context.Shunts[i].NominalMvar})",
+                    ConnectedNode = node,
+                    NominalMvar = context.Shunts[i].NominalMvar,
+                    ParentSubstation = node.ParentSubstation,
+                    ImpedanceCalculationMethod = ShuntImpedanceCalculationMethod.CalculateFromRating,
+                    RawImpedanceParameters = new Impedance(),
+                };
+
+                shunt.Current = new CurrentInjectionPhasorGroup()
+                {
+                    InternalID = shunt.InternalID,
+                    Number = shunt.Number,
+                    Acronym = shunt.Name.ToUpper(),
+                    Name = shunt.Name + " Current Injection Phasor Group",
+                    Description = shunt.Name + " Current Injection Phasor Group",
+                    IsEnabled = true,
+                    UseStatusFlagForRemovingMeasurements = true,
+                    MeasuredBranch = shunt,
+                    MeasuredConnectedNode = shunt.ConnectedNode
+                };
+
+                shunt.Current.ZeroSequence.Measurement.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.ZeroSequence.Estimate.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.NegativeSequence.Measurement.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.NegativeSequence.Estimate.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.PositiveSequence.Measurement.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.PositiveSequence.Estimate.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.PhaseA.Measurement.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.PhaseA.Estimate.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.PhaseB.Measurement.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.PhaseB.Estimate.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.PhaseC.Measurement.BaseKV = shunt.ConnectedNode.BaseKV;
+                shunt.Current.PhaseC.Estimate.BaseKV = shunt.ConnectedNode.BaseKV;
+
+                if (keyify)
+                {
+                    shunt.Current.Keyify($"{shunt.Name}");
+                }
+                node.ParentSubstation.Shunts.Add(shunt);
+                shunts.Add(shunt);
+            }
+
+
+            #endregion
+
+            #region [ Modeling Line Segments, Transmission Lines, & Current Flow Phasor Groups ]
+
+            int currentFlowIntegerIndex = 1;
+
+            for (int i = 0; i < context.LineSegments.Count; i++)
+            {
+                string fromNodeName = $"{context.LineSegments[i].FromStationName}_{context.LineSegments[i].FromNodeId}";
+                string toNodeName = $"{context.LineSegments[i].ToStationName}_{context.LineSegments[i].ToNodeId}";
+
+                Node fromNode = nodes.Find(x => x.Name == fromNodeName);
+                Node toNode = nodes.Find(x => x.Name == toNodeName);
+
+                Division parentDivision = divisions.Find(x => x.Name == context.LineSegments[i].DivisionName);
+
+                Impedance impedance = new Impedance()
+                {
+                    R1 = context.LineSegments[i].Resistance,
+                    X1 = context.LineSegments[i].Reactance,
+                    B1 = context.LineSegments[i].LineCharging,
+                    R3 = context.LineSegments[i].Resistance,
+                    X3 = context.LineSegments[i].Reactance,
+                    B3 = context.LineSegments[i].LineCharging,
+                    R6 = context.LineSegments[i].Resistance,
+                    X6 = context.LineSegments[i].Reactance,
+                    B6 = context.LineSegments[i].LineCharging,
+                };
+
+                LineSegment lineSegment = new LineSegment()
+                {
+                    InternalID = context.LineSegments[i].Number,
+                    Number = context.LineSegments[i].Number,
+                    Acronym = context.LineSegments[i].TransmissionLineId,
+                    Name = context.LineSegments[i].TransmissionLineId,
+                    Description = context.LineSegments[i].TransmissionLineId,
+                    FromNode = fromNode,
+                    ToNode = toNode,
+                    RawImpedanceParameters = impedance,
+                };
+
+                var line = context.TransmissionLines.Find(x => x.Id == context.LineSegments[i].TransmissionLineId);
+
+                TransmissionLine transmissionLine = new TransmissionLine()
+                {
+                    InternalID = line.Number,
+                    Number = line.Number,
+                    Name = lineSegment.Name,
+                    Acronym = lineSegment.Acronym,
+                    Description = lineSegment.Description,
+                    FromNode = fromNode,
+                    ToNode = toNode,
+                    FromSubstation = fromNode.ParentSubstation,
+                    ToSubstation = toNode.ParentSubstation,
+                    ParentDivision = parentDivision,
+                };
+
+                transmissionLine.FromNode.ParentTransmissionLine = transmissionLine;
+                transmissionLine.ToNode.ParentTransmissionLine = transmissionLine;
+
+                transmissionLine.FromSubstationCurrent = new CurrentFlowPhasorGroup()
+                {
+                    InternalID = currentFlowIntegerIndex,
+                    Number = currentFlowIntegerIndex,
+                    Acronym = fromNode.Acronym + "-I",
+                    Name = fromNode.Name + " Current Flow Phasor Group",
+                    Description = fromNode.Description + " Current Flow Phasor Group",
+                    IsEnabled = true,
+                    UseStatusFlagForRemovingMeasurements = true,
+                    MeasuredBranch = transmissionLine,
+                    MeasuredFromNode = transmissionLine.FromNode,
+                    MeasuredToNode = transmissionLine.ToNode
+                };
+
+                transmissionLine.FromSubstationCurrent.ZeroSequence.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.ZeroSequence.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.NegativeSequence.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.NegativeSequence.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.PositiveSequence.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.PositiveSequence.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.PhaseA.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.PhaseA.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.PhaseB.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.PhaseB.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.PhaseC.Measurement.BaseKV = transmissionLine.FromNode.BaseKV;
+                transmissionLine.FromSubstationCurrent.PhaseC.Estimate.BaseKV = transmissionLine.FromNode.BaseKV;
+
+                transmissionLine.ToSubstationCurrent = new CurrentFlowPhasorGroup()
+                {
+                    InternalID = currentFlowIntegerIndex + 1,
+                    Number = currentFlowIntegerIndex + 1,
+                    Acronym = toNode.Acronym + "-I",
+                    Name = toNode.Name + " Current Flow Phasor Group",
+                    Description = toNode.Description + " Current Flow Phasor Group",
+                    IsEnabled = true,
+                    UseStatusFlagForRemovingMeasurements = true,
+                    MeasuredBranch = transmissionLine,
+                    MeasuredFromNode = transmissionLine.ToNode,
+                    MeasuredToNode = transmissionLine.FromNode
+                };
+
+                transmissionLine.ToSubstationCurrent.ZeroSequence.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.ZeroSequence.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.NegativeSequence.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.NegativeSequence.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.PositiveSequence.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.PositiveSequence.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.PhaseA.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.PhaseA.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.PhaseB.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.PhaseB.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.PhaseC.Measurement.BaseKV = transmissionLine.ToNode.BaseKV;
+                transmissionLine.ToSubstationCurrent.PhaseC.Estimate.BaseKV = transmissionLine.ToNode.BaseKV;
+
+                if (keyify)
+                {
+                    transmissionLine.FromSubstationCurrent.Keyify($"{fromNode.Name}");
+                    transmissionLine.ToSubstationCurrent.Keyify($"{toNode.Name}");
+                }
+
+                lineSegment.ParentTransmissionLine = transmissionLine;
+
+                transmissionLine.LineSegments.Add(lineSegment);
+                parentDivision.TransmissionLines.Add(transmissionLine);
+
+                transmissionLines.Add(transmissionLine);
+                lineSegments.Add(lineSegment);
+
+                currentFlowIntegerIndex += 2;
+            }
+
+            #endregion
+
+            #region [ Modeling Transformer Taps ]
+
+            for (int i = 0; i < context.TransformerTaps.Count; i++)
+            {
+                int minPosition = context.TransformerTaps[i].MinimumPosition;
+                int maxPosition = context.TransformerTaps[i].MaximumPosition;
+                int nominalPosition = context.TransformerTaps[i].NominalPosition;
+                double stepSize = context.TransformerTaps[i].StepSize;
+
+                TapConfiguration tap = new TapConfiguration()
+                {
+                    InternalID = context.TransformerTaps[i].Number,
+                    Number = context.TransformerTaps[i].Number,
+                    Acronym = context.TransformerTaps[i].Id.ToUpper(),
+                    Name = context.TransformerTaps[i].Id,
+                    Description = context.TransformerTaps[i].Id,
+                    PositionLowerBounds = minPosition,
+                    PositionUpperBounds = maxPosition,
+                    PositionNominal = nominalPosition,
+                    LowerBounds = 1.0 + (minPosition - nominalPosition) * stepSize,
+                    UpperBounds = 1.0 + (maxPosition - nominalPosition) * stepSize,
+                };
+
+                taps.Add(tap);
+            }
+
+            #endregion
+
+            #region [ Modeling Transformers ] 
+
+            for (int i = 0; i < context.Transformers.Count; i++)
+            {
+                string fromNodeName = $"{context.Transformers[i].StationName}_{context.Transformers[i].FromNodeId}";
+                string toNodeName = $"{context.Transformers[i].StationName}_{context.Transformers[i].ToNodeId}";
+
+                Node fromNode = nodes.Find(x => x.Name == fromNodeName);
+                Node toNode = nodes.Find(x => x.Name == toNodeName);
+
+                Impedance impedance = new Impedance()
+                {
+                    R1 = context.Transformers[i].Resistance,
+                    X1 = context.Transformers[i].Reactance,
+                    G1 = context.Transformers[i].MagnetizingConductance,
+                    B1 = context.Transformers[i].MagnetizingSusceptance,
+                    R3 = context.Transformers[i].Resistance,
+                    X3 = context.Transformers[i].Reactance,
+                    G3 = context.Transformers[i].MagnetizingConductance,
+                    B3 = context.Transformers[i].MagnetizingSusceptance,
+                    R6 = context.Transformers[i].Resistance,
+                    X6 = context.Transformers[i].Reactance,
+                    G6 = context.Transformers[i].MagnetizingConductance,
+                    B6 = context.Transformers[i].MagnetizingSusceptance,
+                };
+
+
+                Transformer transformer = new Transformer()
+                {
+                    InternalID = context.Transformers[i].Number,
+                    Number = context.Transformers[i].Number,
+                    Name = $"{context.Transformers[i].StationName}_{context.Transformers[i].Parent}",
+                    Description = $"{context.Transformers[i].StationName}_{context.Transformers[i].Parent}",
+                    FromNode = fromNode,
+                    ToNode = toNode,
+                    ParentSubstation = fromNode.ParentSubstation,
+                    RawImpedanceParameters = impedance,
+                    UltcIsEnabled = false,
+                    FromNodeConnectionType = TransformerConnectionType.Wye,
+                    ToNodeConnectionType = TransformerConnectionType.Wye,
+                };
+
+                TapConfiguration tap = taps.Find(x => x.Name == context.Transformers[i].FromNodeTap);
+
+                if (tap != null)
+                {
+                    transformer.Tap = tap;
+                }
+
+                transformer.FromNodeCurrent = new CurrentFlowPhasorGroup()
+                {
+                    InternalID = currentFlowIntegerIndex,
+                    Number = currentFlowIntegerIndex,
+                    Acronym = fromNode.Acronym + "-I",
+                    Name = fromNode.Name + " Current Flow Phasor Group",
+                    Description = fromNode.Description + " Current Flow Phasor Group",
+                    IsEnabled = true,
+                    UseStatusFlagForRemovingMeasurements = true,
+                    MeasuredBranch = transformer,
+                    MeasuredFromNode = transformer.FromNode,
+                    MeasuredToNode = transformer.ToNode
+                };
+
+                transformer.FromNodeCurrent.ZeroSequence.Measurement.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.ZeroSequence.Estimate.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.NegativeSequence.Measurement.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.NegativeSequence.Estimate.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.PositiveSequence.Measurement.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.PositiveSequence.Estimate.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.PhaseA.Measurement.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.PhaseA.Estimate.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.PhaseB.Measurement.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.PhaseB.Estimate.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.PhaseC.Measurement.BaseKV = transformer.FromNode.BaseKV;
+                transformer.FromNodeCurrent.PhaseC.Estimate.BaseKV = transformer.FromNode.BaseKV;
+
+                transformer.ToNodeCurrent = new CurrentFlowPhasorGroup()
+                {
+                    InternalID = currentFlowIntegerIndex + 1,
+                    Number = currentFlowIntegerIndex + 1,
+                    Acronym = toNode.Acronym + "-I",
+                    Name = toNode.Name + " Current Flow Phasor Group",
+                    Description = toNode.Description + " Current Flow Phasor Group",
+                    IsEnabled = true,
+                    UseStatusFlagForRemovingMeasurements = true,
+                    MeasuredBranch = transformer,
+                    MeasuredFromNode = transformer.ToNode,
+                    MeasuredToNode = transformer.FromNode
+                };
+
+                transformer.ToNodeCurrent.ZeroSequence.Measurement.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.ZeroSequence.Estimate.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.NegativeSequence.Measurement.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.NegativeSequence.Estimate.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.PositiveSequence.Measurement.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.PositiveSequence.Estimate.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.PhaseA.Measurement.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.PhaseA.Estimate.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.PhaseB.Measurement.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.PhaseB.Estimate.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.PhaseC.Measurement.BaseKV = transformer.ToNode.BaseKV;
+                transformer.ToNodeCurrent.PhaseC.Estimate.BaseKV = transformer.ToNode.BaseKV;
+
+                if (keyify)
+                {
+                    transformer.FromNodeCurrent.Keyify($"{fromNode.Name}");
+                    transformer.ToNodeCurrent.Keyify($"{toNode.Name}");
+                    transformer.Keyify($"{transformer.Name}");
+                }
+
+                currentFlowIntegerIndex += 2;
+
+                fromNode.ParentSubstation.Transformers.Add(transformer);
+                transformers.Add(transformer);
+            }
+
+            #endregion
+
+            #region [ Composing the Network Model ]
+
+            networkModel.Companies = companies;
+            networkModel.VoltageLevels = voltageLevels;
+            networkModel.TapConfigurations = taps;
+            networkModel.BreakerStatuses = breakerStatuses;
+
+            #endregion
+
+            Network network = new Network(networkModel);
+
+            return network;
         }
 
         #endregion

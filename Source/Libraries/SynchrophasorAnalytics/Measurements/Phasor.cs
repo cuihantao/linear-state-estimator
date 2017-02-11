@@ -299,6 +299,14 @@ namespace SynchrophasorAnalytics.Measurements
             return copy;
         }
 
+        public void Keyify(string rootKey)
+        {
+            AngleResidualKey = $"{rootKey}.Ang.Res";
+            MagnitudeResidualKey = $"{rootKey}.Mag.Res";
+            Measurement.Keyify(rootKey);
+            Estimate.Keyify(rootKey);
+        }
+
         #endregion
     }
 }

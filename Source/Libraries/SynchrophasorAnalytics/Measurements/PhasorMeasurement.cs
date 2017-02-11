@@ -369,6 +369,13 @@ namespace SynchrophasorAnalytics.Measurements
             MeasurementShouldBeCalibrated = true;
         }
 
+        public void Keyify(string rootKey)
+        {
+            AngleKey = $"{rootKey}.Ang.Meas";
+            MagnitudeKey = $"{rootKey}.Mag.Meas";
+        }
+
+
         #endregion
     }
 }

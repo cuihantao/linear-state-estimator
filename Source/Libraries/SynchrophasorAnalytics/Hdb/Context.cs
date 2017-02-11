@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SynchrophasorAnalytics.Hdb.Records;
 
-namespace Synchrophasor.Hdb
+namespace SynchrophasorAnalytics.Hdb
 {
     public class HdbContext
     {
@@ -18,6 +19,7 @@ namespace Synchrophasor.Hdb
         private List<Shunt> m_shunts;
         private List<Station> m_stations;
         private List<Transformer> m_transformers;
+        private List<ParentTransformer> m_parentTransformers;
         private List<TransformerTap> m_transformerTaps;
         private List<TransmissionLine> m_transmissionLines;
 
@@ -141,6 +143,18 @@ namespace Synchrophasor.Hdb
             }
         }
 
+        public List<ParentTransformer> ParentTransformers
+        {
+            get
+            {
+                return m_parentTransformers;
+            }
+            set
+            {
+                m_parentTransformers = value;
+            }
+        }
+
         public List<TransformerTap> TransformerTaps
         {
             get
@@ -182,6 +196,7 @@ namespace Synchrophasor.Hdb
             m_shunts = HdbReader.ReadShuntFile(m_modelFiles.ShuntFile);
             m_stations = HdbReader.ReadStationFile(m_modelFiles.StationFile);
             m_transformers = HdbReader.ReadTransformerFile(m_modelFiles.TransformerFile);
+            m_parentTransformers = HdbReader.ReadParentTransformerFile(m_modelFiles.ParentTransformerFile);
             m_transformerTaps = HdbReader.ReadTransformerTapFile(m_modelFiles.TransformerTapFile);
             m_transmissionLines = HdbReader.ReadTransmissionLineFile(m_modelFiles.TransmissionLineFile);
         }
