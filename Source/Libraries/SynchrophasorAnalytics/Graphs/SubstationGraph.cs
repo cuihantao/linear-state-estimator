@@ -41,6 +41,7 @@ namespace SynchrophasorAnalytics.Graphs
         private List<Node> m_vertexSet;
         private List<SwitchingDeviceBase> m_edgeSet;
         private VertexAdjacencyList m_adjacencyList;
+        private List<ObservedBus> m_observedBuses;
 
         #endregion 
 
@@ -91,6 +92,14 @@ namespace SynchrophasorAnalytics.Graphs
             }
         }
 
+        public List<ObservedBus> ObservedBuses
+        {
+            get
+            {
+                return m_observedBuses;
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]
@@ -105,6 +114,7 @@ namespace SynchrophasorAnalytics.Graphs
             BuildVertexSet(substation);
             BuildeEdgeSet(substation);
             InitializeAdjacencyList();
+            m_observedBuses = new List<ObservedBus>();
         }
 
         #endregion
@@ -159,9 +169,10 @@ namespace SynchrophasorAnalytics.Graphs
         /// A method used to take the groups of directly connected nodes and convert them into <see cref="LinearStateEstimator.Modeling.ObservedBus"/> objects.
         /// </summary>
         /// <returns></returns>
-        public List<ObservedBus> ResolveToObservedBusses()
+        public List<ObservedBus> ResolveToObservedBuses()
         {
-            List<ObservedBus> observedBusses = new List<ObservedBus>();
+            m_observedBuses.Clear();
+            List<ObservedBus> observedBuses = new List<ObservedBus>();
             foreach (VertexAdjacencyRow vertexAdjacencyRow in m_adjacencyList.Rows)
             {
                 List<Node> nodeCluster = new List<Node>();
@@ -169,9 +180,10 @@ namespace SynchrophasorAnalytics.Graphs
                 {
                     nodeCluster.Add(m_vertexSet.Find(x => x.InternalID == nodeInternalID));
                 }
-                observedBusses.Add(new ObservedBus(m_internalID, nodeCluster));
+                observedBuses.Add(new ObservedBus(m_internalID, nodeCluster));
+                m_observedBuses.Add(new ObservedBus(m_internalID, nodeCluster));
             }
-            return observedBusses;
+            return observedBuses;
         }
 
         /// <summary>

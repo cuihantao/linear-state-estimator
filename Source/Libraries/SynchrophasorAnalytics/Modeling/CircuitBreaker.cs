@@ -45,7 +45,6 @@ namespace SynchrophasorAnalytics.Modeling
         private const int DEFAULT_NUMBER = 0;
         private const string DEFAULT_NAME = "Undefined";
         private const string DEFAULT_DESCRIPTION = "Uundefined";
-
         #endregion
 
         #region [ Private Members ]
@@ -126,6 +125,15 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        [XmlIgnore()]
+        public bool InPruningMode
+        {
+            get
+            {
+                return m_parentSubstation.ParentDivision.ParentCompany.ParentModel.InPruningMode;
+            }
+        }
+
         /// <summary>
         /// A boolen flag which is high if the <see cref="LinearStateEstimator.Modeling.CircuitBreaker"/> is in an open state defined by <see cref="LinearStateEstimator.Modeling.SwitchingDeviceActualState"/>.
         /// </summary>
@@ -134,6 +142,10 @@ namespace SynchrophasorAnalytics.Modeling
         {
             get
             {
+                if (InPruningMode)
+                {
+                    return true;
+                }
                 if (InManualOverrideMode)
                 {
                     if (ActualState == SwitchingDeviceActualState.Open)
@@ -152,6 +164,21 @@ namespace SynchrophasorAnalytics.Modeling
                 else if (StatusID != 0)
                 {
                     return Status.Value;
+                }
+                else if (UseInferredStateAsActualProxy)
+                {
+                    if (ActualState == SwitchingDeviceActualState.Open)
+                    {
+                        return true;
+                    }
+                    else if (ActualState == SwitchingDeviceActualState.Closed)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
@@ -257,6 +284,8 @@ namespace SynchrophasorAnalytics.Modeling
         #endregion
 
         #region [ Public Methods ]
+
+
 
         /// <summary>
         /// A string representation of the <see cref="LinearStateEstimator.Modeling.CircuitBreaker"/>. The format is <i>CircuitBreaker,baseProperty1, baseProperty2, ... ,statusInternalId,parentSubstationInternalId</i> and can be used for a rudimentary momento design pattern.

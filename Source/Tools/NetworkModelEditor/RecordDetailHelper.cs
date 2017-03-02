@@ -27,6 +27,7 @@ using NetworkModelEditor.ViewModels;
 using SynchrophasorAnalytics.Networks;
 using SynchrophasorAnalytics.Modeling;
 using SynchrophasorAnalytics.Measurements;
+using SynchrophasorAnalytics.Testing;
 
 namespace NetworkModelEditor
 {
@@ -113,6 +114,10 @@ namespace NetworkModelEditor
             else if (networkElement.Element is CurrentInjectionPhasorGroup)
             {
                 return new CurrentInjectionPhasorGroupDetailViewModel(networkElement.Element);
+            }
+            else if (networkElement.Element is RawMeasurements)
+            {
+                return new MeasurementSampleDetailViewModel(networkElement.Element);
             }
             else
             {

@@ -152,7 +152,8 @@ namespace NetworkModelEditor
                     }
                     else if (m_element is RawMeasurements)
                     {
-                        return "Sample File";
+                        RawMeasurements sample = m_element as RawMeasurements;
+                        return $"Sample {sample.Identifier}";
                     }
                     else
                     {

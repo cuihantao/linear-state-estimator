@@ -188,7 +188,7 @@ namespace SynchrophasorAnalytics.Measurements
         {
             get
             {
-                return (m_phasorMeasurement.PerUnitComplexPhasor - m_phasorEstimate.PerUnitComplexPhasor).Magnitude / m_phasorEstimate.PerUnitMagnitude;
+                return Math.Abs((m_phasorMeasurement.PerUnitComplexPhasor - m_phasorEstimate.PerUnitComplexPhasor).Magnitude) / m_phasorEstimate.PerUnitMagnitude;
             }
         }
 
@@ -305,6 +305,14 @@ namespace SynchrophasorAnalytics.Measurements
             MagnitudeResidualKey = $"{rootKey}.Mag.Res";
             Measurement.Keyify(rootKey);
             Estimate.Keyify(rootKey);
+        }
+
+        public void Unkeyify()
+        {
+            AngleResidualKey = "Undefined";
+            MagnitudeResidualKey = "Undefined";
+            Measurement.Unkeyify();
+            Estimate.Unkeyify();
         }
 
         #endregion

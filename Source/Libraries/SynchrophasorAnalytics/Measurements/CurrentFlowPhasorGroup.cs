@@ -179,6 +179,40 @@ namespace SynchrophasorAnalytics.Measurements
             }
         }
 
+        [XmlIgnore()]
+        public bool InPruningMode
+        {
+            get
+            {
+                return m_measuredFromNode.ParentSubstation.ParentDivision.ParentCompany.ParentModel.InPruningMode;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool IncludeInEstimator
+        {
+            get
+            {
+                if (InPruningMode)
+                {
+                    return ExpectsMeasurements;
+                }
+                return base.IncludeInEstimator;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool IncludeInPositiveSequenceEstimator
+        {
+            get
+            {
+                if (InPruningMode)
+                {
+                    return ExpectsPositiveSequenceMeasurements;
+                }
+                return base.IncludeInPositiveSequenceEstimator;
+            }
+        }
         #endregion
 
         #region [ Constructors ]
@@ -367,6 +401,11 @@ namespace SynchrophasorAnalytics.Measurements
         public void Keyify(string rootKey)
         {
             base.Keyify($"{rootKey}.IFlow");
+        }
+
+        public void Unkeyify()
+        {
+            base.Unkeyify();
         }
 
         #endregion

@@ -30,8 +30,14 @@ namespace NetworkModelEditor.ViewModels
 {
     public class RecordDetailViewModel : ViewModelBase
     {
+        #region [ Private Methods ]
+
         private ObservableCollection<ViewModelBase> m_detailViewModelCollection;
         private MainWindowViewModel m_mainWindow;
+
+        #endregion
+
+        #region [ Public Properties ]
 
         public ObservableCollection<ViewModelBase> DetailViewModelCollection
         {
@@ -45,11 +51,19 @@ namespace NetworkModelEditor.ViewModels
             }
         }
 
+        #endregion
+
+        #region [ Constructor ]
+
         public RecordDetailViewModel(MainWindowViewModel mainWindow)
         {
             m_mainWindow = mainWindow;
             m_detailViewModelCollection = new ObservableCollection<ViewModelBase>();
         }
+
+        #endregion
+
+        #region [ Public Methods ]
 
         public void AddViewModel(NetworkElement networkElement)
         {
@@ -66,6 +80,6 @@ namespace NetworkModelEditor.ViewModels
             m_detailViewModelCollection.Clear();
         }
 
-
+        #endregion
     }
 }

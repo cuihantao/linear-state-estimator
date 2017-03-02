@@ -529,6 +529,12 @@ namespace SynchrophasorAnalytics.Measurements
         {
             Key = $"{rootKey}.Breaker.Bit{BitPosition}";
         }
+
+        public void Unkeyify()
+        {
+            Key = "Undefined";
+        }
+
         #endregion
     }
 }

@@ -27,6 +27,7 @@ using SynchrophasorAnalytics.Networks;
 using SynchrophasorAnalytics.Modeling;
 using SynchrophasorAnalytics.Measurements;
 using NetworkModelEditor.ViewModels;
+using SynchrophasorAnalytics.Testing;
 //using NetworkModelEditor.Models;
 
 namespace NetworkModelEditor
@@ -96,6 +97,11 @@ namespace NetworkModelEditor
             else if (networkElement is TapConfiguration)
             {
                 DeleteTapConfiguration(networkElement as TapConfiguration, networkElementViewModel.Parent.Value.Element as List<TapConfiguration>);
+            }
+            else if (networkElement is RawMeasurements)
+            {
+                MainWindowViewModel mainWindow = networkElementViewModel.NetworkTree.MainWindow as MainWindowViewModel;
+                mainWindow.DeleteMeasurementSample(networkElement as RawMeasurements);
             }
         }
 

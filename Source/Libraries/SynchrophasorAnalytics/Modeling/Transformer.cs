@@ -55,6 +55,7 @@ namespace SynchrophasorAnalytics.Modeling
         private const int DEFAULT_NUMBER = 0;
         private const string DEFAULT_NAME = "Undefined";
         private const string DEFAULT_DESCRIPTION = "Uundefined";
+        private const string DEFAULT_MEASUREMENT_KEY = "Undefined";
 
         #endregion
 
@@ -826,6 +827,13 @@ namespace SynchrophasorAnalytics.Modeling
             TapPositionInputKey = $"{rootKey}.Tap.Meas";
             TapPositionOutputKey = $"{rootKey}.Tap.Est";
         }
+
+        public void Unkeyify()
+        {
+            TapPositionInputKey = DEFAULT_MEASUREMENT_KEY;
+            TapPositionOutputKey = DEFAULT_MEASUREMENT_KEY;
+        }
+
         #endregion
 
         #region [ Private Methods ]

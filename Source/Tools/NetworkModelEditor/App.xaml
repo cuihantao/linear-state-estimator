@@ -27,6 +27,7 @@
                 <ResourceDictionary Source="Resources/Data Templates/CurrentPhasorGroupDetailDataTemplate.xaml"/>
                 <ResourceDictionary Source="Resources/Data Templates/CurrentInjectionPhasorGroupDetailDataTemplate.xaml"/>
                 <ResourceDictionary Source="Resources/Data Templates/SeriesCompensatorDetailDataTemplate.xaml"/>
+                <ResourceDictionary Source="Resources/Data Templates/MeasurementSampleDetailDataTemplate.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

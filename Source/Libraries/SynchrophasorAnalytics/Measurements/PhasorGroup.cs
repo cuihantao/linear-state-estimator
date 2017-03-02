@@ -531,6 +531,41 @@ namespace SynchrophasorAnalytics.Measurements
             }
         }
 
+        [XmlIgnore()]
+        public bool ExpectsPositiveSequenceMeasurements
+        {
+            get
+            {
+                return m_posSeq.Measurement.ExpectsInputMeasurement;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool ExpectsMeasurements
+        {
+            get
+            {
+                if (m_posSeq.Measurement.ExpectsInputMeasurement)
+                {
+                    return true;
+                }
+                else if (m_phaseA.Measurement.ExpectsInputMeasurement)
+                {
+                    return true;
+                }
+                else if (m_phaseB.Measurement.ExpectsInputMeasurement)
+                {
+                    return true;
+                }
+                else if (m_phaseC.Measurement.ExpectsInputMeasurement)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+
         /// <summary>
         /// The output measurement key for the ratio of negative sequence magnitude to positive sequence magnitude.
         /// </summary>
@@ -743,6 +778,16 @@ namespace SynchrophasorAnalytics.Measurements
             PhaseC.Keyify($"{rootKey}.C");
         }
 
+        public void Unkeyify()
+        {
+            PositiveSequence.Unkeyify();
+            NegativeSequence.Unkeyify();
+            ZeroSequence.Unkeyify();
+            PhaseA.Unkeyify();
+            PhaseB.Unkeyify();
+            PhaseC.Unkeyify();
+        }
+        
         #endregion
 
         #region [ Private Methods ]

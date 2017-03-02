@@ -66,8 +66,7 @@ namespace SynchrophasorAnalytics.Measurements
                 //SetBaseKvOfChildrenPhasors();
             }
         }
-
-
+        
         /// <summary>
         /// The unique integer identifier of the <see cref="LinearStateEstimator.Modeling.Node"/>
         /// measured by this <see cref="VoltagePhasorGroup"/>. For re-linking references after deserializing.
@@ -85,6 +84,40 @@ namespace SynchrophasorAnalytics.Measurements
             }
         }
 
+        [XmlIgnore()]
+        public bool InPruningMode
+        {
+            get
+            {
+                return m_measuredNode.ParentSubstation.ParentDivision.ParentCompany.ParentModel.InPruningMode;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool IncludeInEstimator
+        {
+            get
+            {
+                if (InPruningMode)
+                {
+                    return ExpectsMeasurements;
+                }
+                return base.IncludeInEstimator;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool IncludeInPositiveSequenceEstimator
+        {
+            get
+            {
+                if (InPruningMode)
+                {
+                    return ExpectsPositiveSequenceMeasurements;
+                }
+                return base.IncludeInPositiveSequenceEstimator;
+            }
+        }
         #endregion
 
         #region [ Constructors ]
@@ -311,6 +344,10 @@ namespace SynchrophasorAnalytics.Measurements
             base.Keyify($"{rootKey}.V");
         }
 
+        public void Unkeyify()
+        {
+            base.Unkeyify();
+        }
 
         #endregion
 

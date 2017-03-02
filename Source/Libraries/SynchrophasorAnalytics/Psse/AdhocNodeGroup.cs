@@ -27,14 +27,15 @@ namespace SynchrophasorAnalytics.Psse
             m_buses = buses;
         }
 
-        public static AdhocBusGroup Merge(AdhocBusGroup group1, AdhocBusGroup group2)
+        public static AdhocBusGroup Merge(AdhocBusGroup group1, AdhocBusGroup group2) 
         {
             List<Bus> buses = group1.Buses;
-
+            
             foreach (Bus bus in group2.Buses)
             {
                 if (!buses.Contains(bus))
                 {
+
                     buses.Add(bus);
                 }
             }

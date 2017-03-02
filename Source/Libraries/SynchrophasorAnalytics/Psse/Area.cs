@@ -8,5 +8,6 @@ namespace SynchrophasorAnalytics.Psse
 {
     class Area
     {
+
     }
 }

@@ -34,7 +34,7 @@ namespace SynchrophasorAnalytics.Modeling
     /// Represents a collection of electric power network elements with regional significance. Gives heirarchy to the network structure to make modeling easier. A <see cref="LinearStateEstimator.Modeling.Division"/> is a child of <see cref="LinearStateEstimator.Modeling.Company"/>.
     /// </summary>
     [Serializable()]
-    public class Division : INetworkDescribable
+    public class Division : INetworkDescribable, IPrunable
     {
         #region [ Private Constants ]
 
@@ -244,10 +244,39 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        [XmlIgnore()]
+        public bool InPruningMode
+        {
+            get
+            {
+                return m_parentCompany.ParentModel.InPruningMode;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool RetainWhenPruning
+        {
+            get
+            {
+                if (InPruningMode)
+                {
+                    foreach (Substation substation in m_childrenSubstations)
+                    {
+                        if (substation.RetainWhenPruning)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                return true;
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]
-        
+
         /// <summary>
         /// A blank constructor with default values.
         /// </summary>

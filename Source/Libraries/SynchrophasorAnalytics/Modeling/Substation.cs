@@ -41,7 +41,7 @@ namespace SynchrophasorAnalytics.Modeling
     /// A <see cref="LinearStateEstimator.Modeling.Substation"/> represents a collection of network elements which usually are enclosed within the same switchyard. This includes <see cref="LinearStateEstimator.Modeling.Node"/>, <see cref="LinearStateEstimator.Modeling.Transformer"/>, <see cref="LinearStateEstimator.Modeling.CircuitBreaker"/>, <see cref="LinearStateEstimator.Modeling.Switch"/>, and/or <see cref="LinearStateEstimator.Modeling.ShuntCompensator"/>
     /// </summary>
     [Serializable()]
-    public class Substation : INetworkDescribable
+    public class Substation : INetworkDescribable, IPrunable
     {
         #region [ Private Constants ]
 
@@ -329,6 +329,39 @@ namespace SynchrophasorAnalytics.Modeling
             set 
             { 
                 m_graph = value; 
+            }
+        }
+
+        [XmlIgnore()]
+        public bool InPruningMode
+        {
+            get
+            {
+                return m_parentDivision.ParentCompany.ParentModel.InPruningMode;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool RetainWhenPruning
+        {
+            get
+            {
+                if (InPruningMode)
+                {
+                    foreach (Node node in m_childrenNodes)
+                    {
+                        if (node.Observability == ObservationState.DirectlyObserved)
+                        {
+                            return true;
+                        }
+                        else if (node.Observability == ObservationState.IndirectlyObserved)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                return true;
             }
         }
 

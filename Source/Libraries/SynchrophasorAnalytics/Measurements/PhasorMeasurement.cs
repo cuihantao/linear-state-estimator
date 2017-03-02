@@ -52,6 +52,19 @@ namespace SynchrophasorAnalytics.Measurements
 
         #region [ Properties ]
 
+        [XmlIgnore()]
+        public bool ExpectsInputMeasurement
+        {
+            get
+            {
+                if ((MagnitudeKey != "" && MagnitudeKey != "Undefined") || (AngleKey != "" && AngleKey != "Undefined"))
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
         /// <summary>
         /// A flag which represents whether or not to include the <see cref="LinearStateEstimator.Measurements.PhasorMeasurement"/> in the state estimator.
         /// </summary>
@@ -374,8 +387,12 @@ namespace SynchrophasorAnalytics.Measurements
             AngleKey = $"{rootKey}.Ang.Meas";
             MagnitudeKey = $"{rootKey}.Mag.Meas";
         }
-
-
+        
+        public void Unkeyify()
+        {
+            AngleKey = DEFAULT_MEASUREMENT_KEY;
+            MagnitudeKey = DEFAULT_MEASUREMENT_KEY;
+        }
         #endregion
     }
 }

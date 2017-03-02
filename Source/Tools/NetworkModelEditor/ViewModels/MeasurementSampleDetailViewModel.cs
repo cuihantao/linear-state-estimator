@@ -29,7 +29,7 @@ using SynchrophasorAnalytics.Testing;
 
 namespace NetworkModelEditor.ViewModels
 {
-    public class MeasurementSampleViewModel : ViewModelBase
+    public class MeasurementSampleDetailViewModel : ViewModelBase
     {
         #region [ Private Members ]
 
@@ -39,15 +39,16 @@ namespace NetworkModelEditor.ViewModels
 
         #region [ Properties ]
 
-        public RawMeasurementsMeasurement[] Measurements
+        public List<RawMeasurementsMeasurement> Measurements
         {
             get
             {
-                return m_measurementSample.Items;
+                return m_measurementSample.Items.ToList();
             }
             set
             {
-                m_measurementSample.Items = value;
+                m_measurementSample.Items = value.ToArray();
+                OnPropertyChanged("Measurements");
             }
         }
 
@@ -55,11 +56,11 @@ namespace NetworkModelEditor.ViewModels
 
         #region [ Constructors ]
 
-        public MeasurementSampleViewModel()
+        public MeasurementSampleDetailViewModel()
         {
         }
 
-        public MeasurementSampleViewModel(object measurementSample)
+        public MeasurementSampleDetailViewModel(object measurementSample)
         {
             if (measurementSample != null && measurementSample is RawMeasurements)
             {

@@ -276,6 +276,7 @@ namespace LinearStateEstimatorOfflineModule
 
         private void ClearTestCaseButton_Click(object sender, EventArgs e)
         {
+            // GOT IT
             DisableControls();
 
             // Clear Raw Measurements 
@@ -302,6 +303,7 @@ namespace LinearStateEstimatorOfflineModule
 
         private void InitializeNetworkModelButton_Click(object sender, EventArgs e)
         {
+            // GOT IT
             try
             {
                 m_network.Model.Initialize();
@@ -318,6 +320,7 @@ namespace LinearStateEstimatorOfflineModule
 
         private void SerializeButton_Click(object sender, EventArgs e)
         {
+            // GOT IT
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -331,6 +334,7 @@ namespace LinearStateEstimatorOfflineModule
 
         private void MapMeasurementsButton_Click(object sender, EventArgs e)
         {
+            // GOT IT
             try
             {
                 foreach (RawMeasurementsMeasurement measurement in m_rawMeasurements.Items)
@@ -353,6 +357,7 @@ namespace LinearStateEstimatorOfflineModule
 
         private void CheckComponentsButton_Click(object sender, EventArgs e)
         {
+            // GOT IT
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(m_network.Model.ComponentList());
             File.WriteAllText(Directory.GetCurrentDirectory() + "/ComponentList.txt", stringBuilder.ToString());
@@ -361,6 +366,7 @@ namespace LinearStateEstimatorOfflineModule
 
         private void ViewReceivedMeasurementsButton_Click(object sender, EventArgs e)
         {
+            
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("Received Measurements Key Value Pairs");
             Dictionary<string, double> receivedMeasurements = m_network.Model.GetReceivedMeasurements();
@@ -429,7 +435,7 @@ namespace LinearStateEstimatorOfflineModule
         {
             try
             {
-                m_network.Model.ResolveToObservedBusses();
+                m_network.Model.ResolveToObservedBuses();
                 m_observedBussesHaveBeenResolved = true;
                 StatusLabel.Text = "Observability analysis resolved nodes to observed nodes.";
                 EnableControls();

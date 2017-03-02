@@ -50,6 +50,7 @@
     </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top" ItemsSource="{Binding Path=MenuBarItems}"/>
+
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -69,6 +70,7 @@
             </StatusBar.ItemsPanel>
             <StatusBarItem>
                 <TextBlock Width="Auto" Text="{Binding ActionStatus}"/>
+                <!--<TextBlock Width="Auto" Text="TEST"/>-->
             </StatusBarItem>
             <StatusBarItem Grid.Column="1">
                 <Separator/>
@@ -83,7 +85,6 @@
                 <TextBlock Width="Auto" Text="{Binding SpecialStatus}" />
             </StatusBarItem>
         </StatusBar>
-        
         <Grid HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />

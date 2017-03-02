@@ -1,0 +1,118 @@
+ECA PhasorCollection LSEDemo {
+    Phasors: { RANNISH_RANNISH_A_pos_V;RANNISH_RANNISH_B_pos_V;RANNISH_RANNISH_C_pos_V;RANNISH_RANNISH_D_pos_V;RANNISH_RANNISH_E_pos_V;RANNISH_RANNISH_F_pos_V;RANNISH_RANNISH_G_pos_V;SEVEREN_SEVEREN_A_pos_V;SEVEREN_SEVEREN_BUS1_pos_V;SEVEREN_SEVEREN_BUS2_pos_V;SEVEREN_SEVEREN_B_pos_V;SEVEREN_SEVEREN_C_pos_V;SEVEREN_SEVEREN_D_pos_V;SEVEREN_SEVEREN_E_pos_V;SEVEREN_SEVEREN_F_pos_V;SEVEREN_SEVEREN_G_pos_V;TINUE_TINUE_A_pos_V;TINUE_TINUE_BUS1_pos_V;TINUE_TINUE_BUS2_pos_V;TINUE_TINUE_C_pos_V;TINUE_TINUE_UN_pos_V;TINUE_TINUE_B_pos_V; } 
+}
+
+ECA Phasor RANNISH_RANNISH_A_pos_V {
+    Magnitude: 9f94fcef-eb65-4c61-9259-857574916e34 
+    Angle: 09c3d2b1-4322-40b2-953c-e8eeb58a2f9c 
+}
+
+ECA Phasor RANNISH_RANNISH_B_pos_V {
+    Magnitude: 2b197d18-5913-4754-93e2-5881b72232e9 
+    Angle: bae57903-1311-4fb6-b8e8-90c5516eea10 
+}
+
+ECA Phasor RANNISH_RANNISH_C_pos_V {
+    Magnitude: dfb2db60-8457-46f0-b685-6120433c21d7 
+    Angle: 6fe9d8ab-281b-44d1-9541-01db4c375487 
+}
+
+ECA Phasor RANNISH_RANNISH_D_pos_V {
+    Magnitude: 0d893048-108e-48e2-b89f-4a086f13a602 
+    Angle: 0a79313e-d17c-4a39-b561-299e6b2d0062 
+}
+
+ECA Phasor RANNISH_RANNISH_E_pos_V {
+    Magnitude: 63bebf27-a050-42af-bc5b-4899d7b98024 
+    Angle: 22c23ded-ead2-4eb6-815b-84d09d1defd8 
+}
+
+ECA Phasor RANNISH_RANNISH_F_pos_V {
+    Magnitude: cd0a8d9d-1300-42dd-b736-e69d45c622a3 
+    Angle: 92f5f8d4-da3f-4f22-9601-fc3f4e2fa7ad 
+}
+
+ECA Phasor RANNISH_RANNISH_G_pos_V {
+    Magnitude: 60cec62b-7013-4fb2-9508-fbaee5d8a020 
+    Angle: df656b0a-11e0-42df-af4d-74e11f050966 
+}
+
+ECA Phasor SEVEREN_SEVEREN_A_pos_V {
+    Magnitude: 28d59f52-d830-4eed-8985-a2af37f3aba6 
+    Angle: cf3df63b-d1ef-4a1f-ba7f-8193df353ed6 
+}
+
+ECA Phasor SEVEREN_SEVEREN_BUS1_pos_V {
+    Magnitude: acbbedaf-1b09-49bc-a340-823f91030ab0 
+    Angle: 56a7fe5d-6844-4e82-90f9-fc67890cca4f 
+}
+
+ECA Phasor SEVEREN_SEVEREN_BUS2_pos_V {
+    Magnitude: 4eadee31-f5d3-4410-b70b-dcacf8ba6c2e 
+    Angle: f12b154a-2f17-4ccf-86ec-6307fd32c631 
+}
+
+ECA Phasor SEVEREN_SEVEREN_B_pos_V {
+    Magnitude: 95d8ee48-5c9e-446b-8ec7-2d4ab3d01aec 
+    Angle: 6c42ed88-da5f-4d3e-a3bc-e66cb4bac808 
+}
+
+ECA Phasor SEVEREN_SEVEREN_C_pos_V {
+    Magnitude: 9b510abd-aad4-49d2-87ff-4ccc11188a99 
+    Angle: 277127f0-1177-4ebc-b9d1-add39c15cc7a 
+}
+
+ECA Phasor SEVEREN_SEVEREN_D_pos_V {
+    Magnitude: 36464ce0-5fe4-498c-8315-2c021a878359 
+    Angle: f2584209-3d41-4579-bdbe-bfd2527fde9f 
+}
+
+ECA Phasor SEVEREN_SEVEREN_E_pos_V {
+    Magnitude: 4ab5cfd5-c2ca-4ef3-b888-8013dffc2ac2 
+    Angle: 00417eeb-daf5-43a9-82e0-7fb352f41fae 
+}
+
+ECA Phasor SEVEREN_SEVEREN_F_pos_V {
+    Magnitude: 7b41680c-1dfe-4ec3-829b-39753f4803b0 
+    Angle: e31438f2-10c0-4042-841f-44ffa39490bb 
+}
+
+ECA Phasor SEVEREN_SEVEREN_G_pos_V {
+    Magnitude: eaffef05-0455-4e4d-ab92-30302bb26ab3 
+    Angle: 6c2558da-ebfa-47dc-9bb6-4b7849611d98 
+}
+
+ECA Phasor TINUE_TINUE_A_pos_V {
+    Magnitude: f6105d5f-8a34-4f0d-8065-d1ecd0883a84 
+    Angle: 2e4820a5-b3d5-4fe1-8832-58be01f7a6d8 
+}
+
+ECA Phasor TINUE_TINUE_BUS1_pos_V {
+    Magnitude: 5963c7f2-77df-4b72-bfee-54d0c1fcacfb 
+    Angle: 4f83bbba-f584-4e5d-984e-26aa3dc35312 
+}
+
+ECA Phasor TINUE_TINUE_BUS2_pos_V {
+    Magnitude: 1d60648f-a9fb-4207-b769-d5f8f7d3a3a2 
+    Angle: 9389bea8-660a-4c9f-b72c-a592ffba313a 
+}
+
+ECA Phasor TINUE_TINUE_C_pos_V {
+    Magnitude: 782ceeef-8960-49c7-940f-8826a8b3ff1b 
+    Angle: f1c3497e-5e74-4f6f-9b6f-375c93dc7473 
+}
+
+ECA Phasor TINUE_TINUE_UN_pos_V {
+    Magnitude: b858cea1-4538-40c9-af74-6227bf21ba76 
+    Angle: b9ef5277-79e5-429f-bf79-81cbaec94631 
+}
+
+ECA Phasor TINUE_TINUE_B_pos_V {
+    Magnitude: ef82a48f-330a-45a8-9cbc-f17f72de6bf8 
+    Angle: 546cc603-1bdc-48d0-a114-b28cb8828c43 
+}
+
+ECA NullOutput NullOutput {
+    Value: OPENECA!NULLOUTPUT:78 
+}
+

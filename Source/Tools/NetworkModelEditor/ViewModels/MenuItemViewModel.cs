@@ -60,6 +60,10 @@ namespace NetworkModelEditor.ViewModels
             {
                 return m_isEnabled;
             }
+            set
+            {
+                m_isEnabled = value;
+            }
         }
 
         public bool IsChecked

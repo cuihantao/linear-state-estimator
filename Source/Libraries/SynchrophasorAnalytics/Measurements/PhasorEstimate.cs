@@ -139,6 +139,11 @@ namespace SynchrophasorAnalytics.Measurements
             MagnitudeKey = $"{rootKey}.Mag.Est";
         }
 
+        public void Unkeyify()
+        {
+            AngleKey = "Undefined";
+            MagnitudeKey = "Undefined";
+        }
         #endregion
     }
 }

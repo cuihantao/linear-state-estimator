@@ -1433,6 +1433,7 @@ namespace SynchrophasorAnalytics.Networks
                                 Name = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
                                 Description = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
                                 NormalState = SwitchingDeviceNormalState.Closed,
+                                ActualState = SwitchingDeviceActualState.Closed,
                                 MeasurementKey = "Undefined",
                                 FromNode = fromNode,
                                 ToNode = toNode,
@@ -1448,6 +1449,7 @@ namespace SynchrophasorAnalytics.Networks
                                 Name = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
                                 Description = $"From: {branch.FromBusNumber} To: {branch.ToBusNumber} Id: {branch.CircuitId}",
                                 NormalState = SwitchingDeviceNormalState.Closed,
+                                ActualState = SwitchingDeviceActualState.Closed,
                                 MeasurementKey = "Undefined",
                                 FromNode = fromNode,
                                 ToNode = toNode,
@@ -1513,19 +1515,11 @@ namespace SynchrophasorAnalytics.Networks
                                 {
                                     substationBreakers.Add(breaker);
                                 }
-                                else if (breaker.ToNode.InternalID == busNumber)
-                                {
-                                    substationBreakers.Add(breaker);
-                                }
                             }
 
                             foreach (Switch switchingDevice in switches)
                             {
                                 if (switchingDevice.FromNode.InternalID == busNumber)
-                                {
-                                    substationSwitches.Add(switchingDevice);
-                                }
-                                else if (switchingDevice.ToNode.InternalID == busNumber)
                                 {
                                     substationSwitches.Add(switchingDevice);
                                 }

@@ -5,12 +5,13 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
+using System.Xml.Serialization;
 using SynchrophasorAnalytics.Psse;
 using SynchrophasorAnalytics.Modeling;
 using SynchrophasorAnalytics.Measurements;
 using SynchrophasorAnalytics.Networks;
 using SynchrophasorAnalytics.Hdb;
-
+using SynchrophasorAnalytics.Testing;
 
 namespace TestConsole
 {
@@ -19,6 +20,138 @@ namespace TestConsole
         static void Main(string[] args)
         {
             #region [ Commented Out Code ]
+
+            //string columnMappingsFile = @"C:\Users\kevin\OneDrive\Documents\VT Data\Models\column-mappings.txt";
+            //string csvFile = @"C:\Users\kevin\OneDrive\Documents\VT Data\Dynamic File\118BusTestRun.csv";
+
+            //RawMeasurements.MakeSampleFilesFromCsv(csvFile, columnMappingsFile, true);
+            string m_configurationPathName = @"C:\Users\kevin\OneDrive\Documents\VT Data\Models\prune test.xml";
+            Network network = Network.DeserializeFromXml(m_configurationPathName);
+            network.Initialize();
+            network.Model.InPruningMode = true;
+
+            if (network.Model.InPruningMode)
+            {
+                network.Model.DetermineActiveCurrentFlows();
+                network.Model.DetermineActiveCurrentInjections();
+                network.Model.ResolveToObservedBuses();
+                network.Model.ResolveToSingleFlowBranches();
+
+                List<Company> companiesToPrune = new List<Company>();
+                List<Division> divisionsToPrune = new List<Division>();
+                List<Substation> substationsToPrune = new List<Substation>();
+                List<TransmissionLine> transmissionLinesToPrune = new List<TransmissionLine>();
+                
+                Console.WriteLine("Searching for companies to prune.");
+                // Identify prunable companies
+                foreach (Company company in network.Model.Companies)
+                {
+                    if (!company.RetainWhenPruning)
+                    {
+                        companiesToPrune.Add(company);
+                        Console.WriteLine($"Identified {company.Name} for pruning.");
+                    }
+                }
+
+                // prune companies
+                foreach (Company company in companiesToPrune)
+                {
+                    network.Model.Companies.Remove(company);
+                }
+
+                Console.WriteLine("Searching for divisions to prune.");
+                // identify prunable divisions
+                foreach (Company company in network.Model.Companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        if (!division.RetainWhenPruning)
+                        {
+                            divisionsToPrune.Add(division);
+                            Console.WriteLine($"Identified {division.Name} for pruning.");
+                        }
+                    }
+                }
+
+                // prune divisions
+                foreach (Company company in network.Model.Companies)
+                {
+                    foreach (Division division in divisionsToPrune)
+                    {
+                        if (company.Divisions.Contains(division))
+                        {
+                            company.Divisions.Remove(division);
+                        }
+                    }
+                }
+
+                Console.WriteLine("Searching for substations to prune.");
+                // identify prunable substations
+                foreach (Company company in network.Model.Companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        foreach (Substation substation in division.Substations)
+                        {
+                            if (!substation.RetainWhenPruning)
+                            {
+                                substationsToPrune.Add(substation);
+                                Console.WriteLine($"Identified {substation.Name} for pruning.");
+                            }
+                        }
+                    }
+                }
+
+                // prune substations
+                foreach (Company company in network.Model.Companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        foreach (Substation substation in substationsToPrune)
+                        {
+                            if (division.Substations.Contains(substation))
+                            {
+                                division.Substations.Remove(substation);
+                            }
+                        }
+                    }
+                }
+
+                Console.WriteLine("Searching for transmissionLines to prune.");
+                // identify prunable transmission lines
+                foreach (Company company in network.Model.Companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        foreach (TransmissionLine transmissionLine in division.TransmissionLines)
+                        {
+                            if (!transmissionLine.RetainWhenPruning)
+                            {
+                                transmissionLinesToPrune.Add(transmissionLine);
+                            }
+                        }
+                    }
+                }
+
+                // prune transmission lines
+                foreach (Company company in network.Model.Companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        foreach (TransmissionLine transmissionLine in transmissionLinesToPrune)
+                        {
+                            if (division.TransmissionLines.Contains(transmissionLine))
+                            {
+                                division.TransmissionLines.Remove(transmissionLine);
+                            }
+                        }
+                    }
+                }
+
+                network.Initialize();
+
+                Console.WriteLine(network.Model.ComponentList());
+            }
 
             //bool keyify = true;
 
@@ -622,39 +755,38 @@ namespace TestConsole
             //networkModel.TapConfigurations = taps;
             //networkModel.BreakerStatuses = breakerStatuses;
 
-            #endregion
 
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            Network network = Network.FromHdbExport($@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\modelFiles.xml", true);
-            //Network network = Network.DeserializeFromXml(@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\hdb_test.xml");
-            Console.WriteLine($"Composed Model: {stopwatch.Elapsed}");
-            //network.Initialize();
-            network.Model.LinkTransmissionLineReferencesToSubstations();
-            Console.WriteLine($"LinkTransmissionLineReferencesToSubstations: {stopwatch.Elapsed}");
-            network.Model.LinkHierarchicalReferences();
-            Console.WriteLine($"LinkHierarchicalReferences: {stopwatch.Elapsed}");
-            network.Model.LinkVoltageLevelReferences();
-            Console.WriteLine($"LinkVoltageLevelReferences: {stopwatch.Elapsed}");
-            network.Model.LinkTapConfigurationReferences();
-            Console.WriteLine($"LinkTapConfigurationReferences: {stopwatch.Elapsed}");
-            network.Model.ListNetworkComponents();
-            Console.WriteLine($"ListNetworkComponents: {stopwatch.Elapsed}");
-            network.Model.ListNetworkMeasurements();
-            Console.WriteLine($"ListNetworkMeasurements: {stopwatch.Elapsed}");
-            network.Model.LinkBreakerStatusToCircuitBreakers();
-            Console.WriteLine($"LinkBreakerStatusToCircuitBreakers: {stopwatch.Elapsed}");
-            network.Model.LinkStatusWordsToPhasorGroups();
-            Console.WriteLine($"LinkStatusWordsToPhasorGroups: {stopwatch.Elapsed}");
-            network.Model.LinkVoltageLevelsToPhasorGroups();
-            Console.WriteLine($"LinkVoltageLevelsToPhasorGroups: {stopwatch.Elapsed}");
-            network.Model.InitializeComplexPowerCalculations();
-            Console.WriteLine($"InitializeComplexPowerCalculations: {stopwatch.Elapsed}");
-            Console.WriteLine("Initialized Model");
-            network.SerializeToXml($@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\hdb_test_3.xml");
+            //Stopwatch stopwatch = new Stopwatch();
+            //stopwatch.Start();
+            //Network network = Network.FromHdbExport($@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\modelFiles.xml", true);
+            ////Network network = Network.DeserializeFromXml(@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\hdb_test.xml");
+            //Console.WriteLine($"Composed Model: {stopwatch.Elapsed}");
+            ////network.Initialize();
+            //network.Model.LinkTransmissionLineReferencesToSubstations();
+            //Console.WriteLine($"LinkTransmissionLineReferencesToSubstations: {stopwatch.Elapsed}");
+            //network.Model.LinkHierarchicalReferences();
+            //Console.WriteLine($"LinkHierarchicalReferences: {stopwatch.Elapsed}");
+            //network.Model.LinkVoltageLevelReferences();
+            //Console.WriteLine($"LinkVoltageLevelReferences: {stopwatch.Elapsed}");
+            //network.Model.LinkTapConfigurationReferences();
+            //Console.WriteLine($"LinkTapConfigurationReferences: {stopwatch.Elapsed}");
+            //network.Model.ListNetworkComponents();
+            //Console.WriteLine($"ListNetworkComponents: {stopwatch.Elapsed}");
+            //network.Model.ListNetworkMeasurements();
+            //Console.WriteLine($"ListNetworkMeasurements: {stopwatch.Elapsed}");
+            //network.Model.LinkBreakerStatusToCircuitBreakers();
+            //Console.WriteLine($"LinkBreakerStatusToCircuitBreakers: {stopwatch.Elapsed}");
+            //network.Model.LinkStatusWordsToPhasorGroups();
+            //Console.WriteLine($"LinkStatusWordsToPhasorGroups: {stopwatch.Elapsed}");
+            //network.Model.LinkVoltageLevelsToPhasorGroups();
+            //Console.WriteLine($"LinkVoltageLevelsToPhasorGroups: {stopwatch.Elapsed}");
+            //network.Model.InitializeComplexPowerCalculations();
+            //Console.WriteLine($"InitializeComplexPowerCalculations: {stopwatch.Elapsed}");
+            //Console.WriteLine("Initialized Model");
+            //network.SerializeToXml($@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\hdb_test_3.xml");
 
-            Console.WriteLine($"Saved the file successfully: {stopwatch.Elapsed}");
-            stopwatch.Stop();
+            //Console.WriteLine($"Saved the file successfully: {stopwatch.Elapsed}");
+            //stopwatch.Stop();
             //Network network2 = Network.DeserializeFromXml($@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\hdb_test.xml");
             //Console.WriteLine("Read the file successfully");
 
@@ -666,7 +798,42 @@ namespace TestConsole
 
             //network2.SerializeToXml($@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\hdb_test2.xml");
             //Console.WriteLine("Saved the third file successfull");
+
+
+            //List<string> lines = new List<string>();
+
+            //Network network = Network.DeserializeFromXml(@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\IEEE 118 Bus - Nodal Variety.xml");
+            //network.Initialize();
+
+            //lines.Add("PRAGMA foreign_keys = ON;");
+            //lines.Add("");
+            //foreach (Substation substation in network.Model.Substations)
+            //{
+            //    string nodeId = "e57b4a6d-ca9e-403c-ad2e-9a1db9a8a707";
+            //    string acronym = substation.Acronym;
+            //    string name = substation.Name;
+            //    int isConcentrator = 0;
+            //    int companyId = 30;
+            //    int historianId = 1;
+            //    int accessId = 2;
+            //    int vendorDeviceId = 2;
+            //    int protocolId = 3;
+            //    int interconnectionId = 1;
+            //    int loadOrder = 0;
+            //    int enabled = 1;
+            //    lines.Add($"INSERT INTO Device(NodeID, Acronym, Name, IsConcentrator, CompanyID, HistorianID, AccessID, VendorDeviceID, ProtocolID, Longitude, Latitude, InterconnectionID, ConnectionString, MeasuredLines, LoadOrder, Enabled) VALUES('{nodeId}', '{acronym}', '{name}', 0, 30, 1, 2, 2, 3, -89.8038, 35.3871, 1, '', 3, 0, 1);");
+            //}
+
+            //using (StreamWriter writer = new StreamWriter(@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\ieee118bus.sql"))
+            //{
+            //    foreach (string line in lines)
+            //    {
+            //        writer.WriteLine(line);
+            //    }
+            //}
+
             Console.ReadLine();
+            #endregion
         }
     }
 }

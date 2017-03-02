@@ -56,7 +56,7 @@ namespace SynchrophasorAnalytics.Modeling
     /// A <see cref="LinearStateEstimator.Modeling.TransmissionLine"/> represents a collection of network elements which usually are enclosed within the same right-of-way and connect two <see cref="LinearStateEstimator.Modeling.Substation"/>s. This includes <see cref="LinearStateEstimator.Modeling.Node"/>, <see cref="LinearStateEstimator.Modeling.Switch"/>, <see cref="LinearStateEstimator.Modeling.LineSegment"/>, and/or <see cref="LinearStateEstimator.Modeling.SeriesCompensator"/>
     /// </summary>
     [Serializable()]
-    public class TransmissionLine : INetworkDescribable, ITwoTerminal
+    public class TransmissionLine : INetworkDescribable, ITwoTerminal, IPrunable
     {
         #region [ Private Constants ]
 
@@ -939,6 +939,32 @@ namespace SynchrophasorAnalytics.Modeling
             get
             {
                 return FromSideHasActiveCurrentFlowMeasurement && ToSideHasActiveCurrentFlowMeasurement;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool InPruningMode
+        {
+            get
+            {
+                return m_parentDivision.ParentCompany.ParentModel.InPruningMode;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool RetainWhenPruning
+        {
+            get
+            {
+                if (InPruningMode)
+                {
+                    if (m_fromSubstation.RetainWhenPruning && m_toSubstation.RetainWhenPruning)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return true;
             }
         }
 

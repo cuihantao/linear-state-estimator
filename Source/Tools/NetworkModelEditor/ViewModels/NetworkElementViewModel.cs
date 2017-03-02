@@ -33,6 +33,7 @@ using NetworkModelEditor.Commands;
 using SynchrophasorAnalytics.Networks;
 using SynchrophasorAnalytics.Modeling;
 using SynchrophasorAnalytics.Measurements;
+using SynchrophasorAnalytics.Testing;
 
 namespace NetworkModelEditor.ViewModels
 {
@@ -58,6 +59,9 @@ namespace NetworkModelEditor.ViewModels
         private RelayCommand m_refreshCommand;
         private RelayCommand m_onMouseDoubleClickCommand;
         private RelayCommand m_deleteCommand;
+        private RelayCommand m_saveMeasurementSampleFileCommand;
+        private RelayCommand m_selectMeasurementSampleCommand;
+        private RelayCommand m_clearMeasurementValuesCommand;
 
         private bool m_isExpanded;
         private bool m_isSelected;
@@ -224,6 +228,7 @@ namespace NetworkModelEditor.ViewModels
             viewMenuItem.Items.Add(new MenuItem() { Header = "Xml Source", Command = m_viewXmlSourceCommand });
             MenuItem refreshMenuItem = new MenuItem() { Header = "Refresh", Command = m_refreshCommand };
             MenuItem deleteMenuItem = new MenuItem() { Header = "Delete", Command = m_deleteCommand };
+            MenuItem clearMeasuremetsMenuItem = new MenuItem() { Header = "Clear Measurements", Command = m_clearMeasurementValuesCommand };
 
             if (m_networkElement.Element is NetworkModel ||
                 m_networkElement.Element is List<VoltageLevel> ||
@@ -240,7 +245,14 @@ namespace NetworkModelEditor.ViewModels
                 m_networkElement.Element is List<LineSegment>)
             {
                 MenuItem addMenuItem = new MenuItem() { Header = "Add", Command = m_createCommand };
-                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem });
+                if (m_networkElement.Element is NetworkModel)
+                {
+                    return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem, clearMeasuremetsMenuItem});
+                }
+                else
+                {
+                    return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem });
+                }
             }
             else if (m_networkElement.Element is Company)
             {
@@ -281,6 +293,12 @@ namespace NetworkModelEditor.ViewModels
                 MenuItem addMenuItem = new MenuItem() { Header = "Add" };
                 return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem});
             }
+            else if (m_networkElement.Element is RawMeasurements)
+            {
+                MenuItem saveMenuItem = new MenuItem() { Header = "Save", Command = m_saveMeasurementSampleFileCommand };
+                MenuItem selectMenuItem = new MenuItem() { Header = "Select for LSE Run", Command = m_selectMeasurementSampleCommand };
+                return new ObservableCollection<MenuItem>(new MenuItem[] { viewMenuItem, selectMenuItem, saveMenuItem, refreshMenuItem, deleteMenuItem });
+            }
             else
             {
                 return new ObservableCollection<MenuItem>(new MenuItem[] { viewMenuItem, refreshMenuItem, deleteMenuItem });
@@ -298,6 +316,9 @@ namespace NetworkModelEditor.ViewModels
             m_viewXmlSourceCommand = new RelayCommand(param => this.ViewXml(), param => true);
             m_refreshCommand = new RelayCommand(param => this.RefreshNetworkTree(), param => true);
             m_deleteCommand = new RelayCommand(param => this.Delete(), param => true);
+            m_saveMeasurementSampleFileCommand = new RelayCommand(param => this.SaveMeasurementSampleFile(), param => true);
+            m_selectMeasurementSampleCommand = new RelayCommand(param => this.SelectMeasurementSample(), param => true);
+            m_clearMeasurementValuesCommand = new RelayCommand(param => this.ClearMeasurementsFromModel(), param => true);
         }
         
         private void InitializeCreateCommands()
@@ -401,6 +422,25 @@ namespace NetworkModelEditor.ViewModels
             OnPropertyChanged("Children");
         }
 
+        private void SaveMeasurementSampleFile()
+        {
+            MainWindowViewModel mainWindow = m_networkTree.MainWindow as MainWindowViewModel;
+            mainWindow.SaveMeasurementSampleFilesCommand.Execute(null);
+        }
+
+        private void SelectMeasurementSample()
+        {
+            MainWindowViewModel mainWindow = m_networkTree.MainWindow as MainWindowViewModel;
+            mainWindow.SelectMeasurementSampleCommand.Execute(null);
+        }
+
+        private void ClearMeasurementsFromModel()
+        {
+            MainWindowViewModel mainWindow = m_networkTree.MainWindow as MainWindowViewModel;
+            mainWindow.ClearMeasurementsFromModelCommand.Execute(null);
+        }
+        
+        
         #endregion
     }
 }

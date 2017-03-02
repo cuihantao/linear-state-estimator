@@ -135,6 +135,10 @@ namespace SynchrophasorAnalytics.Modeling
         {
             get
             {
+                if (InPruningMode)
+                {
+                    return true;
+                }
                 if (m_isInDefaultMode)
                 {
                     if (NormalState.Equals(SwitchingDeviceNormalState.Open))
@@ -179,6 +183,16 @@ namespace SynchrophasorAnalytics.Modeling
                 return !IsOpen;
             }
         }
+
+        [XmlIgnore()]
+        public bool InPruningMode
+        {
+            get
+            {
+                return m_parentSubstation.ParentDivision.ParentCompany.ParentModel.InPruningMode;
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]

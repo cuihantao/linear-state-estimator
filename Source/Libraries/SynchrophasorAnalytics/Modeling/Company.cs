@@ -223,6 +223,35 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        [XmlIgnore()]
+        public bool InPruningMode
+        {
+            get
+            {
+                return m_parentModel.InPruningMode;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool RetainWhenPruning
+        {
+            get
+            {
+                if (InPruningMode)
+                {
+                    foreach (Division division in m_childrenDivisions)
+                    {
+                        if (division.RetainWhenPruning)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                return true;
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]

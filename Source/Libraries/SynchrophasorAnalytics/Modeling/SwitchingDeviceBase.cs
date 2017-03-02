@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using SynchrophasorAnalytics.Measurements;
 
 namespace SynchrophasorAnalytics.Modeling
 {
@@ -44,6 +45,7 @@ namespace SynchrophasorAnalytics.Modeling
         private const int DEFAULT_NUMBER = 0;
         private const string DEFAULT_NAME = "Undefined";
         private const string DEFAULT_DESCRIPTION = "Uundefined";
+        private const string DEFAULT_MEASUREMENT_KEY = "Undefined";
 
         #endregion
 
@@ -61,6 +63,7 @@ namespace SynchrophasorAnalytics.Modeling
 
         private SwitchingDeviceNormalState m_normalState;
         private SwitchingDeviceActualState m_actualState;
+        private SwitchingDeviceInferredState m_inferredState;
 
         private bool m_inManualOverrideMode;
 
@@ -71,6 +74,12 @@ namespace SynchrophasorAnalytics.Modeling
         private int m_fromNodeID;
         private Node m_toNode;
         private int m_toNodeID;
+
+        private bool m_useInferredStateAsActualProxy;
+        private PhasorGroupPair m_crossDevicePhasors;
+        private double m_crossDeviceAngleDeltaThresholdInDegrees;
+        private double m_crossDevicePerUnitMagnitudeThreshold;
+        private double m_crossDeviceTotalVectorDeltaThreshold;
 
         #endregion
 
@@ -217,6 +226,10 @@ namespace SynchrophasorAnalytics.Modeling
             { 
                 m_fromNode = value;
                 m_fromNodeID = value.InternalID;
+                if (m_fromNode.Voltage != null)
+                {
+                    CrossDevicePhasors.GroupA = m_fromNode.Voltage;
+                }
             }
         }
 
@@ -250,6 +263,10 @@ namespace SynchrophasorAnalytics.Modeling
             { 
                 m_toNode = value;
                 m_toNodeID = value.InternalID;
+                if (m_toNode.Voltage != null)
+                {
+                    CrossDevicePhasors.GroupB = m_toNode.Voltage;
+                }
             }
         }
 
@@ -284,7 +301,7 @@ namespace SynchrophasorAnalytics.Modeling
                 m_normalState = value; 
             }
         }
-
+        
         /// <summary>
         /// The actual current state of the switch. Either <see cref="LinearStateEstimator.Modeling.SwitchingDeviceActualState.Open"/> or <see cref="LinearStateEstimator.Modeling.SwitchingDeviceActualState.Closed"/>.
         /// </summary>
@@ -293,13 +310,56 @@ namespace SynchrophasorAnalytics.Modeling
         {
             get
             {
+                if (UseInferredStateAsActualProxy)
+                {                
+                    if (InferredState == SwitchingDeviceInferredState.Open)
+                    {
+                        return SwitchingDeviceActualState.Open;
+                    }
+                    else if (InferredState == SwitchingDeviceInferredState.Closed)
+                    {
+                        return SwitchingDeviceActualState.Closed;
+                    }
+                }
                 return m_actualState;
+
             }
             set
             {
                 m_actualState = value;
             }
         }
+
+        [XmlIgnore()]
+        public SwitchingDeviceInferredState InferredState
+        {
+            get
+            {
+                if (IsCrossDeviceAngleThresholdEclipsed)
+                {
+                    return SwitchingDeviceInferredState.Open;
+                }
+                return SwitchingDeviceInferredState.Closed;
+            }
+            set
+            {
+                m_inferredState = value;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool UseInferredStateAsActualProxy
+        {
+            get
+            {
+                return m_useInferredStateAsActualProxy;
+            }
+            set
+            {
+                m_useInferredStateAsActualProxy = value;
+            }
+        }
+
 
         /// <summary>
         /// A boolean flag which represents whether the <see cref="LinearStateEstimator.Modeling.SwitchingDeviceBase"/> has been put into <i>manual override</i>.
@@ -310,6 +370,108 @@ namespace SynchrophasorAnalytics.Modeling
             get
             {
                 return m_inManualOverrideMode;
+            }
+        }
+
+        [XmlIgnore()]
+        public PhasorGroupPair CrossDevicePhasors
+        {
+            get
+            {
+                if (m_crossDevicePhasors == null)
+                {
+                    if (m_fromNode != null && m_toNode != null)
+                    {
+                        m_crossDevicePhasors = new PhasorGroupPair(m_fromNode.Voltage, m_toNode.Voltage);
+                    }
+                    return m_crossDevicePhasors = new PhasorGroupPair(null, null);
+                }
+                return m_crossDevicePhasors;
+            }
+            set
+            {
+                m_crossDevicePhasors = value;
+            }
+        }
+        
+        [XmlIgnore()]
+        public double CrossDeviceAngleDeltaThresholdInDegrees
+        {
+            get
+            {
+                return m_crossDeviceAngleDeltaThresholdInDegrees;
+            }
+            set
+            {
+                m_crossDeviceAngleDeltaThresholdInDegrees = value;
+            }
+        }
+
+        [XmlIgnore()]
+        public double CrossDevicePerUnitMagnitudeDeltaThreshold
+        {
+            get
+            {
+                return m_crossDevicePerUnitMagnitudeThreshold;
+            }
+            set
+            {
+                m_crossDevicePerUnitMagnitudeThreshold = value;
+            }
+        }
+
+        [XmlIgnore()]
+        public double CrossDeviceTotalVectorDeltaThreshold
+        {
+            get
+            {
+                return m_crossDeviceTotalVectorDeltaThreshold;
+            }
+            set
+            {
+                m_crossDeviceTotalVectorDeltaThreshold = value;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool IsCrossDeviceAngleThresholdEclipsed
+        {
+            get
+            {
+                double delta = CrossDevicePhasors.PositiveSequenceMeasurementPair.AbsoluteAngleDeltaInDegrees;
+                if (delta > m_crossDeviceAngleDeltaThresholdInDegrees)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool IsCrossDeviceMagnitudeThresholdEclipsed
+        {
+            get
+            {
+                double delta = CrossDevicePhasors.PositiveSequenceMeasurementPair.AbsolutePerUnitMagnitudeDelta;
+                if (delta > m_crossDevicePerUnitMagnitudeThreshold)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        [XmlIgnore()]
+        public bool IsCrossDeviceTotalVectorThresholdEclipsed
+        {
+            get
+            {
+                double delta = CrossDevicePhasors.PositiveSequenceMeasurementPair.TotalVectorDelta;
+                if (delta > m_crossDeviceTotalVectorDeltaThreshold)
+                {
+                    return true;
+                }
+                return false;
             }
         }
 
@@ -357,13 +519,24 @@ namespace SynchrophasorAnalytics.Modeling
             m_normalState = normalState;
             m_fromNodeID = fromNodeID;
             m_toNodeID = toNodeID;
-
+            m_useInferredStateAsActualProxy = false;
+            m_crossDeviceAngleDeltaThresholdInDegrees = 0.2;
+            m_crossDevicePerUnitMagnitudeThreshold = 0.2;
+            m_crossDeviceTotalVectorDeltaThreshold = 0.2;
             RemoveFromManualAndRevertToDefault();
         }
 
         #endregion
 
         #region [ Public Methods ]
+
+        /// <summary>
+        /// Sets the MeasurementKey to its default value of "Undefined" 
+        /// </summary>
+        public void Unkeyify()
+        {
+            MeasurementKey = DEFAULT_MEASUREMENT_KEY;
+        }
 
         /// <summary>
         /// Sets the <see cref="LinearStateEstimator.Modeling.SwitchingDeviceBase.ActualState"/> to the desired state and puts the <see cref="LinearStateEstimator.Modeling.SwitchingDeviceBase"/> into <i>manual override</i>. While in <i>manual override</i> the <see cref="LinearStateEstimator.Modeling.SwitchingDeviceBase"/> will not update its state due to measurement update.

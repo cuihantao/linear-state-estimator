@@ -318,6 +318,18 @@ namespace SynchrophasorAnalytics.Measurements
             }
         }
 
+        /// <summary>
+        /// A pretty string representation of the phasor's value. Formatted as "XXX.X kv @ XX.X degrees".
+        /// </summary>
+        [XmlIgnore()]
+        public string PrettyStringValue
+        {
+            get
+            {
+                return $"{((Magnitude)/1000).ToString("0.0")} kV @ {AngleInDegrees.ToString("0.0")} degrees";
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]

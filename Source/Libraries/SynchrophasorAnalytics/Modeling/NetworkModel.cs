@@ -85,7 +85,8 @@ namespace SynchrophasorAnalytics.Modeling
         private List<LineSegment> m_lineSegments;
         private List<VoltageLevel> m_voltageLevels;
         private List<Transformer> m_transformers;
-        private List<ObservedBus> m_observedBusses;
+        private List<ObservedBus> m_observedBuses;
+        private List<ObservedBus> m_potentiallyObservedBuses;
         private List<SwitchingDeviceBase> m_switchingDevices;
         private List<TapConfiguration> m_tapConfigurations;
 
@@ -98,16 +99,32 @@ namespace SynchrophasorAnalytics.Modeling
         private List<BreakerStatus> m_breakerStatuses;
         private List<StatusWord> m_statusWords;
         private List<CurrentFlowPhasorGroup> m_activeCurrentFlows;
+        private List<CurrentFlowPhasorGroup> m_potentiallyActiveCurrentFlows;
         private List<CurrentInjectionPhasorGroup> m_activeCurrentInjections;
+        private List<CurrentInjectionPhasorGroup> m_potentiallyActiveCurrentInjections;
 
         /// <summary>
         /// Parent
         /// </summary>
         private Network m_parentNetwork;
 
+        private bool m_inPruningMode;
+
         #endregion
 
         #region [ Properties ]
+
+        public bool InPruningMode
+        {
+            get
+            {
+                return m_inPruningMode;
+            }
+            set
+            {
+                m_inPruningMode = value;
+            }
+        }
 
         #region [ INetworkDescribable Properties ]
 
@@ -776,11 +793,11 @@ namespace SynchrophasorAnalytics.Modeling
         {
             get
             {
-                return m_observedBusses;
+                return m_observedBuses;
             }
             set
             {
-                m_observedBusses = value;
+                m_observedBuses = value;
             }
         }
 
@@ -1094,8 +1111,61 @@ namespace SynchrophasorAnalytics.Modeling
             LinkStatusWordsToPhasorGroups();
             LinkVoltageLevelsToPhasorGroups();
             InitializeComplexPowerCalculations();
-            m_observedBusses = new List<ObservedBus>();
+            m_observedBuses = new List<ObservedBus>();
+            m_potentiallyObservedBuses = new List<ObservedBus>();
             m_activeCurrentFlows = new List<CurrentFlowPhasorGroup>();
+            m_potentiallyActiveCurrentFlows = new List<CurrentFlowPhasorGroup>();
+            m_activeCurrentInjections = new List<CurrentInjectionPhasorGroup>();
+            m_potentiallyActiveCurrentInjections = new List<CurrentInjectionPhasorGroup>();
+
+        }
+
+        public void Unkeyify()
+        {
+            foreach (VoltagePhasorGroup voltage in m_voltages)
+            {
+                voltage.Unkeyify();
+            }
+
+            foreach (CurrentFlowPhasorGroup current in m_currentFlows)
+            {
+                current.Unkeyify();
+            }
+
+            foreach (CurrentInjectionPhasorGroup current in m_currentInjections)
+            {
+                current.Unkeyify();
+            }
+
+            foreach (BreakerStatus breakerStatus in m_breakerStatuses)
+            {
+                breakerStatus.Unkeyify();
+            }
+
+            foreach (StatusWord statusWord in m_statusWords)
+            {
+                statusWord.Unkeyify();
+            }
+
+            foreach (Transformer transformer in m_transformers)
+            {
+                transformer.Unkeyify();
+            }
+
+            foreach (Switch ciruitSwitch in m_switches)
+            {
+                ciruitSwitch.Unkeyify();
+            }
+
+            foreach (CircuitBreaker circuitBreaker in m_circuitBreakers)
+            {
+                circuitBreaker.Unkeyify();
+            }
+
+            foreach (SeriesCompensator seriesCompensator in m_seriesCompensators)
+            {
+                seriesCompensator.Unkeyify();
+            }
         }
 
         /// <summary>
@@ -1161,20 +1231,20 @@ namespace SynchrophasorAnalytics.Modeling
         /// Resolves the network from breaker/switch/node to bus/branch.
         /// </summary>
         /// <returns></returns>
-        public void ResolveToObservedBusses()
+        public void ResolveToObservedBuses()
         {
-            m_observedBusses.Clear();
+            m_observedBuses.Clear();
 
             foreach (Substation substation in m_substations)
             {
                 substation.InitializeSubstationGraph();
                 substation.Graph.ResolveDirectlyConnectedAdjacencies();
-                List<ObservedBus> substationObservedBusses = CheckObservability(substation.Graph.ResolveToObservedBusses());
+                List<ObservedBus> substationObservedBusses = CheckObservability(substation.Graph.ResolveToObservedBuses());
                 if (substationObservedBusses != null)
                 {
                     foreach (ObservedBus observedBus in substationObservedBusses)
                     {
-                        m_observedBusses.Add(observedBus);
+                        m_observedBuses.Add(observedBus);
                     }
                 }
             }
@@ -1428,6 +1498,134 @@ namespace SynchrophasorAnalytics.Modeling
             return stringBuilder.ToString();
         }
 
+        public void Prune()
+        {
+            if (InPruningMode)
+            {
+                List<Company> companiesToPrune = new List<Company>();
+                List<Division> divisionsToPrune = new List<Division>();
+                List<Substation> substationsToPrune = new List<Substation>();
+                List<TransmissionLine> transmissionLinesToPrune = new List<TransmissionLine>();
+
+                // Identify prunable companies
+                foreach (Company company in m_companies)
+                {
+                    if (!company.RetainWhenPruning)
+                    {
+                        companiesToPrune.Add(company);
+                    }
+                }
+
+                // prune companies
+                foreach (Company company in companiesToPrune)
+                {
+                    m_companies.Remove(company);
+                }
+
+                // identify prunable divisions
+                foreach (Company company in m_companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        if (!division.RetainWhenPruning)
+                        {
+                            divisionsToPrune.Add(division);
+                        }
+                    }
+                }
+
+                // prune divisions
+                foreach (Company company in m_companies)
+                {
+                    foreach (Division division in divisionsToPrune)
+                    {
+                        if (company.Divisions.Contains(division))
+                        {
+                            company.Divisions.Remove(division);
+                        }
+                    }
+                }
+
+                // identify prunable substations
+                foreach (Company company in m_companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        foreach (Substation substation in division.Substations)
+                        {
+                            if (!substation.RetainWhenPruning)
+                            {
+                                substationsToPrune.Add(substation);
+                            }
+                        }
+                    }
+                }
+
+                // prune substations
+                foreach (Company company in m_companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        foreach (Substation substation in substationsToPrune)
+                        {
+                            if (division.Substations.Contains(substation))
+                            {
+                                division.Substations.Remove(substation);
+                            }
+                        }
+                    }
+                }
+
+                // identify prunable transmission lines
+                foreach (Company company in m_companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        foreach (TransmissionLine transmissionLine in division.TransmissionLines)
+                        {
+                            if (!transmissionLine.RetainWhenPruning)
+                            {
+                                transmissionLinesToPrune.Add(transmissionLine);
+                            }
+                        }
+                    }
+                }
+
+                // prune transmission lines
+                foreach (Company company in m_companies)
+                {
+                    foreach (Division division in company.Divisions)
+                    {
+                        foreach (TransmissionLine transmissionLine in transmissionLinesToPrune)
+                        {
+                            if (division.TransmissionLines.Contains(transmissionLine))
+                            {
+                                division.TransmissionLines.Remove(transmissionLine);
+                            }
+                        }
+                    }
+                }
+
+                Initialize();
+            }
+        }
+
+        public void EnableInferredStateAsActualProxy()
+        {
+            foreach (SwitchingDeviceBase device in m_switchingDevices)
+            {
+                device.UseInferredStateAsActualProxy = true;
+            }
+        }
+
+        public void DisableInferredStateAsActualProxy()
+        {
+            foreach (SwitchingDeviceBase device in m_switchingDevices)
+            {
+                device.UseInferredStateAsActualProxy = false;
+            }
+        }
+
         #endregion
 
         #region [ Private Methods ]
@@ -1483,19 +1681,24 @@ namespace SynchrophasorAnalytics.Modeling
                 }
             }
 
-            foreach (TransmissionLine transmissionLine in m_transmissionLines)
+            foreach (Company company in m_companies)
             {
-                Substation value = null;
-
-                if (substations.TryGetValue(transmissionLine.FromSubstationID, out value))
+                foreach (Division division in company.Divisions)
                 {
-                    transmissionLine.FromSubstation = value;
-                    value = null;
-                }
-                if (substations.TryGetValue(transmissionLine.ToSubstationID, out value))
-                {
-                    transmissionLine.ToSubstation = value;
-                    value = null;
+                    foreach (TransmissionLine transmissionLine in division.TransmissionLines)
+                    {
+                        Substation value = null;
+                        if (substations.TryGetValue(transmissionLine.FromSubstationID, out value))
+                        {
+                            transmissionLine.FromSubstation = value;
+                            value = null;
+                        }
+                        if (substations.TryGetValue(transmissionLine.ToSubstationID, out value))
+                        {
+                            transmissionLine.ToSubstation = value;
+                            value = null;
+                        }
+                    }
                 }
             }
         }
@@ -1755,6 +1958,18 @@ namespace SynchrophasorAnalytics.Modeling
 
         private void ListNetworkComponents()
         {
+            m_divisions = new List<Division>();
+            m_substations = new List<Substation>();
+            m_nodes = new List<Node>();
+            m_switches = new List<Switch>();
+            m_switchingDevices = new List<SwitchingDeviceBase>();
+            m_circuitBreakers = new List<CircuitBreaker>();
+            m_shuntCompensators = new List<ShuntCompensator>();
+            m_transformers = new List<Transformer>();
+            m_transmissionLines = new List<TransmissionLine>();
+            m_lineSegments = new List<LineSegment>();
+            m_seriesCompensators = new List<SeriesCompensator>();
+
             foreach (Company company in m_companies)
             {
                 foreach (Division division in company.Divisions)
@@ -1824,6 +2039,10 @@ namespace SynchrophasorAnalytics.Modeling
 
         private void ListNetworkMeasurements()
         {
+            m_voltages = new List<VoltagePhasorGroup>();
+            m_currentFlows = new List<CurrentFlowPhasorGroup>();
+            m_currentInjections = new List<CurrentInjectionPhasorGroup>();
+
             foreach (Company company in m_companies)
             {
                 foreach (Division division in company.Divisions)
@@ -2170,12 +2389,13 @@ namespace SynchrophasorAnalytics.Modeling
 
         /// <summary>
         /// Determines the <see cref="ObservationState"/> of each of the <see cref="Node"/> objects in the <see cref="NetworkModel"/>
+        /// THIS IS DESIGNED FOR ONLY ONE SUBSTATIONS OBSERVED BUSES AT A TIME. NEEDS TO BE REFACTORED?RENAMED TO EXPRESS THIS
         /// </summary>
         /// <param name="observedBusses">The set of <see cref="ObservedBus"/> objects to check the observability of.</param>
         /// <returns>The set of <see cref="ObservedBus"/> objects passed to function updated with the present <see cref="ObservationState"/>.</returns>
         private List<ObservedBus> CheckObservability(List<ObservedBus> observedBusses)
         {
-            int numberOfDirectlyObservedNodes = 0;
+            int totalNumberOfDirectlyObservedNodes = 0;
             int numberOfIndirectlyObservedNodes = 0;
 
             // Mark the nodes that are directly observed by a voltage phasor
@@ -2188,7 +2408,7 @@ namespace SynchrophasorAnalytics.Modeling
                         if (node.Voltage.IncludeInPositiveSequenceEstimator)
                         {
                             node.Observability = ObservationState.DirectlyObserved;
-                            numberOfDirectlyObservedNodes++;
+                            totalNumberOfDirectlyObservedNodes++;
                         }
                         else
                         {
@@ -2203,7 +2423,7 @@ namespace SynchrophasorAnalytics.Modeling
                         if (node.Voltage.IncludeInEstimator)
                         {
                             node.Observability = ObservationState.DirectlyObserved;
-                            numberOfDirectlyObservedNodes++;
+                            totalNumberOfDirectlyObservedNodes++;
                         }
                         else
                         {
@@ -2232,8 +2452,126 @@ namespace SynchrophasorAnalytics.Modeling
                 }
             }
 
+
+            List<ObservedBus> unobservedBuses = new List<ObservedBus>();
+
             // Mark the remaining nodes in the coherent group based on if their is at least one voltage phasor in on the bus
             foreach (ObservedBus observedBus in observedBusses)
+            {
+                int observedNodeCount = 0;
+
+                foreach (Node node in observedBus.Nodes)
+                {
+                    if (node.Observability != ObservationState.Unobserved)
+                    {
+                        observedNodeCount++;
+                    }
+                }
+                foreach (Node node in observedBus.Nodes)
+                {
+                    if (observedNodeCount == 0)
+                    {
+                        node.Observability = ObservationState.Unobserved;
+                        if (!unobservedBuses.Contains(observedBus))
+                        {
+                            unobservedBuses.Add(observedBus);
+                        }
+                    }
+                    else if (node.Observability == ObservationState.Unobserved)
+                    {
+                        node.Observability = ObservationState.IndirectlyObserved;
+                    }
+                }
+                //foreach (Node node in observedBus.Nodes)
+                //{
+                //    if (totalNumberOfDirectlyObservedNodes > 0 || numberOfIndirectlyObservedNodes > 0)
+                //    {
+                //        if (node.Observability != ObservationState.DirectlyObserved && node.Observability != ObservationState.IndirectlyObserved)
+                //        {
+                //            node.Observability = ObservationState.IndirectlyObserved;
+                //            numberOfIndirectlyObservedNodes++;
+                //        }
+                //    }
+                //}
+            }
+
+
+            foreach (ObservedBus unobservedBus in unobservedBuses)
+            {
+                observedBusses.Remove(unobservedBus);
+            }
+
+            if (totalNumberOfDirectlyObservedNodes == 0 && numberOfIndirectlyObservedNodes == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return observedBusses;
+            }
+        }
+
+        public List<ObservedBus> CheckPotentialObservability(List<ObservedBus> observedBuses)
+        {
+            int numberOfDirectlyObservedNodes = 0;
+            int numberOfIndirectlyObservedNodes = 0;
+
+            // Mark the nodes that are directly observed by a voltage phasor
+            foreach (ObservedBus observedBus in observedBuses)
+            {
+                if (m_phaseSelection == PhaseSelection.PositiveSequence)
+                {
+                    foreach (Node node in observedBus.Nodes)
+                    {
+                        if (node.Voltage.ExpectsPositiveSequenceMeasurements)
+                        {
+                            node.Observability = ObservationState.DirectlyObserved;
+                            numberOfDirectlyObservedNodes++;
+                        }
+                        else
+                        {
+                            node.Observability = ObservationState.Unobserved;
+                        }
+                    }
+                }
+                else if (m_phaseSelection == PhaseSelection.ThreePhase)
+                {
+                    foreach (Node node in observedBus.Nodes)
+                    {
+                        if (node.Voltage.ExpectsMeasurements)
+                        {
+                            node.Observability = ObservationState.DirectlyObserved;
+                            numberOfDirectlyObservedNodes++;
+                        }
+                        else
+                        {
+                            node.Observability = ObservationState.Unobserved;
+                        }
+                    }
+                }
+            }
+
+            // Mark the remaining nodes in the coherent group based on if they are observed with at least one current phasor
+            foreach (ObservedBus observedBus in observedBuses)
+            {
+                foreach (Node node in observedBus.Nodes)
+                {
+                    if (node.Observability == ObservationState.Unobserved)
+                    {
+                        foreach (CurrentFlowPhasorGroup currentPhasorGroup in m_potentiallyActiveCurrentFlows)
+                        {
+                            if (currentPhasorGroup.MeasuredToNodeID == node.InternalID)
+                            {
+                                node.Observability = ObservationState.IndirectlyObserved;
+                                numberOfIndirectlyObservedNodes++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Mark the remaining nodes in the coherent group based on if their is at least one voltage phasor in on the bus
+            foreach (ObservedBus observedBus in observedBuses)
             {
                 foreach (Node node in observedBus.Nodes)
                 {
@@ -2254,7 +2592,7 @@ namespace SynchrophasorAnalytics.Modeling
             }
             else
             {
-                return observedBusses;
+                return observedBuses;
             }
         }
 

@@ -36,24 +36,66 @@ namespace NetworkModelEditor.ViewModels
 
         #region [ Private Members ]
 
-        private MainWindowViewModel m_mainWindow;
+        #region [ Data ] 
+
         private Network m_network;
         private List<RawMeasurements> m_measurementSamples;
+
+        #endregion
+
+        #region [ View Models ] 
+
+        private MainWindowViewModel m_mainWindow;
         private NetworkElementViewModel m_networkModelRoot;
         private NetworkElementViewModel m_measurementSamplesRoot;
+        private NetworkElementViewModel m_selectedElement;
         private ObservableCollection<NetworkElementViewModel> m_firstGeneration;
         private ObservableCollection<NetworkElementViewModel> m_secondGeneration;
+
+        #endregion
+
+        #region [ Commands ] 
+
         private RelayCommand m_viewDetailCommand;
-        private NetworkElementViewModel m_selectedElement;
-        
+
+        #endregion
+
         #endregion
 
         #region [ Properties ]
 
-        /// <summary>
-        /// Returns a read-only collection containing the first person 
-        /// in the family tree, to which the TreeView can bind.
-        /// </summary>
+        #region [ Data ] 
+
+        public Network Network
+        {
+            get
+            {
+                return m_network;
+            }
+            set
+            {
+                m_network = value;
+                InitializeNetworkTree(value);
+            }
+        }
+
+        public List<RawMeasurements> MeasurementSamples
+        {
+            get
+            {
+                return m_measurementSamples;
+            }
+            set
+            {
+                m_measurementSamples = value;
+                InitializeMeasurementTree(value);
+            }
+        }
+
+        #endregion
+
+        #region [ View Models ] 
+
         public ObservableCollection<NetworkElementViewModel> FirstGeneration
         {
             get 
@@ -67,31 +109,6 @@ namespace NetworkModelEditor.ViewModels
             get
             {
                 return m_secondGeneration;
-            }
-        }
-
-        public List<RawMeasurements> MeasurementSamples
-        {
-            get
-            {
-                return m_measurementSamples;
-            }
-            set
-            {
-                m_measurementSamples = value;
-            }
-        }
-        
-        public Network Network
-        {
-            get
-            {
-                return m_network;
-            }
-            set
-            {
-                m_network = value;
-                InitializeNetworkTree(value);
             }
         }
 
@@ -117,18 +134,6 @@ namespace NetworkModelEditor.ViewModels
                 return new ObservableCollection<MenuItem>(contextMenuItems);
             }
         }
-        
-        public ICommand ViewDetailCommand
-        {
-            get
-            {
-                if (m_viewDetailCommand == null)
-                {
-                    m_viewDetailCommand = new RelayCommand(param => this.ViewDetail(), param => true);
-                }
-                return m_viewDetailCommand;
-            }
-        }
 
         public ViewModelBase MainWindow
         {
@@ -144,7 +149,25 @@ namespace NetworkModelEditor.ViewModels
                 }
             }
         }
-        
+
+        #endregion
+
+        #region [ Commands ]
+
+        public ICommand ViewDetailCommand
+        {
+            get
+            {
+                if (m_viewDetailCommand == null)
+                {
+                    m_viewDetailCommand = new RelayCommand(param => this.ViewDetail(), param => true);
+                }
+                return m_viewDetailCommand;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region [ Constructor ]
@@ -160,17 +183,12 @@ namespace NetworkModelEditor.ViewModels
             if (network != null)
             {
                 InitializeNetworkTree(network);
-
-                m_measurementSamples = new List<RawMeasurements>();
-                InitializeMeasurementTree(m_measurementSamples);
             }
             else
             {
                 m_network = new Network();
                 InitializeNetworkTree(m_network);
 
-                m_measurementSamples = new List<RawMeasurements>();
-                InitializeMeasurementTree(m_measurementSamples);
             }
             if (measurementSamples != null)
             {
@@ -182,6 +200,10 @@ namespace NetworkModelEditor.ViewModels
                 InitializeMeasurementTree(m_measurementSamples);
             }
         }
+
+        #endregion
+
+        #region [ Private Methods ] 
 
         private void InitializeNetworkTree(Network network)
         {
@@ -201,7 +223,7 @@ namespace NetworkModelEditor.ViewModels
             OnPropertyChanged("SecondGeneration");
         }
         
-        #endregion // Constructor
+        #endregion
 
         internal void HandleRightMouseButtonClick()
         {
@@ -210,16 +232,24 @@ namespace NetworkModelEditor.ViewModels
                 MessageBox.Show(SelectedElement.Name);
             }
         }
-        
+
+        #region [ Commands ] 
+
         private void ViewDetail()
         {
             m_mainWindow.ViewDetailCommand.Execute(null);
         }
+
+        #endregion
+
+        #region [ Public Methods ] 
 
         public void RefreshNetworkTree()
         {
             InitializeNetworkTree(m_network);
             InitializeMeasurementTree(m_measurementSamples);
         }
+
+        #endregion
     }
 }

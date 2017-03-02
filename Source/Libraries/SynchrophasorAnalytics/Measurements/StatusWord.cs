@@ -789,6 +789,11 @@ namespace SynchrophasorAnalytics.Measurements
         {
             Key = $"{rootKey}.Status";
         }
+
+        public void Unkeyify()
+        {
+            Key = DEFAULT_MEASUREMENT_KEY;
+        }
         #endregion
 
     }

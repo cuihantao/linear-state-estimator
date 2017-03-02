@@ -356,7 +356,7 @@ namespace SynchrophasorAnalytics.Adapters
 
                 if (m_network.HasChangedSincePreviousFrame)
                 {
-                    m_network.Model.ResolveToObservedBusses();
+                    m_network.Model.ResolveToObservedBuses();
                     m_network.Model.ResolveToSingleFlowBranches();
                 }
 

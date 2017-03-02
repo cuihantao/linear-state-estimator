@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\..\Build\Output\Debug\Libraries\SynchrophasorAnalytics\SynchrophasorAnalytics.XML</DocumentationFile>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -147,6 +147,8 @@
     <Compile Include="Measurements\Phasor.cs" />
     <Compile Include="Measurements\PhasorBase.cs" />
     <Compile Include="Measurements\PhasorBaseSerializationConditions.cs" />
+    <Compile Include="Measurements\PhasorGroupPair.cs" />
+    <Compile Include="Measurements\PhasorPair.cs" />
     <Compile Include="Measurements\PhasorEstimate.cs" />
     <Compile Include="Measurements\PhasorGroup.cs" />
     <Compile Include="Measurements\PhasorMeasurement.cs" />
@@ -164,6 +166,7 @@
     </Compile>
     <Compile Include="Modeling\Impedance.cs" />
     <Compile Include="Modeling\INetworkDescribable.cs" />
+    <Compile Include="Modeling\IPrunable.cs" />
     <Compile Include="Modeling\ISingleTerminal.cs" />
     <Compile Include="Modeling\IThreeTerminal.cs" />
     <Compile Include="Modeling\ITwoTerminal.cs" />
@@ -183,6 +186,7 @@
     <Compile Include="Modeling\Switch.cs" />
     <Compile Include="Modeling\SwitchingDeviceActualState.cs" />
     <Compile Include="Modeling\SwitchingDeviceBase.cs" />
+    <Compile Include="Modeling\SwitchingDeviceInferredState.cs" />
     <Compile Include="Modeling\SwitchingDeviceNormalState.cs" />
     <Compile Include="Modeling\TapConfiguration.cs" />
     <Compile Include="Modeling\Transformer.cs" />
@@ -215,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Hdb\Scripts\Pattern\altlim.pattern" />
     <None Include="Hdb\Scripts\Pattern\area.pattern" />
     <None Include="Hdb\Scripts\Pattern\bs.pattern" />

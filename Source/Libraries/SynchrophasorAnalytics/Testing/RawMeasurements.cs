@@ -25,6 +25,7 @@
 //
 //******************************************************************************************************
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
 
@@ -44,6 +45,7 @@ namespace SynchrophasorAnalytics.Testing
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
     public partial class RawMeasurements
     {
+        private string identifier;
 
         private RawMeasurementsMeasurement[] itemsField;
 
@@ -58,6 +60,18 @@ namespace SynchrophasorAnalytics.Testing
             set
             {
                 this.itemsField = value;
+            }
+        }
+
+        public string Identifier
+        {
+            get
+            {
+                return identifier;
+            }
+            set
+            {
+                identifier = value;
             }
         }
 
@@ -89,6 +103,99 @@ namespace SynchrophasorAnalytics.Testing
             catch (Exception exception)
             {
                 throw new Exception("Failed to Deserialize the Raw Measurements from the Snapshot File: " + exception.ToString());
+            }
+        }
+
+        public static List<RawMeasurements> FromCsv(string csvPathName, string columnMappingsPathName, bool hasHeader)
+        {
+            String columnMappingFile = null;
+
+            try
+            {   // Open the text file using a stream reader.
+                using (StreamReader sr = new StreamReader(columnMappingsPathName))
+                {
+                    // Read the stream to a string, and write the string to the console.
+                    columnMappingFile = sr.ReadToEnd();
+                    Console.WriteLine(columnMappingFile);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+
+            string[] columnMappingPairs = columnMappingFile.Split(';');
+
+            Dictionary<string, int> columnMetaData = new Dictionary<string, int>();
+
+            foreach (string mapping in columnMappingPairs)
+            {
+                string[] metaData = mapping.Split('=');
+                if (metaData.Length == 2)
+                {
+                    int columnIndex = Convert.ToInt32(metaData[0]);
+                    string columnKey = metaData[1];
+                    columnMetaData.Add(columnKey, columnIndex);
+                }
+            }
+
+            int lineCount = 0;
+
+            List<RawMeasurements> measurementSamples = new List<RawMeasurements>();
+
+            using (var reader = new StreamReader(File.OpenRead(csvPathName)))
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    if (!hasHeader || lineCount != 0)
+                    {
+                        var values = line.Split(',');
+                        List<RawMeasurementsMeasurement> measurements = new List<RawMeasurementsMeasurement>();
+                        foreach (KeyValuePair<string, int> column in columnMetaData)
+                        {
+                            measurements.Add(new RawMeasurementsMeasurement()
+                            {
+                                Key = column.Key,
+                                Value = values[column.Value]
+                            });
+                        }
+                        RawMeasurements measurementSample = new RawMeasurements();
+                        measurementSample.Items = measurements.ToArray();
+                        measurementSamples.Add(measurementSample);
+                    }
+
+                    lineCount++;
+                }
+            }
+
+            foreach (RawMeasurements sample in measurementSamples)
+            {
+                sample.identifier = measurementSamples.IndexOf(sample).ToString();
+            }
+            return measurementSamples;
+        }
+
+        public static void MakeSampleFilesFromCsv(string csvPathName, string columnMappingsPathName, bool hasHeader)
+        {
+            List<RawMeasurements> measurementSamples = RawMeasurements.FromCsv(csvPathName, columnMappingsPathName, true);
+            
+            foreach (RawMeasurements sample in measurementSamples)
+            {
+                // Create an XmlSerializer with the type of Network
+                XmlSerializer serializer = new XmlSerializer(typeof(RawMeasurements));
+
+                // Open a connection to the file and path.
+                TextWriter writer = new StreamWriter($@"C:\Users\kevin\OneDrive\Documents\VT Data\Models\sample_{measurementSamples.IndexOf(sample)}.xml");
+
+                // Serialize this instance of NetworkMeasurements
+                serializer.Serialize(writer, sample);
+
+                Console.WriteLine($"Writing sample file {measurementSamples.IndexOf(sample)}.");
+
+                // Close the connection
+                writer.Close();
             }
         }
     }

@@ -156,6 +156,11 @@ namespace SynchrophasorAnalytics.Modeling
 
         #region [ Public Methods ]
 
+        public void Unkeyify()
+        {
+            OutputMeasurementKey = DEFAULT_OUTPUT_MEASUREMENT_KEY;
+        }
+
         /// <summary>
         /// A string representation of the instance of the <see cref="LinearStateEstimator.Modeling.SeriesCompensator"/> class.
         /// </summary>
