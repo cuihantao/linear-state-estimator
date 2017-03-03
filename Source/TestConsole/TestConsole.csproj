@@ -34,9 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SynchrophasorAnalytics">
-      <HintPath>..\..\Build\Output\Debug\Libraries\SynchrophasorAnalytics\SynchrophasorAnalytics.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\SynchrophasorAnalytics\SynchrophasorAnalytics.csproj">
+      <Project>{7e806a7d-20c8-4cde-a1f8-4a92d1bc89f4}</Project>
+      <Name>SynchrophasorAnalytics</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

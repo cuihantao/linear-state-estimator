@@ -41,7 +41,7 @@ namespace SynchrophasorAnalytics.Hdb.Records
 
         public override string ToString()
         {
-            return "Station:\n  Number:" + Convert.ToString(Number) + "\n    Name:" + Name;
+            return "Station: Number:" + Convert.ToString(Number) + " Name:" + Name;
         }
     }
 }

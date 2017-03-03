@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using SynchrophasorAnalytics.Hdb.Records;
 
@@ -104,12 +105,12 @@ namespace SynchrophasorAnalytics.Hdb
 
             foreach (Dictionary<string, string> record in records)
             {
-                parentTransformers.Add(new ParentTransformer()
-                {
-                    Number = Convert.ToInt32(record[m_parentTransformerNumberHeader]),
-                    Id = record[m_parentTransformerIdHeader],
-                });
-            }
+                   parentTransformers.Add(new ParentTransformer()
+                   {
+                       Number = Convert.ToInt32(record[m_parentTransformerNumberHeader]),
+                       Id = record[m_parentTransformerIdHeader],
+                   });
+               }
             return parentTransformers;
 
         }

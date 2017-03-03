@@ -119,7 +119,7 @@ namespace SynchrophasorAnalytics.Hdb.Records
 
         public override string ToString()
         {
-            return "Node:\n      Number:" + Convert.ToString(Number) + "\n          Id:" + Id + "\n     Company:" + CompanyName + "\n    Division:" + DivisionName + "\n     Station:" + StationName + "\n     Base KV:" + Convert.ToString(BaseKv) + "\n         Bus:" + Convert.ToString(BusNumber);
+            return "Node: Number:" + Convert.ToString(Number) + " Id:" + Id + " Company:" + CompanyName + " Division:" + DivisionName + " Station:" + StationName + " Base KV:" + Convert.ToString(BaseKv) + " Bus:" + Convert.ToString(BusNumber);
         }
     }
 }

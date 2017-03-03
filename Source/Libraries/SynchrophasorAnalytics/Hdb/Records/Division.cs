@@ -54,7 +54,7 @@ namespace SynchrophasorAnalytics.Hdb.Records
 
         public override string ToString()
         {
-            return "Division:\n  Number:" + Convert.ToString(Number) + "\n    Name:" + Name + "\n    Area:" + Convert.ToString(AreaNumber);
+            return "Division: Number:" + Convert.ToString(Number) + " Name:" + Name + " Area:" + Convert.ToString(AreaNumber);
         }
     }
 }

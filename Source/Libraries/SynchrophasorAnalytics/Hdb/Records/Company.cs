@@ -41,7 +41,7 @@ namespace SynchrophasorAnalytics.Hdb.Records
 
         public override string ToString()
         {
-            return "Company:\n  Number:" + Convert.ToString(Number) + "\n    Name:" + Name;
+            return "Company:  Number:" + Convert.ToString(Number) + "    Name:" + Name;
         }
     }
 }

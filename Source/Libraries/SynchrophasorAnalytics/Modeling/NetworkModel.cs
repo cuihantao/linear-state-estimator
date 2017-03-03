@@ -1676,7 +1676,14 @@ namespace SynchrophasorAnalytics.Modeling
                 {
                     foreach (Substation substation in division.Substations)
                     {
-                        substations.Add(substation.InternalID, substation);
+                        if (!substations.Keys.Contains(substation.InternalID))
+                        {
+                            substations.Add(substation.InternalID, substation);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{substation.InternalID} - {substation.Name}");
+                        }
                     }
                 }
             }

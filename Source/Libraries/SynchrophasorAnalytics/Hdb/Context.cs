@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using SynchrophasorAnalytics.Hdb.Records;
 
@@ -178,7 +179,7 @@ namespace SynchrophasorAnalytics.Hdb
                 m_transmissionLines = value;
             }
         }
-
+        
         public HdbContext(ModelFiles modelFiles)
         {
             m_modelFiles = modelFiles;
@@ -199,6 +200,243 @@ namespace SynchrophasorAnalytics.Hdb
             m_parentTransformers = HdbReader.ReadParentTransformerFile(m_modelFiles.ParentTransformerFile);
             m_transformerTaps = HdbReader.ReadTransformerTapFile(m_modelFiles.TransformerTapFile);
             m_transmissionLines = HdbReader.ReadTransmissionLineFile(m_modelFiles.TransmissionLineFile);
+        }
+
+        public Company GetStationCompany(Station station)
+        {
+            List<Node> substationNodes = m_nodes.FindAll(x => x.StationName == station.Name);
+            return m_companies.Find(x => x.Name == substationNodes[0].CompanyName);
+        }
+
+        public Company GetNodeCompany(Node node)
+        {
+            return m_companies.Find(x => x.Name == node.CompanyName);
+        }
+
+        public void Filter(List<string> companyNames)
+        {
+            List<Company> retainedCompanies = new List<Company>();
+            List<Division> retainedDivisions = new List<Division>();
+            List<Station> retainedStations = new List<Station>();
+            List<Station> stationsToRemove = new List<Station>();
+            List<Node> retainedNodes = new List<Node>();
+            List<Node> nodesToRemove = new List<Node>();
+            List<LineSegment> lineSegmentsToRemove = new List<LineSegment>();
+            List<TransmissionLine> transmissionLinesToRemove = new List<TransmissionLine>();
+            List<CircuitBreaker> circuitBreakersToRemove = new List<CircuitBreaker>();
+            List<Shunt> shuntsToRemove = new List<Shunt>();
+            List<Transformer> transformersToRemove = new List<Transformer>();
+            List<TransformerTap> retainedTaps = new List<TransformerTap>();
+            List<ParentTransformer> parentTransformersToRemove = new List<ParentTransformer>();
+
+            Console.WriteLine("1");
+            // Line segments, companies, stations
+            Parallel.ForEach(m_lineSegments, (lineSegment) =>
+           {
+               string fromNodeId = $"{lineSegment.FromStationName}_{lineSegment.FromNodeId}";
+               string toNodeId = $"{lineSegment.ToStationName}_{lineSegment.ToNodeId}";
+               Node fromNode = m_nodes.Find(x => $"{x.StationName}_{x.Id}" == fromNodeId);
+               Node toNode = m_nodes.Find(x => $"{x.StationName}_{x.Id}" == toNodeId);
+               Company fromCompany = GetNodeCompany(fromNode);
+               Company toCompany = GetNodeCompany(toNode);
+
+               Station fromStation = m_stations.Find(x => x.Name == lineSegment.FromStationName);
+               Station toStation = m_stations.Find(x => x.Name == lineSegment.ToStationName);
+
+               if (companyNames.Contains(fromCompany.Name) || companyNames.Contains(toCompany.Name))
+               {
+                   if (!retainedStations.Contains(fromStation))
+                   {
+                       retainedStations.Add(fromStation);
+                   }
+                   if (!retainedStations.Contains(toStation))
+                   {
+                       retainedStations.Add(toStation);
+                   }
+                   if (!retainedNodes.Contains(fromNode))
+                   {
+                       retainedNodes.Add(fromNode);
+                   }
+                   if (!retainedNodes.Contains(toNode))
+                   {
+                       retainedNodes.Add(toNode);
+                   }
+                   if (!retainedCompanies.Contains(fromCompany))
+                   {
+                       retainedCompanies.Add(fromCompany);
+                   }
+                   if (!retainedCompanies.Contains(toCompany))
+                   {
+                       retainedCompanies.Add(toCompany);
+                   }
+               }
+               else
+               {
+                   if (!lineSegmentsToRemove.Contains(lineSegment))
+                   {
+                       lineSegmentsToRemove.Add(lineSegment);
+                   }
+                   if (!stationsToRemove.Contains(fromStation))
+                   {
+                       stationsToRemove.Add(fromStation);
+                   }
+                   if (!stationsToRemove.Contains(toStation))
+                   {
+                       stationsToRemove.Add(toStation);
+                   }
+               }
+           });
+
+            Console.WriteLine("2");
+            // Transmission Lines
+            foreach (LineSegment lineSegment in lineSegmentsToRemove)
+            {
+                TransmissionLine transmissionLine = m_transmissionLines.Find(x => x.Id == lineSegment.TransmissionLineId);
+                if (!transmissionLinesToRemove.Contains(transmissionLine))
+                {
+                    transmissionLinesToRemove.Add(transmissionLine);
+                }
+            }
+
+            Console.WriteLine("3");
+            // Nodes
+            foreach (Station station in stationsToRemove)
+            {
+                List<Node> stationNodes = m_nodes.FindAll(x => x.StationName == station.Name);
+                foreach (Node node in stationNodes)
+                {
+                    if (!nodesToRemove.Contains(node))
+                    {
+                        nodesToRemove.Add(node);
+                    }
+                }
+            }
+
+            Console.WriteLine("4");
+            // Divisions
+            foreach (Station station in retainedStations)
+            {
+                List<Node> stationNodes = m_nodes.FindAll(x => x.StationName == station.Name);
+                foreach (Node node in stationNodes)
+                {
+                    Division division = m_divisions.Find(x => x.Name == node.DivisionName);
+                    
+                    if (!retainedDivisions.Contains(division))
+                    {
+                        retainedDivisions.Add(division);
+                    }
+                }
+            }
+
+            Console.WriteLine("5");
+            // Circuit breakers
+            foreach (CircuitBreaker breaker in m_circuitBreakers)
+            {
+                Station parentStation = m_stations.Find(x => x.Name == breaker.StationName);
+                if (stationsToRemove.Contains(parentStation))
+                {
+                    if (!circuitBreakersToRemove.Contains(breaker))
+                    {
+                        circuitBreakersToRemove.Add(breaker);
+                    }
+                }
+            }
+
+
+            Console.WriteLine("6");
+            // shunts
+            foreach (Shunt shunt in m_shunts)
+            {
+                Station parentStation = m_stations.Find(x => x.Name == shunt.StationName);
+                if (stationsToRemove.Contains(parentStation))
+                {
+                    if (!shuntsToRemove.Contains(shunt))
+                    {
+                        shuntsToRemove.Add(shunt);
+                    }
+                }
+            }
+
+            Console.WriteLine("7");
+            // Transformers and Transformer Taps
+            foreach (Transformer transformer in m_transformers)
+            {
+                Station parentStation = m_stations.Find(x => x.Name == transformer.StationName);
+                if (stationsToRemove.Contains(parentStation))
+                {
+                    if (!transformersToRemove.Contains(transformer))
+                    {
+                        transformersToRemove.Add(transformer);
+                    }
+                }
+                else
+                {
+                    TransformerTap fromTap = m_transformerTaps.Find(x => x.Id == transformer.FromNodeTap);
+                    TransformerTap toTap = m_transformerTaps.Find(x => x.Id == transformer.ToNodeTap);
+                    if (!retainedTaps.Contains(fromTap))
+                    {
+                        retainedTaps.Add(fromTap);
+                    }
+                    if (!retainedTaps.Contains(toTap))
+                    {
+                        retainedTaps.Add(toTap);
+                    }
+                }
+            }
+            Console.WriteLine("8");
+            // Parent Transformer
+            foreach (Transformer transformer in transformersToRemove)
+            {
+                ParentTransformer parentTransformer = m_parentTransformers.Find(x => x.Id == transformer.Parent);
+                if (!parentTransformersToRemove.Contains(parentTransformer))
+                {
+                    parentTransformersToRemove.Add(parentTransformer);
+                }
+            }
+            m_companies = retainedCompanies;
+            m_divisions = retainedDivisions;
+            m_transformerTaps = retainedTaps;
+
+            Console.WriteLine("9");
+            foreach (Station station in stationsToRemove)
+            {
+                m_stations.Remove(station);
+            }
+
+            foreach (LineSegment lineSegment in lineSegmentsToRemove)
+            {
+                m_lineSegments.Remove(lineSegment);
+            }
+            
+            foreach (Node node in nodesToRemove)
+            {
+                m_nodes.Remove(node);
+            }
+            
+            foreach (Shunt shunt in shuntsToRemove)
+            {
+                m_shunts.Remove(shunt);
+            }
+
+            foreach (CircuitBreaker breaker in circuitBreakersToRemove)
+            {
+                m_circuitBreakers.Remove(breaker);
+            }
+
+            foreach (Transformer transformer in transformersToRemove)
+            {
+                m_transformers.Remove(transformer);
+            }
+
+            foreach (ParentTransformer transformer in parentTransformersToRemove)
+            {
+                m_parentTransformers.Remove(transformer);
+            }
+
+            foreach (TransmissionLine transmissionLine in transmissionLinesToRemove)
+            {
+                m_transmissionLines.Remove(transmissionLine);
+            }
         }
     }
 }
