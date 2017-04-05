@@ -24,13 +24,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Xml.Linq;
+using GSF.Configuration;
 using GSF.Data;
-using GSF.IO;
 
 namespace ConfigurationSetupUtility.Screens
 {
@@ -246,7 +244,7 @@ namespace ConfigurationSetupUtility.Screens
                 string newDatabaseMessage = "Please enter the needed information about the\r\nOracle database you would like to create.";
                 string oldDatabaseMessage = "Please enter the needed information about\r\nyour existing Oracle database.";
 
-                XDocument serviceConfig;
+                ConfigurationFile serviceConfig;
                 string connectionString;
                 string dataProviderString;
 
@@ -284,21 +282,9 @@ namespace ConfigurationSetupUtility.Screens
                 // When using an existing database as-is, read existing connection settings out of the configuration file
                 if (existing && !migrate)
                 {
-                    serviceConfig = XDocument.Load(FilePath.GetAbsolutePath("LinearStateEstimator.exe.config"));
-
-                    connectionString = serviceConfig
-                        .Descendants("systemSettings")
-                        .SelectMany(systemSettings => systemSettings.Elements("add"))
-                        .Where(element => "ConnectionString".Equals((string)element.Attribute("name"), StringComparison.OrdinalIgnoreCase))
-                        .Select(element => (string)element.Attribute("value"))
-                        .FirstOrDefault();
-
-                    dataProviderString = serviceConfig
-                        .Descendants("systemSettings")
-                        .SelectMany(systemSettings => systemSettings.Elements("add"))
-                        .Where(element => "DataProviderString".Equals((string)element.Attribute("name"), StringComparison.OrdinalIgnoreCase))
-                        .Select(element => (string)element.Attribute("value"))
-                        .FirstOrDefault();
+                    serviceConfig = ConfigurationFile.Open(configFile);
+                    connectionString = serviceConfig.Settings["systemSettings"]["ConnectionString"]?.Value;
+                    dataProviderString = serviceConfig.Settings["systemSettings"]["DataProviderString"]?.Value;
 
                     if (!string.IsNullOrEmpty(connectionString) && m_oracleSetup.DataProviderString.Equals(dataProviderString, StringComparison.InvariantCultureIgnoreCase))
                     {
