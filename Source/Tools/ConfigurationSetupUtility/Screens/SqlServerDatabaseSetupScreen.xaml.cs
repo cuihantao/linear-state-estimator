@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Management;
 using System.Text.RegularExpressions;
@@ -36,6 +37,7 @@ using GSF;
 using GSF.Communication;
 using GSF.Configuration;
 using GSF.Data;
+using GSF.IO;
 
 namespace ConfigurationSetupUtility.Screens
 {
@@ -323,6 +325,11 @@ namespace ConfigurationSetupUtility.Screens
                 m_databaseNameTextBox.Text = migrate ? "LinearStateEstimator" + App.DatabaseVersionSuffix : "LinearStateEstimator";
 
                 // When using an existing database as-is, read existing connection settings out of the configuration file
+                string configFile = FilePath.GetAbsolutePath("LinearStateEstimator.exe.config");
+
+                if (!File.Exists(configFile))
+                    configFile = FilePath.GetAbsolutePath("LinearStateEstimatorManager.exe.config");
+
                 if (existing && !migrate)
                 {
                     serviceConfig = ConfigurationFile.Open(configFile);
@@ -337,6 +344,7 @@ namespace ConfigurationSetupUtility.Screens
                         m_adminUserNameTextBox.Text = m_sqlServerSetup.UserName;
                         m_adminPasswordTextBox.Password = m_sqlServerSetup.Password;
                         m_checkBoxIntegratedSecurity.IsChecked = ((object)m_sqlServerSetup.IntegratedSecurity != null);
+                        m_state["encryptSqlServerConnectionStrings"] = serviceConfig.Settings["systemSettings"]["ConnectionString"].Encrypted;
                     }
                 }
             }

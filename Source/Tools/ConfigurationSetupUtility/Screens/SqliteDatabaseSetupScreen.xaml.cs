@@ -278,6 +278,11 @@ namespace ConfigurationSetupUtility.Screens
                 m_state.Add("sqliteDatabaseFilePath", m_sqliteDatabaseFilePathTextBox.Text);
 
             // When using an existing database as-is, read existing connection settings out of the configuration file
+            string configFile = FilePath.GetAbsolutePath("LinearStateEstimator.exe.config");
+
+            if (!File.Exists(configFile))
+                configFile = FilePath.GetAbsolutePath("LinearStateEstimatorManager.exe.config");
+
             if (existing && !migrate)
             {
                 serviceConfig = ConfigurationFile.Open(configFile);

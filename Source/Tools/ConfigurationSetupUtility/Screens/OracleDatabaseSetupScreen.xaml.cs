@@ -24,11 +24,13 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using GSF.Configuration;
 using GSF.Data;
+using GSF.IO;
 
 namespace ConfigurationSetupUtility.Screens
 {
@@ -280,6 +282,11 @@ namespace ConfigurationSetupUtility.Screens
                 m_schemaUserNameTextBox.Text = migrate ? "LinearStateEstimator" + App.DatabaseVersionSuffix : "LinearStateEstimator";
 
                 // When using an existing database as-is, read existing connection settings out of the configuration file
+                string configFile = FilePath.GetAbsolutePath("LinearStateEstimator.exe.config");
+
+                if (!File.Exists(configFile))
+                    configFile = FilePath.GetAbsolutePath("LinearStateEstimatorManager.exe.config");
+
                 if (existing && !migrate)
                 {
                     serviceConfig = ConfigurationFile.Open(configFile);
@@ -292,6 +299,7 @@ namespace ConfigurationSetupUtility.Screens
                         m_tnsNameTextBox.Text = m_oracleSetup.TnsName;
                         m_adminUserNameTextBox.Text = m_oracleSetup.SchemaUserName;
                         m_adminPasswordTextBox.Password = m_oracleSetup.SchemaPassword;
+                        m_oracleSetup.EncryptConnectionString = serviceConfig.Settings["systemSettings"]["ConnectionString"].Encrypted;
                     }
                 }
             }
