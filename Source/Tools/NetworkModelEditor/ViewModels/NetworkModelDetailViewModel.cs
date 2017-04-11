@@ -265,6 +265,210 @@ namespace NetworkModelEditor.ViewModels
                 m_model.ReturnsSeriesCompensatorStatus = value;
             }
         }
+        
+        public bool ReturnsPerformanceMetrics
+        {
+            get
+            {
+                return m_model.ReturnsPerformanceMetrics;
+            }
+            set
+            {
+                m_model.ReturnsPerformanceMetrics = value;
+            }
+        }
+        
+        public bool ReturnsTopologyProfilingInformation
+        {
+            get
+            {
+                return m_model.ReturnsTopologyProfilingInformation;
+            }
+            set
+            {
+                m_model.ReturnsTopologyProfilingInformation = value;
+            }
+        }
+        
+        public bool ReturnsMeasurementValidationFlags
+        {
+            get
+            {
+                return m_model.ReturnsMeasurementValidationFlags;
+            }
+            set
+            {
+                m_model.ReturnsMeasurementValidationFlags = value;
+            }
+        }
+
+        public string ActiveVoltageCountKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.ActiveVoltageCountKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.ActiveVoltageCountKey = value;
+            }
+        }
+
+        public string ActiveCurrentFlowCountKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.ActiveCurrentFlowCountKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.ActiveCurrentFlowCountKey = value;
+            }
+        }
+
+        public string ActiveCurrentInjectionCountKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.ActiveCurrentInjectionCountKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.ActiveCurrentInjectionCountKey = value;
+            }
+        }
+
+        public string ObservedBusCountKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.ObservedBusCountKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.ObservedBusCountKey = value;
+            }
+        }
+
+        public string RefreshExecutionTimeKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.RefreshExecutionTimeKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.RefreshExecutionTimeKey = value;
+            }
+        }
+
+        public string ParsingExecutionTimeKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.ParsingExecutionTimeKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.ParsingExecutionTimeKey = value;
+            }
+        }
+
+        public string MeasurementMappingExecutionTimeKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.MeasurementMappingExecutionTimeKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.MeasurementMappingExecutionTimeKey = value;
+            }
+        }
+
+        public string ObservabilityAnalysisExecutionTimeKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.ObservabilityAnalysisExecutionTimeKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.ObservabilityAnalysisExecutionTimeKey = value;
+            }
+        }
+
+        public string ActiveCurrentPhasorDeterminationExecutionTimeKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.ActiveCurrentPhasorDeterminationExecutionTimeKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.ActiveCurrentPhasorDeterminationExecutionTimeKey = value;
+            }
+        }
+
+        public string StateComputationExecutionTimeKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.StateComputationExecutionTimeKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.StateComputationExecutionTimeKey = value;
+            }
+        }
+
+        public string SolutionRetrievalExecutionTimeKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.SolutionRetrievalExecutionTimeKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.SolutionRetrievalExecutionTimeKey = value;
+            }
+        }
+
+        public string OutputPreparationExecutionTimeKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.OutputPreparationExecutionTimeKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.OutputPreparationExecutionTimeKey = value;
+            }
+        }
+
+        public string TotalExecutionTimeInTicksKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.TotalExecutionTimeInTicksKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.TotalExecutionTimeInTicksKey = value;
+            }
+        }
+
+        public string TotalExecutionTimeInMillisecondsKey
+        {
+            get
+            {
+                return m_model.ParentNetwork.PerformanceMetrics.TotalExecutionTimeInMillisecondsKey;
+            }
+            set
+            {
+                m_model.ParentNetwork.PerformanceMetrics.TotalExecutionTimeInMillisecondsKey = value;
+            }
+        }
 
         #endregion
 

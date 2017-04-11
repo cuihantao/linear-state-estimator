@@ -64,6 +64,9 @@ namespace NetworkModelEditor.ViewModels
         private Network m_network;
         private List<RawMeasurements> m_measurementSamples;
         private RawMeasurements m_selectedMeasurementSample;
+        private List<VoltageLevel> m_retainedVoltageLevels;
+        private List<Substation> m_retainedSubstations;
+        private List<Company> m_retainedCompanies;
 
         #endregion
 
@@ -75,6 +78,7 @@ namespace NetworkModelEditor.ViewModels
         private RelayCommand m_openMeasurementSampleFileCommand;
         private RelayCommand m_openPsseRawFileCommand;
         private RelayCommand m_openHdbExportFilesCommand;
+        private RelayCommand m_openTvaHdbExportFilesCommand;
 
         #endregion
 
@@ -99,6 +103,9 @@ namespace NetworkModelEditor.ViewModels
         private RelayCommand m_unkeyifyModelCommand;
         private RelayCommand m_generateMeasurementSamplesCommand;
         private RelayCommand m_pruneModelCommand;
+        private RelayCommand m_pruneModelByVoltageLevelCommand;
+        private RelayCommand m_pruneModelBySubstationCommand;
+        private RelayCommand m_pruneModelByCompanyCommand;
 
         #endregion
 
@@ -195,6 +202,10 @@ namespace NetworkModelEditor.ViewModels
         private MenuItemViewModel m_unkeyifyModelMenuItem;
         private MenuItemViewModel m_pruneModelMenuItem;
 
+        private MenuItemViewModel m_pruneModelByVoltageLevelMenuItem;
+        private MenuItemViewModel m_pruneModelBySubstationMenuItem;
+        private MenuItemViewModel m_pruneModelByCompanyMenuItem;
+
         private MenuItemViewModel m_measurementActionsMenuItem;
         private MenuItemViewModel m_generateMeasurementSamplesMenuItem;
 
@@ -211,6 +222,7 @@ namespace NetworkModelEditor.ViewModels
         private MenuItemViewModel m_openMeasurementSampleMenuItem;
         private MenuItemViewModel m_openPsseRawFileMenuItem;
         private MenuItemViewModel m_openHdbExportFilesMenuItem;
+        private MenuItemViewModel m_openTvaHdbExportFilesMenuItem;
         private MenuItemViewModel m_saveNetworkModelMenuItem;
         private MenuItemViewModel m_saveNetworkSnapshotMenuItem;
         private MenuItemViewModel m_saveMeasurementSampleFileMenuItem;
@@ -385,6 +397,42 @@ namespace NetworkModelEditor.ViewModels
             }
         }
 
+        public List<Substation> RetainedSubstations
+        {
+            get
+            {
+                return m_retainedSubstations;
+            }
+            set
+            {
+                m_retainedSubstations = value;
+            }
+        }
+
+        public List<VoltageLevel> RetainedVoltageLevels
+        {
+            get
+            {
+                return m_retainedVoltageLevels;
+            }
+            set
+            {
+                m_retainedVoltageLevels = value;
+            }
+        }
+
+        public List<Company> RetainedCompanies
+        {
+            get
+            {
+                return m_retainedCompanies;
+            }
+            set
+            {
+                m_retainedCompanies = value;
+            }
+        }
+
         #endregion
 
         #region [ Commands ]
@@ -434,6 +482,19 @@ namespace NetworkModelEditor.ViewModels
                     m_openHdbExportFilesCommand = new RelayCommand(param => this.OpenHdbExportFiles(), param => true);
                 }
                 return m_openHdbExportFilesCommand;
+            }
+
+        }
+
+        public ICommand OpenTvaHdbExportFilesCommand
+        {
+            get
+            {
+                if (m_openTvaHdbExportFilesCommand == null)
+                {
+                    m_openTvaHdbExportFilesCommand = new RelayCommand(param => this.OpenTvaHdbExportFiles(), param => true);
+                }
+                return m_openTvaHdbExportFilesCommand;
             }
 
         }
@@ -507,6 +568,42 @@ namespace NetworkModelEditor.ViewModels
                     m_pruneModelCommand = new RelayCommand(param => this.PruneModel(), param => true);
                 }
                 return m_pruneModelCommand;
+            }
+        }
+
+        public ICommand PruneModelByVoltageLevelCommand
+        {
+            get
+            {
+                if (m_pruneModelByVoltageLevelCommand == null)
+                {
+                    m_pruneModelByVoltageLevelCommand = new RelayCommand(param => this.PruneModelByVoltageLevel(), param => true);
+                }
+                return m_pruneModelByVoltageLevelCommand;
+            }
+        }
+
+        public ICommand PruneModelBySubstationCommand
+        {
+            get
+            {
+                if (m_pruneModelBySubstationCommand == null)
+                {
+                    m_pruneModelBySubstationCommand = new RelayCommand(param => this.PruneModelBySubstation(), param => true);
+                }
+                return m_pruneModelBySubstationCommand;
+            }
+        }
+
+        public ICommand PruneModelByCompanyCommand
+        {
+            get
+            {
+                if (m_pruneModelByCompanyCommand == null)
+                {
+                    m_pruneModelByCompanyCommand = new RelayCommand(param => this.PruneModelByCompany(), param => true);
+                }
+                return m_pruneModelByCompanyCommand;
             }
         }
 
@@ -1402,9 +1499,15 @@ namespace NetworkModelEditor.ViewModels
             #region [ MENU BAR --> UTILITIES --> MODEL ACTIONS ]
             m_unkeyifyModelMenuItem = new MenuItemViewModel("Unkeyify Model", UnkeyifyModelCommand);
             m_pruneModelMenuItem = new MenuItemViewModel("Prune Model", PruneModelCommand);
+            m_pruneModelByVoltageLevelMenuItem = new MenuItemViewModel("Prune Model by Voltage Level", PruneModelByVoltageLevelCommand);
+            m_pruneModelBySubstationMenuItem = new MenuItemViewModel("Prune Model by Substation", PruneModelBySubstationCommand);
+            m_pruneModelByCompanyMenuItem = new MenuItemViewModel("Prune Model by Company", PruneModelByCompanyCommand);
             m_modelActionsMenuItem = new MenuItemViewModel("Model Actions", null);
             m_modelActionsMenuItem.AddMenuItem(m_unkeyifyModelMenuItem);
             m_modelActionsMenuItem.AddMenuItem(m_pruneModelMenuItem);
+            m_modelActionsMenuItem.AddMenuItem(m_pruneModelByVoltageLevelMenuItem);
+            m_modelActionsMenuItem.AddMenuItem(m_pruneModelBySubstationMenuItem);
+            m_modelActionsMenuItem.AddMenuItem(m_pruneModelByCompanyMenuItem);
             #endregion
 
             #region [ MENU BAR --> UTILITIES --> MEASUREMENT ACTIONS ]
@@ -1424,10 +1527,12 @@ namespace NetworkModelEditor.ViewModels
             m_openMeasurementSampleMenuItem = new MenuItemViewModel("Xml Measurement Sample", OpenMeasurementSampleFileCommand);
             m_openPsseRawFileMenuItem = new MenuItemViewModel("PSSE *.raw File", OpenPsseRawFileCommand);
             m_openHdbExportFilesMenuItem = new MenuItemViewModel("Hdb Export List File", OpenHdbExportFilesCommand);
+            m_openTvaHdbExportFilesMenuItem = new MenuItemViewModel("TVA Hdb Export List File", OpenTvaHdbExportFilesCommand);
             m_openMenuItem = new MenuItemViewModel("Open", null);
             m_openMenuItem.AddMenuItem(m_openNetworkModelMenuItem);
             m_openMenuItem.AddMenuItem(m_openMeasurementSampleMenuItem);
             m_openMenuItem.AddMenuItem(m_openHdbExportFilesMenuItem);
+            m_openMenuItem.AddMenuItem(m_openTvaHdbExportFilesMenuItem);
             m_openMenuItem.AddMenuItem(m_openPsseRawFileMenuItem);
             #endregion
 
@@ -1467,6 +1572,9 @@ namespace NetworkModelEditor.ViewModels
             m_network.Initialize();
             m_network.Model = new NetworkModel();
             m_measurementSamples = new List<RawMeasurements>();
+            m_retainedVoltageLevels = new List<VoltageLevel>();
+            m_retainedSubstations = new List<Substation>();
+            m_retainedCompanies = new List<Company>();
             m_networkTreeViewModel = new NetworkTreeViewModel(this, m_network, m_measurementSamples);
         }
         
@@ -1519,12 +1627,39 @@ namespace NetworkModelEditor.ViewModels
             {
                 try
                 {
-                    m_network = Network.FromHdbExport(openFileDialog.FileName, true);
-                    ActionStatus = $"Opened network model from {openFileDialog.FileName}";
+                    m_network = Network.FromHdbExport(openFileDialog.FileName, true, new List<string>(), useAreaLinks:false);
+                    ActionStatus = $"Opened EMS network model from {openFileDialog.FileName}";
 
                     m_networkTreeViewModel.Network = m_network;
                     EnableControls();
                 }
+                catch (Exception exception)
+                {
+                    if (exception != null)
+                    {
+                        System.Windows.MessageBox.Show(exception.ToString(), "Failed to load selected file.");
+                    }
+                }
+            }
+        }
+
+        private void OpenTvaHdbExportFiles()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.DefaultExt = ".xml";
+            openFileDialog.Filter = "TVA Hdb Export List File (.xml)|*.xml";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    m_network = Network.FromHdbExport(openFileDialog.FileName, true, new List<string>(), useAreaLinks:true);
+                    ActionStatus = $"Opened TVA network model from {openFileDialog.FileName}";
+
+                    m_networkTreeViewModel.Network = m_network;
+                    EnableControls();
+    }
                 catch (Exception exception)
                 {
                     if (exception != null)
@@ -1789,6 +1924,48 @@ namespace NetworkModelEditor.ViewModels
 
             m_network.Model.Prune();
             m_network.Model.InPruningMode = wasInPruningMode;
+        }
+
+        private void PruneModelByVoltageLevel()
+        {
+            List<int> voltageLevelFilter = new List<int>();
+            foreach (VoltageLevel voltageLevel in m_retainedVoltageLevels)
+            {
+                voltageLevelFilter.Add(voltageLevel.InternalID);
+            }
+            int totalVoltageLevelCount = m_network.Model.VoltageLevels.Count;
+            int retainedVoltageLevelCount = voltageLevelFilter.Count;
+            m_network.Model.PruneByVoltageLevels(voltageLevelFilter);
+            m_networkTreeViewModel.Network = m_network;
+            ActionStatus = $"Retained {retainedVoltageLevelCount} of {totalVoltageLevelCount} Voltage Levels.";
+        }
+
+        private void PruneModelBySubstation()
+        {
+            List<int> substationFilter = new List<int>();
+            foreach (Substation substation in m_retainedSubstations)
+            {
+                substationFilter.Add(substation.InternalID);
+            }
+            int totalSubstationCount = m_network.Model.Substations.Count;
+            int retainedSubstationCount = substationFilter.Count;
+            m_network.Model.PruneBySubstations(substationFilter);
+            m_networkTreeViewModel.Network = m_network;
+            ActionStatus = $"Retained {retainedSubstationCount} of {totalSubstationCount} Substations.";
+        }
+
+        private void PruneModelByCompany()
+        {
+            List<int> companyFilter = new List<int>();
+            foreach (Company company in m_retainedCompanies)
+            {
+                companyFilter.Add(company.InternalID);
+            }
+            int totalCompanyCount = m_network.Model.Companies.Count;
+            int retainedCompanyCount = companyFilter.Count;
+            m_network.Model.PruneByCompanies(companyFilter);
+            m_networkTreeViewModel.Network = m_network;
+            ActionStatus = $"Retained {retainedCompanyCount} of {totalCompanyCount} Companies.";
         }
 
         private void EnableInferredStateAsActualProxy()

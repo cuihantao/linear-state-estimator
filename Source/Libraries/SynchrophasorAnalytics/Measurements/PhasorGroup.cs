@@ -76,6 +76,7 @@ namespace SynchrophasorAnalytics.Measurements
         private string m_description;
 
         private bool m_enabled;
+        private string m_measurementIsIncludedKey;
 
         private bool m_useStatusFlagForRemovingMeasurements;
         private StatusWord m_statusWord;
@@ -436,6 +437,19 @@ namespace SynchrophasorAnalytics.Measurements
             }
         }
 
+        [XmlAttribute("MeasurementIsIncludedKey")]
+        public string MeasurementIsIncludedKey
+        {
+            get
+            {
+                return m_measurementIsIncludedKey;
+            }
+            set
+            {
+                m_measurementIsIncludedKey = value;
+            }
+        }
+
         /// <summary>
         /// A flag which represents whether or not to include the phasor group in the
         /// positive sequence estimator.
@@ -652,7 +666,7 @@ namespace SynchrophasorAnalytics.Measurements
             m_phaseC = phaseC;
             m_statusWord = statusWord;
             m_negativeSequenceToPositiveSequenceRatioKey = "Undefined";
-
+            m_measurementIsIncludedKey = "Undefined";
             InitializeDefaultParameters();
         }
 

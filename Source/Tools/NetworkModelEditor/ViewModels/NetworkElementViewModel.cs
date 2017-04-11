@@ -62,6 +62,9 @@ namespace NetworkModelEditor.ViewModels
         private RelayCommand m_saveMeasurementSampleFileCommand;
         private RelayCommand m_selectMeasurementSampleCommand;
         private RelayCommand m_clearMeasurementValuesCommand;
+        private RelayCommand m_addVoltageLevelToRetainListCommand;
+        private RelayCommand m_addSubstationToRetainListCommand;
+        private RelayCommand m_addCompanyToRetainListCommand;
 
         private bool m_isExpanded;
         private bool m_isSelected;
@@ -257,7 +260,8 @@ namespace NetworkModelEditor.ViewModels
             else if (m_networkElement.Element is Company)
             {
                 MenuItem addMenuItem = new MenuItem() { Header = "Add", Command = m_createCommand };
-                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem, deleteMenuItem });
+                MenuItem addToRetainListMenuItem = new MenuItem() { Header = "Add to Retain List", Command = m_addCompanyToRetainListCommand };
+                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, addToRetainListMenuItem, viewMenuItem, refreshMenuItem, deleteMenuItem });
             }
             else if (m_networkElement.Element is Division)
             {
@@ -274,7 +278,8 @@ namespace NetworkModelEditor.ViewModels
                 addMenuItem.Items.Add(new MenuItem() { Header = "Circuit Breaker", Command = m_createCircuitBreakerCommand });
                 addMenuItem.Items.Add(new MenuItem() { Header = "Switch", Command = m_createSwitchCommand });
                 addMenuItem.Items.Add(new MenuItem() { Header = "Transformer", Command = m_createTransformerCommand });
-                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem, deleteMenuItem });
+                MenuItem addToRetainListMenuItem = new MenuItem() { Header = "Add to Retain List", Command = m_addSubstationToRetainListCommand };
+                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, addToRetainListMenuItem, viewMenuItem, refreshMenuItem, deleteMenuItem });
             }
             else if (m_networkElement.Element is TransmissionLine)
             {
@@ -299,6 +304,11 @@ namespace NetworkModelEditor.ViewModels
                 MenuItem selectMenuItem = new MenuItem() { Header = "Select for LSE Run", Command = m_selectMeasurementSampleCommand };
                 return new ObservableCollection<MenuItem>(new MenuItem[] { viewMenuItem, selectMenuItem, saveMenuItem, refreshMenuItem, deleteMenuItem });
             }
+            else if (m_networkElement.Element is VoltageLevel)
+            {
+                MenuItem addToRetainListMenuItem = new MenuItem() { Header = "Add to Retain List", Command = m_addVoltageLevelToRetainListCommand };
+                return new ObservableCollection<MenuItem>(new MenuItem[] { addToRetainListMenuItem, viewMenuItem, refreshMenuItem, deleteMenuItem });
+            }
             else
             {
                 return new ObservableCollection<MenuItem>(new MenuItem[] { viewMenuItem, refreshMenuItem, deleteMenuItem });
@@ -319,6 +329,10 @@ namespace NetworkModelEditor.ViewModels
             m_saveMeasurementSampleFileCommand = new RelayCommand(param => this.SaveMeasurementSampleFile(), param => true);
             m_selectMeasurementSampleCommand = new RelayCommand(param => this.SelectMeasurementSample(), param => true);
             m_clearMeasurementValuesCommand = new RelayCommand(param => this.ClearMeasurementsFromModel(), param => true);
+            m_addCompanyToRetainListCommand = new RelayCommand(param => this.AddCompanyToRetainList(), param => true);
+            m_addSubstationToRetainListCommand = new RelayCommand(param => this.AddSubstationToRetainList(), param => true);
+            m_addVoltageLevelToRetainListCommand = new RelayCommand(param => this.AddVoltageLevelToRetainList(), param => true);
+
         }
         
         private void InitializeCreateCommands()
@@ -332,6 +346,39 @@ namespace NetworkModelEditor.ViewModels
             m_createSwitchCommand = new RelayCommand(param => this.CreateNewSwitch(), param => true);
             m_createLineSegmentCommand = new RelayCommand(param => this.CreateNewLineSegment(), param => true);
             m_createTransformerCommand = new RelayCommand(param => this.CreateNewTransformer(), param => true);
+        }
+
+        private void AddVoltageLevelToRetainList()
+        {
+            MainWindowViewModel mainWindow = m_networkTree.MainWindow as MainWindowViewModel;
+            VoltageLevel voltageLevel = m_networkElement.Element as VoltageLevel;
+            if (!mainWindow.RetainedVoltageLevels.Contains(voltageLevel))
+            {
+                mainWindow.RetainedVoltageLevels.Add(voltageLevel);
+                mainWindow.ActionStatus = $"{voltageLevel.Description} added to retained list.";
+            }
+        }
+
+        private void AddSubstationToRetainList()
+        {
+            MainWindowViewModel mainWindow = m_networkTree.MainWindow as MainWindowViewModel;
+            Substation substation = m_networkElement.Element as Substation;
+            if (!mainWindow.RetainedSubstations.Contains(substation))
+            {
+                mainWindow.RetainedSubstations.Add(substation);
+                mainWindow.ActionStatus = $"{substation.Name} added to retained list.";
+            }
+        }
+
+        private void AddCompanyToRetainList()
+        {
+            MainWindowViewModel mainWindow = m_networkTree.MainWindow as MainWindowViewModel;
+            Company company = m_networkElement.Element as Company;
+            if (!mainWindow.RetainedCompanies.Contains(company))
+            {
+                mainWindow.RetainedCompanies.Add(company);
+                mainWindow.ActionStatus = $"{company.Name} added to retained list.";
+            }
         }
 
         private void Delete()

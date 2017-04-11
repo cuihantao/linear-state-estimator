@@ -84,6 +84,8 @@ namespace SynchrophasorAnalytics.Modeling
         private int m_voltagePhasorGroupID;
 
         private ObservationState m_observationState;
+        private string m_observationStateKey;
+        private string m_observedBusIdKey;
         private List<Node> m_adjacencies;
 
         #endregion
@@ -379,6 +381,43 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        [XmlAttribute("ObservationStateKey")]
+        public string ObservationStateKey
+        {
+            get
+            {
+                return m_observationStateKey;
+            }
+            set
+            {
+                m_observationStateKey = value;
+            }
+        }
+
+        [XmlAttribute("ObservedBusIdKey")]
+        public string ObservedBusIdKey
+        {
+            get
+            {
+                return m_observedBusIdKey;
+            }
+            set
+            {
+                m_observedBusIdKey = value;
+            }
+        }
+
+        [XmlIgnore()]
+        public int ObservedBusId
+        {
+            get
+            {
+                ObservedBus observedBus = m_parentSubstation.Graph.ObservedBuses.Find(bus => bus.Nodes.Contains(this));
+                return observedBus.InternalID;
+            }
+        }
+
+
         #endregion
 
         #region [ Constructors ]
@@ -426,6 +465,7 @@ namespace SynchrophasorAnalytics.Modeling
             m_voltageLevelID = voltageLevelID;
             m_parentSubstation = parentSubstation;
             m_parentTransmissionLine = parentTransmissionLine;
+            m_observationStateKey = "Undefined";
         }
 
         #endregion

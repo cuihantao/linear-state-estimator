@@ -83,6 +83,34 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="5" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -111,6 +139,23 @@
                 <Label Grid.Row="32" Grid.Column="1" Content="Returns Switch Status" Style="{StaticResource LabelStyle}"/>
                 <Label Grid.Row="34" Grid.Column="1" Content="Returns Tap Positions" Style="{StaticResource LabelStyle}"/>
                 <Label Grid.Row="36" Grid.Column="1" Content="Returns Series Compensator Status" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="38" Grid.Column="1" Content="Returns Returns Performance Metrics" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="40" Grid.Column="1" Content="Returns Topology Profiling Information" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="42" Grid.Column="1" Content="Returns Measurement Validation Flags" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="44" Grid.Column="1" Content="Active Voltage Count Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="46" Grid.Column="1" Content="Active Current Flow Count Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="48" Grid.Column="1" Content="Active Current Injection Count Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="50" Grid.Column="1" Content="Observed Bus Count Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="52" Grid.Column="1" Content="Refresh Execution Time Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="54" Grid.Column="1" Content="Parsing Execution Time Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="56" Grid.Column="1" Content="Measurement Mapping Execution Time Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="58" Grid.Column="1" Content="Observability Analysis Execution Time Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="60" Grid.Column="1" Content="Active Current Phasor Determiniation Execution Time Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="62" Grid.Column="1" Content="State Computation Execution Time Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="64" Grid.Column="1" Content="Solution Retrieval Execution Time Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="66" Grid.Column="1" Content="Output Preparation Execution Time Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="68" Grid.Column="1" Content="Total Execution Time in Ticks Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="70" Grid.Column="1" Content="Total Execution Time in Milliseconds Key" Style="{StaticResource LabelStyle}"/>
 
                 <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Path=InternalID}" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource IntegerValidationTemplate}"/>
                 <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Path=Number}" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource IntegerValidationTemplate}"/>
@@ -131,6 +176,23 @@
                 <CheckBox Grid.Row="32" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding Path=ReturnsSwitchStatus}"/>
                 <CheckBox Grid.Row="34" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding Path=ReturnsTapPositions}"/>
                 <CheckBox Grid.Row="36" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding Path=ReturnsSeriesCompensatorStatus}"/>
+                <CheckBox Grid.Row="38" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding Path=ReturnsPerformanceMetrics}"/>
+                <CheckBox Grid.Row="40" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding Path=ReturnsTopologyProfilingInformation}"/>
+                <CheckBox Grid.Row="42" Grid.Column="3" VerticalAlignment="Center" IsChecked="{Binding Path=ReturnsMeasurementValidationFlags}"/>
+                <TextBox Grid.Row="44" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=ActiveVoltageCountKey}"/>
+                <TextBox Grid.Row="46" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=ActiveCurrentFlowCountKey}"/>
+                <TextBox Grid.Row="48" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=ActiveCurrentInjectionCountKey}"/>
+                <TextBox Grid.Row="50" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=ObservedBusCountKey}"/>
+                <TextBox Grid.Row="52" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=RefreshExecutionTimeKey}"/>
+                <TextBox Grid.Row="54" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=ParsingExecutionTimeKey}"/>
+                <TextBox Grid.Row="56" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=MeasurementMappingExecutionTimeKey}"/>
+                <TextBox Grid.Row="58" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=ObservabilityAnalysisExecutionTimeKey}"/>
+                <TextBox Grid.Row="60" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=ActiveCurrentPhasorDeterminationExecutionTimeKey}"/>
+                <TextBox Grid.Row="62" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=StateComputationExecutionTimeKey}"/>
+                <TextBox Grid.Row="64" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=SolutionRetrievalExecutionTimeKey}"/>
+                <TextBox Grid.Row="66" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=OutputPreparationExecutionTimeKey}"/>
+                <TextBox Grid.Row="68" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=TotalExecutionTimeInTicksKey}"/>
+                <TextBox Grid.Row="70" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding Path=TotalExecutionTimeInMillisecondsKey}"/>
                 <!-- CONTENT -->
             </Grid>
         </StackPanel>

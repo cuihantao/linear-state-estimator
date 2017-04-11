@@ -305,6 +305,21 @@ namespace SynchrophasorAnalytics.Modeling
                     AddSwitchStatusesToOutput(rawEstimateKeyValuePairs);
                 }
 
+                if (m_inputOutputSettings.ReturnsPerformanceMetrics)
+                {
+                    AddPerformanceMetricsToOutput(rawEstimateKeyValuePairs);
+                }
+
+                if (m_inputOutputSettings.ReturnsTopologyProfilingInformation)
+                {
+                    AddTopologyProfilingInformationToOutput(rawEstimateKeyValuePairs);
+                }
+
+                if (m_inputOutputSettings.ReturnsMeasurementValidationFlags)
+                {
+                    AddMeasurementValidationFlagsToOutput(rawEstimateKeyValuePairs);
+                }
+
                 return rawEstimateKeyValuePairs;
             }
         }
@@ -570,6 +585,45 @@ namespace SynchrophasorAnalytics.Modeling
             set
             {
                 m_inputOutputSettings.ReturnsSeriesCompensatorStatus = value;
+            }
+        }
+
+        [XmlAttribute("ReturnsPerformanceMetrics")]
+        public bool ReturnsPerformanceMetrics
+        {
+            get
+            {
+                return m_inputOutputSettings.ReturnsPerformanceMetrics;
+            }
+            set
+            {
+                m_inputOutputSettings.ReturnsPerformanceMetrics = value;
+            }
+        }
+
+        [XmlAttribute("ReturnsTopologyProfilingInformation")]
+        public bool ReturnsTopologyProfilingInformation
+        {
+            get
+            {
+                return m_inputOutputSettings.ReturnsTopologyProfilingInformation;
+            }
+            set
+            {
+                m_inputOutputSettings.ReturnsTopologyProfilingInformation = value;
+            }
+        }
+
+        [XmlAttribute("ReturnsMeasurementValidationFlags")]
+        public bool ReturnsMeasurementValidationFlags
+        {
+            get
+            {
+                return m_inputOutputSettings.ReturnsMeasurementValidationFlags;
+            }
+            set
+            {
+                m_inputOutputSettings.ReturnsMeasurementValidationFlags = value;
             }
         }
 
@@ -1608,6 +1662,166 @@ namespace SynchrophasorAnalytics.Modeling
 
                 Initialize();
             }
+        }
+
+        public void PruneByVoltageLevels(List<int> retainedVoltageLevelInternalIds)
+        {
+            List<Node> nodesToPrune = new List<Node>();
+            List<TransmissionLine> transmissionLinesToPrune = new List<TransmissionLine>();
+            List<CircuitBreaker> retainedCircuitBreakers = new List<CircuitBreaker>();
+
+            foreach (Node node in m_nodes)
+            {
+                if (!retainedVoltageLevelInternalIds.Contains(node.VoltageLevelID))
+                {
+                    nodesToPrune.Add(node);
+                }
+            }
+
+            foreach (Company company in m_companies)
+            {
+                foreach (Division division in company.Divisions)
+                {
+                    division.TransmissionLines.RemoveAll(line => (nodesToPrune.Contains(line.FromNode) || nodesToPrune.Contains(line.ToNode)));
+                    foreach (Substation substation in division.Substations)
+                    {
+                        substation.Shunts.RemoveAll(shunt => nodesToPrune.Contains(shunt.ConnectedNode));
+                        substation.CircuitBreakers.RemoveAll(breaker => (nodesToPrune.Contains(breaker.FromNode) || nodesToPrune.Contains(breaker.ToNode)));
+                        substation.Switches.RemoveAll(device => (nodesToPrune.Contains(device.FromNode) || nodesToPrune.Contains(device.ToNode)));
+                        substation.Transformers.RemoveAll(transformer => (nodesToPrune.Contains(transformer.FromNode) || nodesToPrune.Contains(transformer.ToNode)));
+                        substation.Nodes.RemoveAll(node => nodesToPrune.Contains(node));
+                        retainedCircuitBreakers.AddRange(substation.CircuitBreakers);
+                    }
+                    division.Substations.RemoveAll(substation => substation.Nodes.Count == 0);
+                }
+                company.Divisions.RemoveAll(division => division.Substations.Count == 0);
+            }
+            m_companies.RemoveAll(company => company.Divisions.Count == 0);
+
+            m_voltageLevels.RemoveAll(baseKv => !retainedVoltageLevelInternalIds.Contains(baseKv.InternalID));
+
+            m_breakerStatuses.RemoveAll(status => !retainedCircuitBreakers.Contains(status.ParentCircuitBreaker));
+        }
+
+        public void PruneBySubstations(List<int> retainedSubstationInternalIds)
+        {
+            List<Company> companiesToPrune = new List<Company>();
+            List<Division> divisionsToPrune = new List<Division>();
+            List<Substation> substationsToPrune = new List<Substation>();
+            List<TransmissionLine> transmissionLinesToPrune = new List<TransmissionLine>();
+
+            // identify prunable transmission lines
+            foreach (Company company in m_companies)
+            {
+                foreach (Division division in company.Divisions)
+                {
+                    foreach (TransmissionLine transmissionLine in division.TransmissionLines)
+                    {
+                        if (!(retainedSubstationInternalIds.Contains(transmissionLine.FromSubstationID) && retainedSubstationInternalIds.Contains(transmissionLine.ToSubstationID)))
+                        {
+                            transmissionLinesToPrune.Add(transmissionLine);
+                        }
+                    }
+                }
+            }
+
+            // identify prunable substations
+            foreach (Company company in m_companies)
+            {
+                foreach (Division division in company.Divisions)
+                {
+                    foreach (Substation substation in division.Substations)
+                    {
+                        if (!retainedSubstationInternalIds.Contains(substation.InternalID))
+                        {
+                            substationsToPrune.Add(substation);
+                        }
+                    }
+                }
+            }
+
+            // prune transmission lines
+            foreach (Company company in m_companies)
+            {
+                foreach (Division division in company.Divisions)
+                {
+                    foreach (TransmissionLine transmissionLine in transmissionLinesToPrune)
+                    {
+                        if (division.TransmissionLines.Contains(transmissionLine))
+                        {
+                            division.TransmissionLines.Remove(transmissionLine);
+                        }
+                    }
+                }
+            }
+
+            // prune substations
+            foreach (Company company in m_companies)
+            {
+                foreach (Division division in company.Divisions)
+                {
+                    foreach (Substation substation in substationsToPrune)
+                    {
+                        if (division.Substations.Contains(substation))
+                        {
+                            division.Substations.Remove(substation);
+                        }
+                    }
+                }
+            }
+
+            // identify prunable divisions
+            foreach (Company company in m_companies)
+            {
+                foreach (Division division in company.Divisions)
+                {
+                    if (division.Substations.Count == 0)
+                    {
+                        divisionsToPrune.Add(division);
+                    }
+                }
+            }
+
+            // prune divisions
+            foreach (Company company in m_companies)
+            {
+                foreach (Division division in divisionsToPrune)
+                {
+                    if (company.Divisions.Contains(division))
+                    {
+                        company.Divisions.Remove(division);
+                    }
+                }
+            }
+
+            // Identify prunable companies
+            foreach (Company company in m_companies)
+            {
+                if (company.Divisions.Count == 0)
+                {
+                    companiesToPrune.Add(company);
+                }
+            }
+
+            // prune companies
+            foreach (Company company in companiesToPrune)
+            {
+                m_companies.Remove(company);
+            }
+        }
+
+        public void PruneByCompanies(List<int> retainedCompanyInternalIds)
+        {
+            foreach (Company company in m_companies)
+            {
+                foreach (Division division in company.Divisions)
+                {
+                    division.TransmissionLines.RemoveAll(line => !retainedCompanyInternalIds.Contains(line.FromSubstation.ParentDivision.ParentCompany.InternalID));
+                    division.TransmissionLines.RemoveAll(line => !retainedCompanyInternalIds.Contains(line.ToSubstation.ParentDivision.ParentCompany.InternalID));
+                }
+            }
+
+            m_companies.RemoveAll(company => !retainedCompanyInternalIds.Contains(company.InternalID));
         }
 
         public void EnableInferredStateAsActualProxy()
@@ -3452,6 +3666,75 @@ namespace SynchrophasorAnalytics.Modeling
                     {
                         output.Add(switchingDevice.MeasurementKey, (int)switchingDevice.ActualState);
                     }
+                }
+            }
+        }
+
+        private void AddPerformanceMetricsToOutput(Dictionary<string, double> output)
+        {
+            PerformanceMetrics metrics = m_parentNetwork.PerformanceMetrics;
+            output.Add(metrics.ActiveVoltageCountKey, metrics.ActiveVoltageCount);
+            output.Add(metrics.ActiveCurrentFlowCountKey, metrics.ActiveCurrentFlowCount);
+            output.Add(metrics.ActiveCurrentInjectionCountKey, metrics.ActiveCurrentInjectionCount);
+            output.Add(metrics.ObservedBusCountKey, metrics.ObservedBusCount);
+            output.Add(metrics.RefreshExecutionTimeKey, metrics.RefreshExecutionTime);
+            output.Add(metrics.ParsingExecutionTimeKey, metrics.ParsingExecutionTime);
+            output.Add(metrics.MeasurementMappingExecutionTimeKey, metrics.MeasurementMappingExecutionTime);
+            output.Add(metrics.ObservabilityAnalysisExecutionTimeKey, metrics.ObservabilityAnalysisExecutionTime);
+            output.Add(metrics.ActiveCurrentPhasorDeterminationExecutionTimeKey, metrics.ActiveCurrentPhasorDeterminationExecutionTime);
+            output.Add(metrics.StateComputationExecutionTimeKey, metrics.StateComputationExecutionTime);
+            output.Add(metrics.SolutionRetrievalExecutionTimeKey, metrics.SolutionRetrievalExecutionTime);
+            output.Add(metrics.OutputPreparationExecutionTimeKey, metrics.OutputPreparationExecutionTime);
+            output.Add(metrics.TotalExecutionTimeInTicksKey, metrics.TotalExecutionTimeInTicks);
+            output.Add(metrics.TotalExecutionTimeInMillisecondsKey, metrics.TotalExecutionTimeInMilliseconds);
+        }
+
+        private void AddTopologyProfilingInformationToOutput(Dictionary<string, double> output)
+        {
+            foreach (Substation substation in m_substations)
+            {
+                output.Add(substation.ObservedBusCountKey, substation.ObservedBusCount);
+                foreach (Node node in substation.Nodes)
+                {
+                    output.Add(node.ObservationStateKey, Convert.ToDouble(node.Observability));
+                    output.Add(node.ObservedBusIdKey, node.ObservedBusId);
+                }
+            }
+        }
+
+        private void AddMeasurementValidationFlagsToOutput(Dictionary<string, double> output)
+        {
+            foreach (VoltagePhasorGroup voltage in m_voltages)
+            {
+                if (m_phaseSelection == PhaseSelection.PositiveSequence)
+                {
+                    output.Add(voltage.MeasurementIsIncludedKey, Convert.ToDouble(voltage.IncludeInPositiveSequenceEstimator));
+                }
+                else if (m_phaseSelection == PhaseSelection.ThreePhase)
+                {
+                    output.Add(voltage.MeasurementIsIncludedKey, Convert.ToDouble(voltage.IncludeInEstimator));
+                }
+            }
+            foreach (CurrentFlowPhasorGroup currentFlow in m_currentFlows)
+            {
+                if (m_phaseSelection == PhaseSelection.PositiveSequence)
+                {
+                    output.Add(currentFlow.MeasurementIsIncludedKey, Convert.ToDouble(currentFlow.IncludeInPositiveSequenceEstimator));
+                }
+                else if (m_phaseSelection == PhaseSelection.ThreePhase)
+                {
+                    output.Add(currentFlow.MeasurementIsIncludedKey, Convert.ToDouble(currentFlow.IncludeInEstimator));
+                }
+            }
+            foreach (CurrentInjectionPhasorGroup currentInjection in m_currentInjections)
+            {
+                if (m_phaseSelection == PhaseSelection.PositiveSequence)
+                {
+                    output.Add(currentInjection.MeasurementIsIncludedKey, Convert.ToDouble(currentInjection.IncludeInPositiveSequenceEstimator));
+                }
+                else if (m_phaseSelection == PhaseSelection.ThreePhase)
+                {
+                    output.Add(currentInjection.MeasurementIsIncludedKey, Convert.ToDouble(currentInjection.IncludeInEstimator));
                 }
             }
         }

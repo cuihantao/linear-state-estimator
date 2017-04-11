@@ -67,6 +67,7 @@ namespace SynchrophasorAnalytics.Modeling
         private string m_acronym;
         private string m_name;
         private string m_description;
+        private string m_observedBusCountKey;
 
         /// <summary>
         /// Parent
@@ -185,6 +186,19 @@ namespace SynchrophasorAnalytics.Modeling
             set 
             { 
                 m_description = value; 
+            }
+        }
+
+        [XmlAttribute("ObservedBusCountKey")]
+        public string ObservedBusCountKey
+        {
+            get
+            {
+                return m_observedBusCountKey;
+            }
+            set
+            {
+                m_observedBusCountKey = value;
             }
         }
 
@@ -365,6 +379,15 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        [XmlIgnore()]
+        public int ObservedBusCount
+        {
+            get
+            {
+                return m_graph.ObservedBuses.Count;
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]
@@ -415,6 +438,7 @@ namespace SynchrophasorAnalytics.Modeling
             m_childrenTransformers = transformers;
             m_childrenCircuitBreakers = circuitBreakers;
             m_childrenSwitches = switches;
+            m_observedBusCountKey = "Undefined";
         }
 
         #endregion

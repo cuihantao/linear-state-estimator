@@ -51,6 +51,9 @@ namespace SynchrophasorAnalytics.Networks
         private bool m_returnsSwitchStatus;
         private bool m_returnsTapPositions;
         private bool m_returnsSeriesCompensatorStatus;
+        private bool m_returnsPerformanceMetrics;
+        private bool m_returnsTopologyProfilingInformation;
+        private bool m_returnsMeasurementValidationFlags;
 
         #endregion
 
@@ -232,6 +235,45 @@ namespace SynchrophasorAnalytics.Networks
             }
         }
 
+        [XmlAttribute("ReturnsPerformanceMetrics")]
+        public bool ReturnsPerformanceMetrics
+        {
+            get
+            {
+                return m_returnsPerformanceMetrics;
+            }
+            set
+            {
+                m_returnsPerformanceMetrics = value;
+            }
+        }
+
+        [XmlAttribute("ReturnsTopologyProfilingInformation")]
+        public bool ReturnsTopologyProfilingInformation
+        {
+            get
+            {
+                return m_returnsTopologyProfilingInformation;
+            }
+            set
+            {
+                m_returnsTopologyProfilingInformation = value;
+            }
+        }
+
+        [XmlAttribute("ReturnsMeasurementValidationFlags")]
+        public bool ReturnsMeasurementValidationFlags
+        {
+            get
+            {
+                return m_returnsMeasurementValidationFlags;
+            }
+            set
+            {
+                m_returnsMeasurementValidationFlags = value;
+            }
+        }
+
         #endregion
 
         #region [ Constructor ]
@@ -255,6 +297,9 @@ namespace SynchrophasorAnalytics.Networks
             m_returnsSwitchStatus = false;
             m_returnsTapPositions = false;
             m_returnsSeriesCompensatorStatus = false;
+            m_returnsPerformanceMetrics = true;
+            m_returnsTopologyProfilingInformation = false;
+            m_returnsMeasurementValidationFlags = false;
         }
 
         #endregion
