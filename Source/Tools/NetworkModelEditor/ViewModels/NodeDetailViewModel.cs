@@ -260,6 +260,30 @@ namespace NetworkModelEditor.ViewModels
             }
         }
 
+        public string ObservationStateKey
+        {
+            get
+            {
+                return m_node.ObservationStateKey;
+            }
+            set
+            {
+                m_node.ObservationStateKey = value;
+            }
+        }
+
+        public string ObservedBusIdKey
+        {
+            get
+            {
+                return m_node.ObservedBusIdKey;
+            }
+            set
+            {
+                m_node.ObservedBusIdKey = value;
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]

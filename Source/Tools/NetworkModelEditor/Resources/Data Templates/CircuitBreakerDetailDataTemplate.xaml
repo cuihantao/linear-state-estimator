@@ -56,6 +56,12 @@
                     <RowDefinition Height="5" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10" />
@@ -79,6 +85,10 @@
                 <Label Grid.Row="16" Grid.Column="1" Content="Breaker Status" Style="{StaticResource LabelStyle}"/>
                 <Label Grid.Row="18" Grid.Column="1" Content="Normal State" Style="{StaticResource LabelStyle}"/>
                 <Label Grid.Row="20" Grid.Column="1" Content="Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="22" Grid.Column="1" Content="Cross Device Angle Delta Threshold in Degrees" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="24" Grid.Column="1" Content="Cross Device Per Unit Magnitude Delta Threshold" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="26" Grid.Column="1" Content="Cross Device Total Vector Delta Threshold" Style="{StaticResource LabelStyle}"/>
+                
                 <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Path=InternalId}" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource IntegerValidationTemplate}"/>
                 <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Path=Number}" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource IntegerValidationTemplate}"/>
                 <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding Path=Name}" Style="{StaticResource TextBoxStyle}"/>
@@ -89,6 +99,9 @@
                 <ComboBox Grid.Row="16" Grid.Column="3" ItemsSource="{Binding Path=BreakerStatuses}" DisplayMemberPath="Description" SelectedValue="{Binding BreakerStatus}" Style="{StaticResource ComboBoxStyle}"/>
                 <ComboBox Grid.Row="18" Grid.Column="3" ItemsSource="{Binding Source={StaticResource SwitchingDeviceNormalStateEnumeration}}" SelectedValue="{Binding NormalState}" Style="{StaticResource ComboBoxStyle}"/>
                 <TextBox Grid.Row="20" Grid.Column="3" Text="{Binding Path=Key}" Style="{StaticResource TextBoxStyle}"/>
+                <TextBox Grid.Row="22" Grid.Column="3" Text="{Binding Path=CrossDeviceAngleDeltaThresholdInDegrees}" Style="{StaticResource TextBoxStyle}"/>
+                <TextBox Grid.Row="24" Grid.Column="3" Text="{Binding Path=CrossDevicePerUnitMagnitudeDeltaThreshold}" Style="{StaticResource TextBoxStyle}"/>
+                <TextBox Grid.Row="26" Grid.Column="3" Text="{Binding Path=CrossDeviceTotalVectorDeltaThreshold}" Style="{StaticResource TextBoxStyle}"/>
             </Grid>
         </StackPanel>
     </DataTemplate>

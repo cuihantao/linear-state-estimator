@@ -66,6 +66,8 @@
                     <RowDefinition Height="5" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10" />
@@ -80,6 +82,7 @@
                 <Label Grid.Row="8" Grid.Column="1" Content="Description" Style="{StaticResource LabelStyle}"/>
                 <Label Grid.Row="10" Grid.Column="1" Content="Status Word" Style="{StaticResource LabelStyle}"/>
                 <Label Grid.Row="12" Grid.Column="1" Content="Calibration Type" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="14" Grid.Column="1" Content="Measurement Inclusion Key" Style="{StaticResource LabelStyle}"/>
                 
                 <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Path=InternalId}" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource IntegerValidationTemplate}"/>
                 <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Path=Number}" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource IntegerValidationTemplate}"/>
@@ -88,10 +91,11 @@
                 <TextBox Grid.Row="8" Grid.Column="3" Text="{Binding Path=Description}" Style="{StaticResource TextBoxStyle}"/>
                 <ComboBox Grid.Row="10" Grid.Column="3" ItemsSource="{Binding Path=StatusWordSelection}" DisplayMemberPath="Description" SelectedValue="{Binding StatusFlag, Mode=TwoWay}" Style="{StaticResource ComboBoxStyle}"/>
                 <ComboBox Grid.Row="12" Grid.Column="3" ItemsSource="{Binding Source={StaticResource CalibrationSettings}}" SelectedItem="{Binding Path=CalibrationType}" Style="{StaticResource ComboBoxStyle}"/>
-                <CheckBox Grid.Row="14" Grid.Column="3" Content="Enabled" IsChecked="{Binding Path=IsEnabled}" Style="{StaticResource CheckBoxStyle}"/>
-                <CheckBox Grid.Row="16" Grid.Column="3" Content="Use Status Flags For Removing Bad Measurements" IsChecked="{Binding Path=UseStatusFlagsForRemovingMeasurements}" Style="{StaticResource CheckBoxStyle}"/>
+                <TextBox Grid.Row="14" Grid.Column="3" Text="{Binding Path=MeasurementIsIncludedKey}" Style="{StaticResource TextBoxStyle}"/>
+                <CheckBox Grid.Row="16" Grid.Column="3" Content="Enabled" IsChecked="{Binding Path=IsEnabled}" Style="{StaticResource CheckBoxStyle}"/>
+                <CheckBox Grid.Row="18" Grid.Column="3" Content="Use Status Flags For Removing Bad Measurements" IsChecked="{Binding Path=UseStatusFlagsForRemovingMeasurements}" Style="{StaticResource CheckBoxStyle}"/>
                 
-                <TabControl Grid.Row="18" Grid.RowSpan="10" Grid.Column="1" Grid.ColumnSpan="3">
+                <TabControl Grid.Row="20" Grid.RowSpan="10" Grid.Column="1" Grid.ColumnSpan="3">
                     <!--<TabItem Header="Positive Sequence" IsEnabled="{Binding Path=IsPositiveSequence}" MinWidth="130">-->
                     <TabItem Header="Positive Sequence" MinWidth="130">
                             <Grid>

@@ -49,7 +49,11 @@ namespace SynchrophasorAnalytics.Networks
         {
             get
             {
-                return m_network.Model.ActiveVoltages.Count;
+                if (m_network.Model.ActiveVoltages != null)
+                {
+                    return m_network.Model.ActiveVoltages.Count;
+                }
+                return 0;
             }
         }
 
@@ -71,7 +75,11 @@ namespace SynchrophasorAnalytics.Networks
         {
             get
             {
-                return m_network.Model.ActiveCurrentFlows.Count;
+                if (m_network.Model.ActiveCurrentFlows != null)
+                {
+                    return m_network.Model.ActiveCurrentFlows.Count;
+                }
+                return 0;
             }
         }
 
@@ -93,7 +101,11 @@ namespace SynchrophasorAnalytics.Networks
         {
             get
             {
-                return m_network.Model.ActiveCurrentInjections.Count;
+                if (m_network.Model.ActiveCurrentInjections != null)
+                {
+                    return m_network.Model.ActiveCurrentInjections.Count;
+                }
+                return 0;
             }
         }
 
@@ -115,7 +127,11 @@ namespace SynchrophasorAnalytics.Networks
         {
             get
             {
-                return m_network.Model.ObservedBusses.Count;
+                if (m_network.Model.ObservedBusses != null)
+                {
+                    return m_network.Model.ObservedBusses.Count;
+                }
+                return 0;
             }
         }
 
@@ -417,7 +433,76 @@ namespace SynchrophasorAnalytics.Networks
             m_outputPreparationExecutionTimeKey = "Undefined";
             m_totalExecutionTimeInTicksKey = "Undefined";
             m_totalExecutionTimeInMillisecondsKey = "Undefined";
-    }
+        }
+
+        #endregion
+
+        #region [ Public Methods ]
+
+        public void SetNetwork(Network network)
+        {
+            m_network = network;
+        }
+
+        public void Keyify()
+        {
+            m_activeVoltageCountKey = "LSE.activeVoltageCount";
+            m_activeCurrentFlowCountKey = "LSE.activeCurrentFlowCount";
+            m_activeCurrentInjectionCountKey = "LSE.activeCurrentInjectionCount";
+            m_observedBusCountKey = "LSE.observedBusCount";
+            m_refreshExecutionTimeKey = "LSE.refreshExecutionTime";
+            m_parsingExecutionTimeKey = "LSE.parsingExecutionTime";
+            m_measurementMappingExecutionTimeKey = "LSE.measurementMappingExecutionTime";
+            m_observabilityAnalysisExecutionTimeKey = "LSE.observabilityAnalysisExecutionTime";
+            m_activeCurrentPhasorDetermintationExecutionTimeKey = "LSE.activeCurrentPhasorDetermintationExecutionTime";
+            m_stateComputationExecutionTimeKey = "LSE.stateComputationExecutionTime";
+            m_solutionRetrievalExecutionTimeKey = "LSE.solutionRetrievalExecutionTime";
+            m_outputPreparationExecutionTimeKey = "LSE.outputPreparationExecutionTime";
+            m_totalExecutionTimeInTicksKey = "LSE.totalExecutionTimeInTicks";
+            m_totalExecutionTimeInMillisecondsKey = "LSE.totalExecutionTimeInMilliseconds";
+        }
+
+        public void UnKeyify()
+        {
+            m_activeVoltageCountKey = "Undefined";
+            m_activeCurrentFlowCountKey = "Undefined";
+            m_activeCurrentInjectionCountKey = "Undefined";
+            m_observedBusCountKey = "Undefined";
+            m_refreshExecutionTimeKey = "Undefined";
+            m_parsingExecutionTimeKey = "Undefined";
+            m_measurementMappingExecutionTimeKey = "Undefined";
+            m_observabilityAnalysisExecutionTimeKey = "Undefined";
+            m_activeCurrentPhasorDetermintationExecutionTimeKey = "Undefined";
+            m_stateComputationExecutionTimeKey = "Undefined";
+            m_solutionRetrievalExecutionTimeKey = "Undefined";
+            m_outputPreparationExecutionTimeKey = "Undefined";
+            m_totalExecutionTimeInTicksKey = "Undefined";
+            m_totalExecutionTimeInMillisecondsKey = "Undefined";
+        }
+
+        public string ToVerboseString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine();
+            stringBuilder.AppendFormat("----- LSE Performance Metrics --------------------------------------------------");
+            stringBuilder.AppendLine();
+            stringBuilder.AppendFormat($"                    Active Voltages: {ActiveVoltageCount}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"               Active Current Flows: {ActiveCurrentFlowCount}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"          Active Current Injections: {ActiveCurrentInjectionCount}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"                     Observed Buses: {ObservedBusCount}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"                            Refresh: {RefreshExecutionTime} ms{Environment.NewLine}");
+            stringBuilder.AppendFormat($"                            Parsing: {ParsingExecutionTime} ms{Environment.NewLine}");
+            stringBuilder.AppendFormat($"                Measurement Mapping: {MeasurementMappingExecutionTime} ms{Environment.NewLine}");
+            stringBuilder.AppendFormat($"             Observability Analysis: {ObservabilityAnalysisExecutionTime} ms{Environment.NewLine}");
+            stringBuilder.AppendFormat($"Active Current Phasor Determination: {ActiveCurrentPhasorDeterminationExecutionTime} ms{Environment.NewLine}");
+            stringBuilder.AppendFormat($"                  State Computation: {StateComputationExecutionTime} ms{Environment.NewLine}");
+            stringBuilder.AppendFormat($"                 Solution Retrieval: {SolutionRetrievalExecutionTime} ms{Environment.NewLine}");
+            stringBuilder.AppendFormat($"                 Output Preparation: {OutputPreparationExecutionTime} ms{Environment.NewLine}");
+            stringBuilder.AppendFormat($"                        Total Ticks: {TotalExecutionTimeInTicks}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"                 Total Milliseconds: {TotalExecutionTimeInMilliseconds} ms{Environment.NewLine}");
+            stringBuilder.AppendLine();
+            return stringBuilder.ToString();
+        }
 
         #endregion
     }

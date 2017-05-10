@@ -43,9 +43,9 @@ namespace SynchrophasorAnalytics.Measurements
         #region [ Constants ]
 
         /// <summary>
-        /// The maximum value that the C37.118 status word can have. It is equivalent to 1111111111111111 in binary.
+        /// The maximum value that the  status word can have. It is equivalent to 111111111111111111111 in binary.
         /// </summary>
-        private static int MAXIMUM_VALUE = 65535;
+        private static int MAXIMUM_VALUE = 2097151;
 
         private static int DEFAULT_INTERNAL_ID = 0;
         private static int DEFAULT_NUMBER = 0;
@@ -77,6 +77,11 @@ namespace SynchrophasorAnalytics.Measurements
         private bool m_pmuSync;
         private bool m_pmuError;
         private bool m_dataValid;
+        private bool m_deviceError;
+        private bool m_dataSortingType;
+        private bool m_synchronizationIsValid;
+        private bool m_dataIsValid;
+        private bool m_dataDiscarded;
         private string m_inputMeasurementKey;
         private bool m_statusWordWasReported;
         private double m_binaryValue;
@@ -532,6 +537,71 @@ namespace SynchrophasorAnalytics.Measurements
             }
         }
 
+        [XmlAttribute("CDE")]
+        public bool DeviceError
+        {
+            get
+            {
+                return m_deviceError;
+            }
+            set
+            {
+                m_deviceError = value;
+            }
+
+        }
+
+        [XmlAttribute("CDST")]
+        public bool DataSortingType
+        {
+            get
+            {
+                return m_dataSortingType;
+            }
+            set
+            {
+                m_dataSortingType = value;
+            }
+        }
+
+        [XmlAttribute("CSIV")]
+        public bool SynchronizationIsValid
+        {
+            get
+            {
+                return m_synchronizationIsValid;
+            }
+            set
+            {
+                m_synchronizationIsValid = value;
+            }
+        }
+
+        [XmlAttribute("CDIV")]
+        public bool DataIsValid
+        {
+            get
+            {
+                return m_dataIsValid;
+            }
+            set
+            {
+                m_dataIsValid = value;
+            }
+        }
+
+        [XmlAttribute("CDD")]
+        public bool DataDiscarded
+        {
+            get
+            {
+                return m_dataDiscarded;
+            }
+            set
+            {
+                m_dataDiscarded = value;
+            }
+        }
         #endregion
 
         #region [ Constructors ]
@@ -577,7 +647,7 @@ namespace SynchrophasorAnalytics.Measurements
         /// <param name="description">A description of the <see cref="LinearStateEstimator.Measurements.StatusWord"/>.</param>
         /// <param name="inputMeasurementKey">The input measurement key for the <see cref="LinearStateEstimator.Measurements.StatusWord"/>.</param>
         /// <param name="value">A integer containing the value of the <see cref="LinearStateEstimator.Measurements.StatusWord"/>.</param>
-        public StatusWord(int internalID, int number, string description, string inputMeasurementKey, int value)
+        public StatusWord(int internalID, int number, string description, string inputMeasurementKey, Int32 value)
         {
             m_internalID = internalID;
             m_number = number;
@@ -596,26 +666,31 @@ namespace SynchrophasorAnalytics.Measurements
         /// Parses the <see cref="StatusWord"/> into boolean flags for each of the bits in the <see cref="StatusWord"/>
         /// </summary>
         /// <param name="value">The raw integer value of the <see cref="StatusWord"/></param>
-        private void ParseStatusFlag(int value)
+        private void ParseStatusFlag(Int32 value)
         {
             string flags = AddPrefixOfZerosIfNeeded(Convert.ToString(value, 2));
 
-                         m_triggerReasonZero = CheckBit(flags[(int)StatusWordBit.TriggerReasonZero]);
-                          m_triggerReasonOne = CheckBit(flags[(int)StatusWordBit.TriggerReasonOne]);
-                          m_triggerReasonTwo = CheckBit(flags[(int)StatusWordBit.TriggerReasonTwo]);
-                        m_triggerReasonThree = CheckBit(flags[(int)StatusWordBit.TriggerReasonThree]);
-                    m_unlockedTimePeriodZero = CheckBit(flags[(int)StatusWordBit.UnlockedTimePeriodZero]);
-                     m_unlockedTimePeriodOne = CheckBit(flags[(int)StatusWordBit.UnlockedTimePeriodOne]);
-                              m_securityZero = CheckBit(flags[(int)StatusWordBit.SecurityZero]);
-                               m_securityOne = CheckBit(flags[(int)StatusWordBit.SecurityOne]);
-                               m_securityTwo = CheckBit(flags[(int)StatusWordBit.SecurityTwo]);
-                             m_securityThree = CheckBit(flags[(int)StatusWordBit.SecurityThree]);
-              m_configurationChangedRecently = CheckBit(flags[(int)StatusWordBit.ConfigurationChangedRecently]);
-                        m_pmuTriggerDetected = CheckBit(flags[(int)StatusWordBit.PMUTriggerDetected]);
-                               m_dataSorting = CheckBit(flags[(int)StatusWordBit.DataSorting]);
-                                   m_pmuSync = CheckBit(flags[(int)StatusWordBit.PMUSync]);
-                                  m_pmuError = CheckBit(flags[(int)StatusWordBit.PMUError]);
-                                 m_dataValid = CheckBit(flags[(int)StatusWordBit.DataValid]);
+                         m_triggerReasonZero = CheckBit(flags[(Int32)StatusWordBit.TriggerReasonZero]);
+                          m_triggerReasonOne = CheckBit(flags[(Int32)StatusWordBit.TriggerReasonOne]);
+                          m_triggerReasonTwo = CheckBit(flags[(Int32)StatusWordBit.TriggerReasonTwo]);
+                        m_triggerReasonThree = CheckBit(flags[(Int32)StatusWordBit.TriggerReasonThree]);
+                    m_unlockedTimePeriodZero = CheckBit(flags[(Int32)StatusWordBit.UnlockedTimePeriodZero]);
+                     m_unlockedTimePeriodOne = CheckBit(flags[(Int32)StatusWordBit.UnlockedTimePeriodOne]);
+                              m_securityZero = CheckBit(flags[(Int32)StatusWordBit.SecurityZero]);
+                               m_securityOne = CheckBit(flags[(Int32)StatusWordBit.SecurityOne]);
+                               m_securityTwo = CheckBit(flags[(Int32)StatusWordBit.SecurityTwo]);
+                             m_securityThree = CheckBit(flags[(Int32)StatusWordBit.SecurityThree]);
+              m_configurationChangedRecently = CheckBit(flags[(Int32)StatusWordBit.ConfigurationChangedRecently]);
+                        m_pmuTriggerDetected = CheckBit(flags[(Int32)StatusWordBit.PMUTriggerDetected]);
+                               m_dataSorting = CheckBit(flags[(Int32)StatusWordBit.DataSorting]);
+                                   m_pmuSync = CheckBit(flags[(Int32)StatusWordBit.PMUSync]);
+                                  m_pmuError = CheckBit(flags[(Int32)StatusWordBit.PMUError]);
+                                 m_dataValid = CheckBit(flags[(Int32)StatusWordBit.DataValid]);
+                               m_deviceError = CheckBit(flags[(Int32)StatusWordBit.DeviceError]);
+                           m_dataSortingType = CheckBit(flags[(Int32)StatusWordBit.DataSortingType]);
+                    m_synchronizationIsValid = CheckBit(flags[(Int32)StatusWordBit.SynchronizationIsValid]);
+                               m_dataIsValid = CheckBit(flags[(Int32)StatusWordBit.DataIsValid]);
+                             m_dataDiscarded = CheckBit(flags[(Int32)StatusWordBit.DataDiscarded]);
         }
 
         /// <summary>
@@ -649,7 +724,7 @@ namespace SynchrophasorAnalytics.Measurements
         {
             // Add leading zeros to make it sixteen characters long
             string prefixOfZeros = "";
-            for (int i = 0; i < (16 - flags.Length); i++) 
+            for (int i = 0; i < (21 - flags.Length); i++) 
             { 
                 prefixOfZeros += "0"; 
             }
@@ -669,22 +744,27 @@ namespace SynchrophasorAnalytics.Measurements
         {
             switch ((int)bit)
             {
-                case 0: return m_dataValid;
-                case 1: return m_pmuError;
-                case 2: return m_pmuSync;
-                case 3: return m_dataSorting;
-                case 4: return m_pmuTriggerDetected;
-                case 5: return m_configurationChangedRecently;
-                case 6: return m_securityThree;
-                case 7: return m_securityTwo;
-                case 8: return m_securityOne;
-                case 9: return m_securityZero;
-                case 10: return m_unlockedTimePeriodOne;
-                case 11: return m_unlockedTimePeriodZero;
-                case 12: return m_triggerReasonThree;
-                case 13: return m_triggerReasonTwo;
-                case 14: return m_triggerReasonOne;
-                case 15: return m_triggerReasonZero;
+                case 0: return m_deviceError;
+                case 1: return m_dataSortingType;
+                case 2: return m_synchronizationIsValid;
+                case 3: return m_dataIsValid;
+                case 4: return m_dataDiscarded;
+                case 5: return m_dataValid;
+                case 6: return m_pmuError;
+                case 7: return m_pmuSync;
+                case 8: return m_dataSorting;
+                case 9: return m_pmuTriggerDetected;
+                case 10: return m_configurationChangedRecently;
+                case 11: return m_securityThree;
+                case 12: return m_securityTwo;
+                case 13: return m_securityOne;
+                case 14: return m_securityZero;
+                case 15: return m_unlockedTimePeriodOne;
+                case 16: return m_unlockedTimePeriodZero;
+                case 17: return m_triggerReasonThree;
+                case 18: return m_triggerReasonTwo;
+                case 19: return m_triggerReasonOne;
+                case 20: return m_triggerReasonZero;
                 default: return false;
             }
         }
@@ -704,7 +784,12 @@ namespace SynchrophasorAnalytics.Measurements
         /// <returns>A descriptive string representation of the class instance specific to the <see cref="LinearStateEstimator.Measurements.StatusWord"/>.</returns>
         public string ToStatusString()
         {
-            string binaryString  = Convert.ToInt16(m_dataValid).ToString() + " ";
+            string binaryString  = Convert.ToInt16(DataDiscarded).ToString() + " ";
+                   binaryString += Convert.ToInt16(DataIsValid).ToString() + " ";
+                   binaryString += Convert.ToInt16(SynchronizationIsValid).ToString() + " ";
+                   binaryString += Convert.ToInt16(DataSortingType).ToString() + " ";
+                   binaryString += Convert.ToInt16(DeviceError).ToString() + " ";
+                   binaryString += Convert.ToInt16(m_dataValid).ToString() + " ";
                    binaryString += Convert.ToInt16(m_pmuError).ToString() + " ";
                    binaryString += Convert.ToInt16(m_pmuSync).ToString() + " ";
                    binaryString += Convert.ToInt16(m_dataSorting).ToString() + " ";
@@ -734,26 +819,34 @@ namespace SynchrophasorAnalytics.Measurements
             stringBuilder.AppendLine();
             stringBuilder.AppendFormat("----- Status Word --------------------------------------------------------------");
             stringBuilder.AppendLine();
-            stringBuilder.AppendFormat("      InternalID: " + m_internalID.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("          Number: " + m_number.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("     Description: " + m_description + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("             Key: " + m_inputMeasurementKey + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("  TriggerReasonO: " + m_triggerReasonZero.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("  TriggerReason1: " + m_triggerReasonOne.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("  TriggerReason2: " + m_triggerReasonTwo.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("  TriggerReason3: " + m_triggerReasonThree.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("UnlockedTimePer0: " + m_unlockedTimePeriodZero.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("UnlockedTimePer1: " + m_unlockedTimePeriodOne.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("       SecurityO: " + m_securityZero.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("       Security1: " + m_securityOne.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("       Security2: " + m_securityTwo.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("       Security3: " + m_securityThree.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("ConfgChangdRecnt: " + m_configurationChangedRecently.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("PMUTriggrDetectd: " + m_pmuTriggerDetected.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("     DataSorting: " + m_dataSorting.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("         PMUSync: " + m_pmuSync.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("        PMUError: " + m_pmuError.ToString() + "{0}", Environment.NewLine);
-            stringBuilder.AppendFormat("       DataValid: " + m_dataValid.ToString() + "{0}", Environment.NewLine);
+            stringBuilder.AppendFormat($"      InternalID: {InternalID}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"          Number: {Number}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"     Description: {Description}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"             Key: {Key}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"         Enabled: {IsEnabled}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"    Was Reported: {StatusWordWasReported}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"    Binary Value: {BinaryValue}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"  TriggerReason0: {TriggerReason_0}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"  TriggerReason1: {TriggerReason_1}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"  TriggerReason2: {TriggerReason_2}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"  TriggerReason3: {TriggerReason_3}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"UnlockedTimePer0: {UnlockedTimePeriod_0}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"UnlockedTimePer1: {UnlockedTimePeriod_1}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"       Security0: {Security_0}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"       Security1: {Security_1}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"       Security2: {Security_2}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"       Security3: {Security_3}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"ConfgChangdRecnt: {ConfigurationChangedRecently}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"PMUTriggrDetectd: {PMUTriggerDetected}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"     DataSorting: {DataSorting}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"         PMUSync: {PMUSync}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"        PMUError: {PMUError}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"       DataValid: {DataValid}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"     DeviceError: {DeviceError}{Environment.NewLine}");
+            stringBuilder.AppendFormat($" DataSortingType: {DataSortingType}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"     SyncIsValid: {SynchronizationIsValid}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"     DataIsValid: {DataIsValid}{Environment.NewLine}");
+            stringBuilder.AppendFormat($"   DataDiscarded: {DataDiscarded}{Environment.NewLine}");
             stringBuilder.AppendLine();
             return stringBuilder.ToString();
         }

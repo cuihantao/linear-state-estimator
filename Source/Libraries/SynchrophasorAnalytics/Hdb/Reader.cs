@@ -11,6 +11,8 @@ namespace SynchrophasorAnalytics.Hdb
 {
     public class HdbReader
     {
+        #region [ Private Constants ]
+
         private const string m_recordDeclarative = "#record";
 
         private const string m_companyNumberHeader = "%SUBSCRIPT";
@@ -35,6 +37,13 @@ namespace SynchrophasorAnalytics.Hdb
         private const string m_nodeStationHeader = "id_st";
         private const string m_nodeBusNumberHeader = "i$bs_nd";
 
+        private const string m_nodeExtensionNumberHeader = "%SUBSCRIPT";
+        private const string m_nodeExtensionIdHeader = "id_nd";
+        private const string m_nodeExtensionStationHeader = "id_st";
+        private const string m_nodeExtensionDeviceNameHeader = "nd_device";
+        private const string m_nodeExtensionMagnitudeHistorianIdHeader = "nd_historian_id_magnitude";
+        private const string m_nodeExtensionAngleHistorianIdHeader = "nd_historian_id_angle";
+
         private const string m_transmissionLineNumberHeader = "%SUBSCRIPT";
         private const string m_transmissionLineIdHeader = "id_line";
 
@@ -44,6 +53,13 @@ namespace SynchrophasorAnalytics.Hdb
         private const string m_shuntStationNameHeader = "id_st";
         private const string m_shuntNominalMvarHeader = "mrnom_cp";
         private const string m_shuntIsOpenHeader = "open_cp";
+
+        private const string m_shuntExtensionNumberHeader = "%SUBSCRIPT";
+        private const string m_shuntExtensionIdHeader = "id_cp";
+        private const string m_shuntExtensionStationNameHeader = "id_st";
+        private const string m_shuntExtensionDeviceNameHeader = "nd_device";
+        private const string m_shuntExtensionMagnitudeHistorianIdHeader = "nd_historian_id_magnitude";
+        private const string m_shuntExtensionAngleHistorianIdHeader = "nd_historian_id_angle";
 
         private const string m_lineSegmentNumberHeader = "%SUBSCRIPT";
         private const string m_lineSegmentIdHeader = "id_ln";
@@ -58,6 +74,17 @@ namespace SynchrophasorAnalytics.Hdb
         private const string m_lineSegmentLineChargingHeader = "bch_ln";
         private const string m_lineSegmentIsRemovedHeader = "remove_ln";
 
+        private const string m_lineSegmentExtensionNumberHeader = "%SUBSCRIPT";
+        private const string m_lineSegmentExtensionIdHeader = "id_ln";
+        private const string m_lineSegmentExtensionTransmissionLineIdHeader = "id_line";
+        private const string m_lineSegmentExtensionDivisionIdHeader = "id_dv";
+        private const string m_lineSegmentExtensionFromNodeDeviceNameHeader = "nd_device";
+        private const string m_lineSegmentExtensionFromNodeMagnitudeHistorianIdHeader = "nd_historian_id_magnitude";
+        private const string m_lineSegmentExtensionFromNodeAngleHistorianIdHeader = "nd_historian_id_angle";
+        private const string m_lineSegmentExtensionToNodeDeviceNameHeader = "znd_device";
+        private const string m_lineSegmentExtensionToNodeMagnitudeHistorianIdHeader = "znd_historian_id_magnitude";
+        private const string m_lineSegmentExtensionToNodeAngleHistorianIdHeader = "znd_historian_id_angle";
+
         private const string m_circuitBreakerNumberHeader = "%SUBSCRIPT";
         private const string m_circuitBreakerIdHeader = "id_cb";
         private const string m_circuitBreakerTypeHeader = "id_cbtyp";
@@ -66,6 +93,13 @@ namespace SynchrophasorAnalytics.Hdb
         private const string m_circuitBreakerToNodeIdHeader = "znd_cb";
         private const string m_circuitBreakerNormallyOpenHeader = "nmlopen_cb";
         private const string m_circuitBreakerIsOpenHeader = "open_cb";
+
+        private const string m_circuitBreakerExtensionNumberHeader = "%SUBSCRIPT";
+        private const string m_circuitBreakerExtensionIdHeader = "id_cb";
+        private const string m_circuitBreakerExtensionStationNameHeader = "id_st";
+        private const string m_circuitBreakerExtensionDeviceNameHeader = "open_device";
+        private const string m_circuitBreakerExtensionHistorianIdHeader = "open_historian_id";
+        private const string m_circuitBreakerExtensionBitPositionHeader = "open_bit_position";
 
         private const string m_tapNumberHeader = "%SUBSCRIPT";
         private const string m_tapIdHeader = "id_tapty";
@@ -93,9 +127,24 @@ namespace SynchrophasorAnalytics.Hdb
         private const string m_transformerMagnetizingConductanceHeader = "gmag_xf";
         private const string m_transformerMagnetizingSusceptanceHeader = "bmag_xf";
 
+        private const string m_transformerExtensionNumberHeader = "%SUBSCRIPT";
+        private const string m_transformerExtensionIdHeader = "id_xf";
+        private const string m_transformerExtensionParentHeader = "id_xfmr";
+        private const string m_transformerExtensionStationNameHeader = "id_st";
+        private const string m_transformerExtensionFromNodeDeviceNameHeader = "nd_device";
+        private const string m_transformerExtensionFromNodeMagnitudeHistorianIdHeader = "nd_historian_id_magnitude";
+        private const string m_transformerExtensionFromNodeAngleHistorianIdHeader = "nd_historian_id_angle";
+        private const string m_transformerExtensionToNodeDeviceNameHeader = "znd_device";
+        private const string m_transformerExtensionToNodeMagnitudeHistorianIdHeader = "znd_historian_id_magnitude";
+        private const string m_transformerExtensionToNodeAngleHistorianIdHeader = "znd_historian_id_angle";
+        private const string m_transformerExtensionTapDeviceNameHeader = "tap_device";
+        private const string m_transformerExtensionTapHistorianIdHeader = "tap_historian_id";
+
 
         private const string m_parentTransformerNumberHeader = "%SUBSCRIPT";
         private const string m_parentTransformerIdHeader = "id_xfmr";
+
+        #endregion
 
         public static List<ParentTransformer> ReadParentTransformerFile(string hdbExportFile)
         {
@@ -148,6 +197,34 @@ namespace SynchrophasorAnalytics.Hdb
             return transformers;
         }
 
+        public static List<TransformerExtension> ReadTransformerExtensionFile(string hdbExportFile)
+        {
+            List<Dictionary<string, string>> records = ReadAndParameterizeAttributes(hdbExportFile);
+
+            List<TransformerExtension> transformerExtensions = new List<TransformerExtension>();
+
+            foreach (Dictionary<string, string> record in records)
+            {
+                transformerExtensions.Add(new TransformerExtension()
+                {
+                    Number = Convert.ToInt32(record[m_transformerNumberHeader]),
+                    Id = record[m_transformerIdHeader],
+                    Parent = record[m_transformerParentHeader],
+                    StationName = record[m_transformerStationNameHeader],
+                    FromNodeDeviceName = record[m_transformerExtensionFromNodeDeviceNameHeader],
+                    FromNodeMagnitudeHistorianId = record[m_transformerExtensionFromNodeMagnitudeHistorianIdHeader],
+                    FromNodeAngleHistorianId = record[m_transformerExtensionFromNodeAngleHistorianIdHeader],
+                    ToNodeDeviceName = record[m_transformerExtensionToNodeDeviceNameHeader],
+                    ToNodeMagnitudeHistorianId = record[m_transformerExtensionToNodeMagnitudeHistorianIdHeader],
+                    ToNodeAngleHistorianId = record[m_transformerExtensionToNodeAngleHistorianIdHeader],
+                    TapDeviceName = record[m_transformerExtensionTapDeviceNameHeader],
+                    TapHistorianId = record[m_transformerExtensionTapHistorianIdHeader]
+                });
+            }
+
+            return transformerExtensions;
+        }
+
         public static List<TransformerTap> ReadTransformerTapFile(string hdbExportFile)
         {
             List<Dictionary<string, string>> records = ReadAndParameterizeAttributes(hdbExportFile);
@@ -192,6 +269,28 @@ namespace SynchrophasorAnalytics.Hdb
             return circuitBreakers;
         }
 
+        public static List<CircuitBreakerExtension> ReadCircuitBreakerExtensionFile(string hdbExportFile)
+        {
+            List<Dictionary<string, string>> records = ReadAndParameterizeAttributes(hdbExportFile);
+
+            List<CircuitBreakerExtension> circuitBreakerExtensions = new List<CircuitBreakerExtension>();
+
+            foreach (Dictionary<string, string> record in records)
+            {
+                circuitBreakerExtensions.Add(new CircuitBreakerExtension()
+                {
+                    Number = Convert.ToInt32(record[m_circuitBreakerNumberHeader]),
+                    Id = record[m_circuitBreakerIdHeader],
+                    StationName = record[m_circuitBreakerStationNameHeader],
+                    DeviceName = record[m_circuitBreakerExtensionDeviceNameHeader],
+                    HistorianId = record[m_circuitBreakerExtensionHistorianIdHeader],
+                    BitPosition = record[m_circuitBreakerExtensionBitPositionHeader]
+                });
+            }
+
+            return circuitBreakerExtensions;
+        }
+
         public static List<LineSegment> ReadLineSegmentFile(string hdbExportFile)
         {
             List<Dictionary<string, string>> records = ReadAndParameterizeAttributes(hdbExportFile);
@@ -219,6 +318,31 @@ namespace SynchrophasorAnalytics.Hdb
             return lineSegments;
         }
 
+        public static List<LineSegmentExtension> ReadLineSegmentExtensionFile(string hdbExportFile)
+        {
+            List<Dictionary<string, string>> records = ReadAndParameterizeAttributes(hdbExportFile);
+
+            List<LineSegmentExtension> lineSegmentExtensions = new List<LineSegmentExtension>();
+
+            foreach (Dictionary<string, string> record in records)
+            {
+                lineSegmentExtensions.Add(new LineSegmentExtension()
+                {
+                    Number = Convert.ToInt32(record[m_lineSegmentExtensionNumberHeader]),
+                    Id = record[m_lineSegmentExtensionIdHeader],
+                    TransmissionLineId = record[m_lineSegmentExtensionTransmissionLineIdHeader],
+                    DivisionName = record[m_lineSegmentExtensionDivisionIdHeader],
+                    FromNodeDeviceName = record[m_lineSegmentExtensionFromNodeDeviceNameHeader],
+                    FromNodeMagnitudeHistorianId = record[m_lineSegmentExtensionFromNodeMagnitudeHistorianIdHeader],
+                    FromNodeAngleHistorianId = record[m_lineSegmentExtensionFromNodeAngleHistorianIdHeader],
+                    ToNodeDeviceName = record[m_lineSegmentExtensionToNodeDeviceNameHeader],
+                    ToNodeMagnitudeHistorianId = record[m_lineSegmentExtensionToNodeMagnitudeHistorianIdHeader],
+                    ToNodeAngleHistorianId = record[m_lineSegmentExtensionToNodeAngleHistorianIdHeader],
+                });
+            }
+            return lineSegmentExtensions;
+        }
+
         public static List<Shunt> ReadShuntFile(string hdbExportFile)
         {
             List<Dictionary<string, string>> records = ReadAndParameterizeAttributes(hdbExportFile);
@@ -238,6 +362,28 @@ namespace SynchrophasorAnalytics.Hdb
                 });
             }
             return shunts;
+        }
+
+        public static List<ShuntExtension> ReadShuntExtensionFile(string hdbExportFile)
+        {
+            List<Dictionary<string, string>> records = ReadAndParameterizeAttributes(hdbExportFile);
+
+            List<ShuntExtension> shuntExtensions = new List<ShuntExtension>();
+
+            foreach (Dictionary<string, string> record in records)
+            {
+                shuntExtensions.Add(new ShuntExtension()
+                {
+                    Number = Convert.ToInt32(record[m_shuntExtensionNumberHeader]),
+                    Id = record[m_shuntExtensionNumberHeader],
+                    StationName = record[m_shuntExtensionStationNameHeader],
+                    DeviceName = record[m_shuntExtensionDeviceNameHeader],
+                    MagnitudeHistorianId = record[m_shuntExtensionMagnitudeHistorianIdHeader],
+                    AngleHistorianId = record[m_shuntExtensionAngleHistorianIdHeader]
+                });
+            }
+
+            return shuntExtensions;
         }
 
         public static List<TransmissionLine> ReadTransmissionLineFile(string hdbExportFile)
@@ -278,6 +424,27 @@ namespace SynchrophasorAnalytics.Hdb
                 });
             }
             return nodes;
+        }
+
+        public static List<NodeExtension> ReadNodeExtensionFile(string hdbExportFile)
+        {
+            List<Dictionary<string, string>> records = ReadAndParameterizeAttributes(hdbExportFile);
+
+            List<NodeExtension> nodeExtensions = new List<NodeExtension>();
+
+            foreach (Dictionary<string, string> record in records)
+            {
+                nodeExtensions.Add(new NodeExtension()
+                {
+                    Number = Convert.ToInt32(record[m_nodeExtensionNumberHeader]),
+                    Id = record[m_nodeExtensionIdHeader],
+                    StationName = record[m_nodeExtensionStationHeader],
+                    DeviceName = record[m_nodeExtensionDeviceNameHeader],
+                    MagnitudeHistorianId = record[m_nodeExtensionMagnitudeHistorianIdHeader],
+                    AngleHistorianId = record[m_nodeExtensionAngleHistorianIdHeader]
+                });
+            }
+            return nodeExtensions;
         }
 
         public static List<Area> ReadAreaFile(string hdbExportFile)
@@ -348,7 +515,6 @@ namespace SynchrophasorAnalytics.Hdb
             }
             return companies;
         }
-
 
         public static List<Dictionary<string, string>> ReadAndParameterizeAttributes(string hdbExportFile)
         {

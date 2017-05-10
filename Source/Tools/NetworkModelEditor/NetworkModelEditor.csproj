@@ -41,6 +41,30 @@
     <DocumentationFile>..\..\..\Build\Output\Release\Tools\NetworkModelEditor\NetworkModelEditor.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ECAClientFramework, Version=0.9.37.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\openECA\Client\ECAClientFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="ECAClientUtilities, Version=0.9.37.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\openECA\Client\ECAClientUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="ECACommonUtilities, Version=0.9.37.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\openECA\Client\ECACommonUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="GSF.Communication, Version=2.2.44.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\openECA\Client\GSF.Communication.dll</HintPath>
+    </Reference>
+    <Reference Include="GSF.Core, Version=2.2.44.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\openECA\Client\GSF.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GSF.TimeSeries, Version=2.2.44.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\openECA\Client\GSF.TimeSeries.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -64,12 +88,16 @@
     <Compile Include="Behaviors\MouseDoubleClickBehavior.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="DetailViewTemplateSelector.cs" />
+    <Compile Include="IAnalyticHost.cs" />
     <Compile Include="Interfaces\IContextMenu.cs" />
     <Compile Include="Interfaces\IParent.cs" />
+    <Compile Include="LinearStateEstimatorAnalytic.cs" />
     <Compile Include="MainWindowViewTemplateSelector.cs" />
+    <Compile Include="MeasurementSamplerAnalytic.cs" />
     <Compile Include="NetworkElement.cs" />
     <Compile Include="NetworkElementDestroyer.cs" />
     <Compile Include="NetworkElementFactory.cs" />
+    <Compile Include="OpenEcaConnection.cs" />
     <Compile Include="RecordDetailHelper.cs" />
     <Compile Include="ViewModels\BreakerStatusDetailViewModel.cs" />
     <Compile Include="ViewModels\CircuitBreakerDetailViewModel.cs" />
@@ -252,6 +280,13 @@
       <Project>{7e806a7d-20c8-4cde-a1f8-4a92d1bc89f4}</Project>
       <Name>SynchrophasorAnalytics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MeasurementSampler\MeasurementSampler.csproj">
+      <Project>{b250d920-493b-431d-bea3-72dbc3a301b4}</Project>
+      <Name>MeasurementSampler</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\FILTER Statements.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

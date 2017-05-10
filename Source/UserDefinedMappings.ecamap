@@ -1,0 +1,10 @@
+ECA Phasor TVA_SQN_UPMU1_L1MagAng_pos_V {
+    Magnitude: be338d36-4b86-4fe6-be9a-646d9b136fdd 
+    Angle: 295be103-9b6f-47d6-b6bb-7c0aae5ef94a 
+}
+
+ECA Phasor TEST {
+    Magnitude: OpenECA_TEST:Magnitude 
+    Angle: OpenECA_TEST:Angle 
+}
+

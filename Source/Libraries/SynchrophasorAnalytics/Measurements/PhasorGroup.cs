@@ -464,11 +464,8 @@ namespace SynchrophasorAnalytics.Measurements
                     if (m_useStatusFlagForRemovingMeasurements)
                     {
                         if (m_posSeq.Measurement.IncludeInEstimator == false ||
-                                             m_statusWord.DataValid == true ||
-                                              m_statusWord.PMUError == true ||
-                                               m_statusWord.PMUSync == true ||
-                                  m_statusWord.UnlockedTimePeriod_0 == true ||
-                                  m_statusWord.UnlockedTimePeriod_1 == true)
+                                           m_statusWord.DataIsValid == true ||
+                                m_statusWord.SynchronizationIsValid == true)
                         { 
                             return false; 
                         }
@@ -511,11 +508,9 @@ namespace SynchrophasorAnalytics.Measurements
                         if (m_phaseA.Measurement.IncludeInEstimator == false ||
                             m_phaseB.Measurement.IncludeInEstimator == false ||
                             m_phaseC.Measurement.IncludeInEstimator == false ||
-                                             m_statusWord.DataValid == true ||
+                                           m_statusWord.DataIsValid == true ||
                                               m_statusWord.PMUError == true ||
-                                               m_statusWord.PMUSync == true ||
-                                  m_statusWord.UnlockedTimePeriod_0 == true ||
-                                  m_statusWord.UnlockedTimePeriod_1 == true)
+                                m_statusWord.SynchronizationIsValid == true)
                         { 
                             return false; 
                         }
@@ -782,6 +777,16 @@ namespace SynchrophasorAnalytics.Measurements
             return m_shouldSerializeEstimatedNegativeSequenceToPositiveSequenceRatio;
         }
 
+        public void KeyifyValidationFlag(string rootKey)
+        {
+            MeasurementIsIncludedKey = $"{rootKey}.Included";
+        }
+
+        public void UnkeyifyValidationFlag()
+        {
+            MeasurementIsIncludedKey = "Undefined";
+        }
+
         public void Keyify(string rootKey)
         {
             PositiveSequence.Keyify($"{rootKey}.+");
@@ -790,6 +795,7 @@ namespace SynchrophasorAnalytics.Measurements
             PhaseA.Keyify($"{rootKey}.A");
             PhaseB.Keyify($"{rootKey}.B");
             PhaseC.Keyify($"{rootKey}.C");
+            KeyifyValidationFlag(rootKey);
         }
 
         public void Unkeyify()
@@ -800,6 +806,7 @@ namespace SynchrophasorAnalytics.Measurements
             PhaseA.Unkeyify();
             PhaseB.Unkeyify();
             PhaseC.Unkeyify();
+            MeasurementIsIncludedKey = "Undefined";
         }
         
         #endregion

@@ -57,6 +57,7 @@ namespace NetworkModelEditor.ViewModels
         private RelayCommand m_viewDetailCommand;
         private RelayCommand m_viewXmlSourceCommand;
         private RelayCommand m_refreshCommand;
+        private RelayCommand m_sortCommand;
         private RelayCommand m_onMouseDoubleClickCommand;
         private RelayCommand m_deleteCommand;
         private RelayCommand m_saveMeasurementSampleFileCommand;
@@ -227,6 +228,7 @@ namespace NetworkModelEditor.ViewModels
             InitializeMenuItemCommands();
 
             MenuItem viewMenuItem = new MenuItem() { Header = "View" };
+            MenuItem sortMenuItem = new MenuItem() { Header = "Sort" , Command = m_sortCommand };
             viewMenuItem.Items.Add(new MenuItem() { Header = "Detail", Command = m_viewDetailCommand });
             viewMenuItem.Items.Add(new MenuItem() { Header = "Xml Source", Command = m_viewXmlSourceCommand });
             MenuItem refreshMenuItem = new MenuItem() { Header = "Refresh", Command = m_refreshCommand };
@@ -250,18 +252,18 @@ namespace NetworkModelEditor.ViewModels
                 MenuItem addMenuItem = new MenuItem() { Header = "Add", Command = m_createCommand };
                 if (m_networkElement.Element is NetworkModel)
                 {
-                    return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem, clearMeasuremetsMenuItem});
+                    return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, sortMenuItem, refreshMenuItem, clearMeasuremetsMenuItem});
                 }
                 else
                 {
-                    return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem });
+                    return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, sortMenuItem, refreshMenuItem });
                 }
             }
             else if (m_networkElement.Element is Company)
             {
                 MenuItem addMenuItem = new MenuItem() { Header = "Add", Command = m_createCommand };
                 MenuItem addToRetainListMenuItem = new MenuItem() { Header = "Add to Retain List", Command = m_addCompanyToRetainListCommand };
-                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, addToRetainListMenuItem, viewMenuItem, refreshMenuItem, deleteMenuItem });
+                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, addToRetainListMenuItem, viewMenuItem, sortMenuItem, refreshMenuItem, deleteMenuItem });
             }
             else if (m_networkElement.Element is Division)
             {
@@ -291,12 +293,12 @@ namespace NetworkModelEditor.ViewModels
             {
                 MenuItem addMenuItem = new MenuItem() { Header = "Add" };
                 addMenuItem.Items.Add(new MenuItem() { Header = "New Status Word", Command = m_createCommand });
-                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem });
+                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, sortMenuItem, refreshMenuItem });
             }
             else if (m_networkElement.Element is List<TapConfiguration>)
             {
                 MenuItem addMenuItem = new MenuItem() { Header = "Add" };
-                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, refreshMenuItem});
+                return new ObservableCollection<MenuItem>(new MenuItem[] { addMenuItem, viewMenuItem, sortMenuItem, refreshMenuItem });
             }
             else if (m_networkElement.Element is RawMeasurements)
             {
@@ -324,6 +326,7 @@ namespace NetworkModelEditor.ViewModels
             InitializeCreateCommands();
             m_viewDetailCommand = new RelayCommand(param => this.ViewDetail(), param => true);
             m_viewXmlSourceCommand = new RelayCommand(param => this.ViewXml(), param => true);
+            m_sortCommand = new RelayCommand(param => this.Sort(), param => true);
             m_refreshCommand = new RelayCommand(param => this.RefreshNetworkTree(), param => true);
             m_deleteCommand = new RelayCommand(param => this.Delete(), param => true);
             m_saveMeasurementSampleFileCommand = new RelayCommand(param => this.SaveMeasurementSampleFile(), param => true);
@@ -487,6 +490,85 @@ namespace NetworkModelEditor.ViewModels
             mainWindow.ClearMeasurementsFromModelCommand.Execute(null);
         }
         
+        private void Sort()
+        {
+            if (m_networkElement.Element is NetworkModel)
+            {
+                NetworkModel networkModel = m_networkElement.Element as NetworkModel;
+                networkModel.Companies.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is Company)
+            {
+                Company company = m_networkElement.Element as Company;
+                company.Divisions.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<Node>)
+            {
+                List<Node> unsorted = m_networkElement.Element as List<Node>;
+                unsorted.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<ShuntCompensator>)
+            {
+                List<ShuntCompensator> unsorted = m_networkElement.Element as List<ShuntCompensator>;
+                unsorted.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<Switch>)
+            {
+                List<Switch> unsorted = m_networkElement.Element as List<Switch>;
+                unsorted.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<CircuitBreaker>)
+            {
+                List<CircuitBreaker> unsorted = m_networkElement.Element as List<CircuitBreaker>;
+                unsorted.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<Transformer>)
+            {
+                List<Transformer> unsorted = m_networkElement.Element as List<Transformer>;
+                unsorted.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<SeriesCompensator>)
+            {
+                List<SeriesCompensator> unsorted = m_networkElement.Element as List<SeriesCompensator>;
+                unsorted.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<LineSegment>)
+            {
+                List<LineSegment> unsorted = m_networkElement.Element as List<LineSegment>;
+                unsorted.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<TransmissionLine>)
+            {
+                List<TransmissionLine> unsorted = m_networkElement.Element as List<TransmissionLine>;
+                unsorted.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<Substation>)
+            {
+                List<Substation> substations = m_networkElement.Element as List<Substation>;
+                substations.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<BreakerStatus>)
+            {
+                List<BreakerStatus> breakerStatuses = m_networkElement.Element as List<BreakerStatus>;
+                breakerStatuses.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<TapConfiguration>)
+            {
+                List<TapConfiguration> tapConfigurations = m_networkElement.Element as List<TapConfiguration>;
+                tapConfigurations.Sort((x, y) => x.Name.CompareTo(y.Name));
+            }
+            else if (m_networkElement.Element is List<VoltageLevel>)
+            {
+                List<VoltageLevel> voltageLevels = m_networkElement.Element as List<VoltageLevel>;
+                voltageLevels.Sort((x, y) => x.Value.CompareTo(y.Value));
+            }
+            else if (m_networkElement.Element is List<StatusWord>)
+            {
+                List<StatusWord> statusWords = m_networkElement.Element as List<StatusWord>;
+                statusWords.Sort((x, y) => x.Description.CompareTo(y.Description));
+            }
+            OnPropertyChanged("Children");
+        }
         
         #endregion
     }

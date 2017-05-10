@@ -13,13 +13,18 @@ namespace SynchrophasorAnalytics.Hdb
     {
         private string m_areaFile;
         private string m_circuitBreakerFile;
+        private string m_circuitBreakerExtensionFile;
         private string m_companyFile;
         private string m_divisionFile;
         private string m_lineSegmentFile;
+        private string m_lineSegmentExtensionFile;
         private string m_nodeFile;
+        private string m_nodeExtensionFile;
         private string m_shuntFile;
+        private string m_shuntExtensionFile;
         private string m_stationFile;
         private string m_transformerFile;
+        private string m_transformerExtensionFile;
         private string m_parentTransformerFile;
         private string m_transformerTapFile;
         private string m_transmissionLineFile;
@@ -47,6 +52,19 @@ namespace SynchrophasorAnalytics.Hdb
             set
             {
                 m_circuitBreakerFile = value;
+            }
+        }
+
+        [XmlElement("cb_extension")]
+        public string CircuitBreakerExtensionFile
+        {
+            get
+            {
+                return m_circuitBreakerExtensionFile;
+            }
+            set
+            {
+                m_circuitBreakerExtensionFile = value;
             }
         }
 
@@ -89,6 +107,19 @@ namespace SynchrophasorAnalytics.Hdb
             }
         }
 
+        [XmlElement("ln_extension")]
+        public string LineSegmentExtensionFile
+        {
+            get
+            {
+                return m_lineSegmentExtensionFile;
+            }
+            set
+            {
+                m_lineSegmentExtensionFile = value;
+            }
+        }
+
         [XmlElement("nd")]
         public string NodeFile
         {
@@ -102,6 +133,19 @@ namespace SynchrophasorAnalytics.Hdb
             }
         }
 
+        [XmlElement("nd_extension")]
+        public string NodeExtensionFile
+        {
+            get
+            {
+                return m_nodeExtensionFile;
+            }
+            set
+            {
+                m_nodeExtensionFile = value;
+            }
+        }
+
         [XmlElement("cp")]
         public string ShuntFile
         {
@@ -112,6 +156,19 @@ namespace SynchrophasorAnalytics.Hdb
             set
             {
                 m_shuntFile = value;
+            }
+        }
+
+        [XmlElement("cp_extension")]
+        public string ShuntExtensionFile
+        {
+            get
+            {
+                return m_shuntExtensionFile;
+            }
+            set
+            {
+                m_shuntExtensionFile = value;
             }
         }
 
@@ -138,6 +195,19 @@ namespace SynchrophasorAnalytics.Hdb
             set
             {
                 m_transformerFile = value;
+            }
+        }
+
+        [XmlElement("xf_extension")]
+        public string TransformerExtensionFile
+        {
+            get
+            {
+                return m_transformerExtensionFile;
+            }
+            set
+            {
+                m_transformerExtensionFile = value;
             }
         }
 
@@ -183,25 +253,30 @@ namespace SynchrophasorAnalytics.Hdb
         public ModelFiles()
         {
         }
-
-
+        
         public override string ToString()
         {
             string modelFileString = "";
-            modelFileString += $"              Area: {AreaFile}\n";
-            modelFileString += $"   Circuit Breaker: {CircuitBreakerFile}\n";
-            modelFileString += $"           Company: {CompanyFile}\n";
-            modelFileString += $"          Division: {DivisionFile}\n";
-            modelFileString += $"      Line Segment: {LineSegmentFile}\n";
-            modelFileString += $"              Node: {NodeFile}\n";
-            modelFileString += $"             Shunt: {ShuntFile}\n";
-            modelFileString += $"            Station: {StationFile}\n";
-            modelFileString += $"       Transformer: {TransformerFile}\n";
-            modelFileString += $"Parent Transformer: {TransformerFile}\n";
-            modelFileString += $"               Tap: {TransformerTapFile}\n";
-            modelFileString += $" Transmission Line: {TransmissionLineFile}\n";
+            modelFileString += $"                     Area: {AreaFile}\n";
+            modelFileString += $"          Circuit Breaker: {CircuitBreakerFile}\n";
+            modelFileString += $"Circuit Breaker Extension: {CircuitBreakerExtensionFile}\n";
+            modelFileString += $"                  Company: {CompanyFile}\n";
+            modelFileString += $"                 Division: {DivisionFile}\n";
+            modelFileString += $"             Line Segment: {LineSegmentFile}\n";
+            modelFileString += $"   Line Segment Extension: {LineSegmentExtensionFile}\n";
+            modelFileString += $"                     Node: {NodeFile}\n";
+            modelFileString += $"           Node Extension: {NodeExtensionFile}\n";
+            modelFileString += $"                    Shunt: {ShuntFile}\n";
+            modelFileString += $"          Shunt Extension: {ShuntExtensionFile}\n";
+            modelFileString += $"                  Station: {StationFile}\n";
+            modelFileString += $"              Transformer: {TransformerFile}\n";
+            modelFileString += $"    Transformer Extension: {TransformerExtensionFile}\n";
+            modelFileString += $"       Parent Transformer: {TransformerFile}\n";
+            modelFileString += $"                      Tap: {TransformerTapFile}\n";
+            modelFileString += $"        Transmission Line: {TransmissionLineFile}\n";
             return modelFileString;
         }
+
         #region [ Xml Serialization/Deserialization methods ]
 
         public static ModelFiles DeserializeFromXml(string pathName)

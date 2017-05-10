@@ -1,0 +1,3912 @@
+LSE Input Input {
+    Digitals: AllDigitals 
+    StatusWords: AllStatusWords 
+    VoltagePhasors: AllVoltagePhasors 
+    CurrentPhasors: AllCurrentPhasors 
+}
+
+ECA Digitals AllDigitals {
+    Values: { FILTER ActiveMeasurements WHERE SignalType='DIGI' } 
+}
+
+ECA StatusWords AllStatusWords {
+    Values: { FILTER ActiveMeasurements WHERE SignalType='FLAG' } 
+}
+
+ECA PhasorCollection AllVoltagePhasors {
+    Phasors: { FILTER Mappings WHERE TypeCategory='ECA' AND TypeIdentifier='Phasor' AND MappingIdentifier LIKE '%_V' } 
+}
+
+ECA Phasor TVA_SQN_UPMU1_L1MagAng_pos_V {
+    Magnitude: be338d36-4b86-4fe6-be9a-646d9b136fdd 
+    Angle: 295be103-9b6f-47d6-b6bb-7c0aae5ef94a 
+}
+
+ECA Phasor TVA_SQN_UPMU1_L2MagAng_pos_V {
+    Magnitude: f92120d3-e6ba-4c12-981f-4678a040f9e7 
+    Angle: e7b29a86-356e-4b2f-84aa-bf2a58ca07b4 
+}
+
+ECA Phasor TVA_SQN_UPMU1_L3MagAng_pos_V {
+    Magnitude: 60023c46-6992-4e64-9761-3ac91fdc239f 
+    Angle: ff94e40c-44d3-43c5-8037-8249f15f2e76 
+}
+
+ECA Phasor TVA_SQN_UPMU2_L1MagAng_pos_V {
+    Magnitude: dfcf91ec-be21-4d58-8b45-1b37ff56f1f3 
+    Angle: 63979108-faf5-404e-969f-5f4bf628176d 
+}
+
+ECA Phasor TVA_SQN_UPMU2_L2MagAng_pos_V {
+    Magnitude: 222ded72-6f06-479f-b3d4-186aa4d760e2 
+    Angle: c9da0f8f-8239-46fd-9694-2ac49fa3a462 
+}
+
+ECA Phasor TVA_SQN_UPMU2_L3MagAng_pos_V {
+    Magnitude: 95505506-4213-48d8-b7ba-28c097032f0e 
+    Angle: aad5419e-5f46-4ace-8e08-d1ace6bd8f99 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU1_V1_Gen_3_pos_V {
+    Magnitude: ded9be37-2818-4043-94d2-6c46fc3dd63c 
+    Angle: 3c32e39f-aaf5-4606-99f6-05dd43ac2ab5 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU1_Va_Gen_3_pos_V {
+    Magnitude: 7d6c49fe-034d-45ba-828e-9178dd6c241e 
+    Angle: 9e47d701-4ccf-4b38-84dc-c49c702e7be4 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU1_Vb_Gen_3_neg_V {
+    Magnitude: 206ca167-cc14-4831-9577-71c8414c8c6a 
+    Angle: 507414d2-425d-460e-a5cc-81e7b21d9ce8 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU1_Vc_Gen_3_0_V {
+    Magnitude: 9f2317af-3558-434f-9c67-266f7648b57f 
+    Angle: 359097cd-4a73-41a3-b02b-74e1c8761cf0 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU2_V1_964_GT_pos_V {
+    Magnitude: c6a146ce-4fe7-4dce-81ee-fe8d9d21baa3 
+    Angle: f20e982d-20b5-4271-8e8b-1106fa89bb8e 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU2_Va_964_GT_pos_V {
+    Magnitude: 2762a3cf-bab1-47d7-8b3a-52613f27742c 
+    Angle: 5733924e-5e46-459c-be47-2735d0c42258 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU2_Vb_964_GT_neg_V {
+    Magnitude: dc5cd607-6d6a-4075-baa9-6414d37bdb48 
+    Angle: eab4e18d-1c18-4c09-935e-9013511f916c 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU2_Vc_964_GT_0_V {
+    Magnitude: 02be5a8a-120f-4e75-96e2-b57d65df91ec 
+    Angle: 8f0e55a9-a87a-4171-a026-19da967b1112 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU3_V1_954_GT_17_20_pos_V {
+    Magnitude: 215b98ab-8d2c-4972-a90b-8e1b607f07fd 
+    Angle: 41862536-6cb2-4a10-a21c-9fa1a1a4635d 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU3_Va_954_GT_17_20_pos_V {
+    Magnitude: b6e3449e-5e91-496e-9aad-48e7b0737447 
+    Angle: bca00d87-ceb5-413e-adb6-70e76300076e 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU3_Vb_954_GT_17_20_neg_V {
+    Magnitude: 23c4b1eb-cf4b-4b4e-bda8-144d706766b5 
+    Angle: 6e60e3cd-b0b3-40a6-8956-5c4b958bea47 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU3_Vc_954_GT_17_20_0_V {
+    Magnitude: c6a1fb7a-7348-4659-bc43-e5c4dbbe637f 
+    Angle: 9133c2b1-6fe9-4631-9448-712ea4c7fd28 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU4_V1_944_Horn_Lake_pos_V {
+    Magnitude: 2ba3dd2b-c63f-4ad2-bf59-5fe661992440 
+    Angle: d1584080-3a10-45b6-82c0-35db0507aed7 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU4_Va_944_Horn_Lake_pos_V {
+    Magnitude: 3727d234-9233-416d-9ea1-3ccf79de76a0 
+    Angle: bed1513f-e7d8-40ec-89df-0d55c0ae6e15 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU4_Vb_944_Horn_Lake_neg_V {
+    Magnitude: e6cb0bd4-a8a4-4ce8-b817-be7fa980deca 
+    Angle: f49ecb7e-7b66-4cbd-9be7-05a38c8f5cc7 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU4_Vc_944_Horn_Lake_0_V {
+    Magnitude: c7925416-3d61-494e-a50b-ebbb79ca6e5c 
+    Angle: 1b8b3daf-b01f-4311-849b-48be6ea65ace 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU5_V1_Gen_1_24kV_pos_V {
+    Magnitude: 58fc347e-a6e2-4bad-8f2b-4f7b279eece8 
+    Angle: 5b31a974-8063-4357-98d7-ea5671e18c56 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU5_Va_Gen_1_24kV_pos_V {
+    Magnitude: 3d12f673-22c2-4da8-9c35-cf40ef85acc2 
+    Angle: 25de983d-38df-4b2d-97a8-2cfa1e285a1e 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU5_Vb_Gen_1_24kV_neg_V {
+    Magnitude: f1db2cc5-1e1e-47b0-921a-30ca2a58beea 
+    Angle: 6a4b7dec-8bfc-4fc9-a1bd-d6a0e46c7380 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU5_Vc_Gen_1_24kV_0_V {
+    Magnitude: aacd2fc6-c65b-40bf-8677-a60eac1e9a47 
+    Angle: b9f51340-ae4d-41f6-ac7a-77882cff9ecc 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU6_V1_Gen_2_24kV_pos_V {
+    Magnitude: ec3818a4-92d3-48a0-8481-22b47cf9a1ba 
+    Angle: 83f60874-b7a8-4b96-a711-043a6cf916e2 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU6_Va_Gen_2_24kV_pos_V {
+    Magnitude: cfba6b9e-c663-496e-9152-8289d73f2875 
+    Angle: 9681853e-2df0-42a2-bde7-f9b1913db177 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU6_Vb_Gen_2_24kV_neg_V {
+    Magnitude: e586b307-80b6-41fd-bcd3-5f99fe7cd031 
+    Angle: ef924741-e2b2-4930-8c83-5bb6076cd006 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU6_Vc_Gen_2_24kV_0_V {
+    Magnitude: 74822385-dcc6-4737-9376-70382b5cd9b9 
+    Angle: 0dfcfc8c-533f-499c-a2a5-1f2a917656f9 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU7_V1_914_Unit_1_pos_V {
+    Magnitude: ead1911a-dbf7-4533-8cfc-a8a414765db3 
+    Angle: 0ad31488-e0f5-46e2-b6e6-d014a0055f60 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU7_Va_914_Unit_1_pos_V {
+    Magnitude: 3f92ed03-5dc5-49e3-bb65-fc46480f114d 
+    Angle: 99722ca3-e1dc-414d-b281-90226130a01e 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU7_Vb_914_Unit_1_neg_V {
+    Magnitude: 2db7fbdb-0d36-45d4-81d4-1683f2f66c77 
+    Angle: ad247cf7-d3bc-4a95-9fd6-3a94965e0e5f 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU7_Vc_914_Unit_1_0_V {
+    Magnitude: b575b5bf-c9fb-4b84-ba92-4a089469b992 
+    Angle: 8f0a2b8e-2ea4-4d87-b627-f85a8fa2b55b 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU8_V1_924_Unit_2_pos_V {
+    Magnitude: f0b9bb26-9e63-4e46-b514-fff77f58ba99 
+    Angle: ac66801a-eb6b-41a1-b8c0-42e06197dd32 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU8_Va_924_Unit_2_pos_V {
+    Magnitude: 249be607-40a2-4ede-bc8a-34c66ee49708 
+    Angle: 8afe0f45-7eb7-4eb3-a5a0-82d842293ae0 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU8_Vb_924_Unit_2_neg_V {
+    Magnitude: 643d07fb-db5e-431d-85a9-f45b7aa79f9e 
+    Angle: ffcc50fe-625f-4ce1-9ec1-7320aad8f51b 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU8_Vc_924_Unit_2_0_V {
+    Magnitude: 3a1ed9e6-7654-4647-b735-4a24d09df222 
+    Angle: de2f9c2d-7ea3-4855-b529-c8a752df81e8 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU9_V1_934_Unit_3_pos_V {
+    Magnitude: 5e3b413d-c8c8-480d-9407-36f6bab2b233 
+    Angle: de685cd2-1934-40d1-a761-5e03e80f72ef 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU9_Va_934_Unit_3_pos_V {
+    Magnitude: 2bc31764-1036-4469-b821-30c5a8c687a3 
+    Angle: 67ab6255-1524-41a9-92b9-ca4c2fd7ffb4 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU9_Vb_934_Unit_3_neg_V {
+    Magnitude: 83840e4b-5327-4402-a436-8e8d565508fe 
+    Angle: f507601c-7dc7-4b06-94bf-65e4c213a949 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU9_Vc_934_Unit_3_0_V {
+    Magnitude: 5924eb62-914b-4284-bb5f-d50c73dc2e2b 
+    Angle: 39f83633-51a3-419e-8f33-364c85d7f86a 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_V0_pos_V {
+    Magnitude: e9897789-8f77-4352-a724-20fd161ff452 
+    Angle: 3b9b906c-81b1-44f1-8ab8-d9c8ec5bc125 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_V1_pos_V {
+    Magnitude: d6e3b99b-f71d-4bb9-be81-19d43615c51d 
+    Angle: aca2347c-d56e-4ffc-8e6a-da09877bc746 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_V2_pos_V {
+    Magnitude: 94aaee98-194e-4eb5-b5f5-511663c3f458 
+    Angle: dd356842-2378-40a0-8c1a-106cc0377904 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_VA_pos_V {
+    Magnitude: 80f20348-24cf-4957-b9d3-190bbc10472c 
+    Angle: e7a80571-10ae-4478-93b0-a3a03f046ae5 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_VB_pos_V {
+    Magnitude: 24122a9c-6ed3-403f-9096-faf05b8ed49d 
+    Angle: d1845f63-086f-419e-a8d6-0c131c618c6a 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_VC_pos_V {
+    Magnitude: 3215a9a9-5c09-4cd7-a4f3-8887693a3a3f 
+    Angle: 538e6d95-39d5-478b-b4aa-0aaf7e4cd72b 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_V0_pos_V {
+    Magnitude: ab791f5b-8c85-4a4d-b0ad-af97ade2fc40 
+    Angle: 9e1090c6-43d7-4fcb-bd8f-5dbbea4a047d 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_V1_pos_V {
+    Magnitude: 8bfa2793-5286-4d0d-9baa-be72e34d4f53 
+    Angle: fd41e17d-8479-4db0-99dc-78b3ab2e0a4b 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_V2_pos_V {
+    Magnitude: dd9e4f8f-f53c-4ec9-ad93-aa085c5dc54d 
+    Angle: c7560330-8fd1-4997-a527-39bab795b17c 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_VA_pos_V {
+    Magnitude: 3c18e1a7-484e-4dc4-bc2f-ba44b06d2fff 
+    Angle: 59487ddf-23dc-4059-99d5-54373a1e04e1 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_VB_pos_V {
+    Magnitude: f7030d1d-1247-453c-8d49-d7bf5469c00a 
+    Angle: f8c9bd57-e946-461c-868a-48760c6af5c8 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_VC_pos_V {
+    Magnitude: fd022279-5e6b-44e5-a341-ab1f2318616f 
+    Angle: 75c6a3e5-aa9c-4a2d-b0b0-9b5ce2f2dd6e 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_V0_pos_V {
+    Magnitude: 97637f33-03db-4a18-aa88-24391b599f12 
+    Angle: 64025068-bfe9-490f-9693-633a5dc75b27 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_V1_pos_V {
+    Magnitude: 256a9edb-f295-4f8f-875f-74775aef4c0b 
+    Angle: 32ed75f9-df8e-4bfe-b2d7-305fbcec28ad 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_V2_pos_V {
+    Magnitude: 6989d6c6-efe0-4da3-b983-3483f9c7ba91 
+    Angle: 07232f18-123c-4bd5-83ce-2181d7df0311 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_VA_pos_V {
+    Magnitude: 44293cb2-b917-4914-a368-37540357fdd2 
+    Angle: c729b1ef-74fe-4d74-9e9c-5d91e0d93770 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_VB_pos_V {
+    Magnitude: 602e2fb2-2dac-402f-b216-d9d4bfa7e788 
+    Angle: 3b060f84-b836-4b53-b9a1-3dc829367cbc 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_VC_pos_V {
+    Magnitude: 949fe93a-01dd-4163-849e-d62c7c98a691 
+    Angle: 8d70eb46-2bb5-4677-9421-7d47fe0ff449 
+}
+
+ECA Phasor TVA_TVA_BULL_RUN_161_kv_Bus_pos_V {
+    Magnitude: 94a71c6c-d112-44bc-b354-fc2fe1b901cf 
+    Angle: 55e24049-a250-4e1f-b1b1-40bb3eb417bf 
+}
+
+ECA Phasor TVA_TVA_BULL_RUN_500_kv_Bus_pos_V {
+    Magnitude: 905a67e6-55b3-4676-9554-f5100bbd05a9 
+    Angle: 95cf718a-4c88-4c3a-851f-fc7e0ab39067 
+}
+
+ECA Phasor TVA_TVA_CORDOVA_Bus_1_pos_V {
+    Magnitude: f23feb76-0d3c-4ccc-aca2-b66290072702 
+    Angle: 3e97c348-98e8-45a2-a251-277bcf80e8c6 
+}
+
+ECA Phasor TVA_TVA_CORDOVA_Bus_2_pos_V {
+    Magnitude: 9ccdcb27-1342-4dd5-9fbc-26dcd603e411 
+    Angle: ef58b8bc-71c3-4170-8e7d-231141ddac47 
+}
+
+ECA Phasor TVA_TVA_CUMBERLAND_BUS_1_pos_V {
+    Magnitude: c05ec0e4-18c0-43dc-b209-7ed6c6be9635 
+    Angle: f177491f-9cb8-4e7a-9352-d5f05a804e60 
+}
+
+ECA Phasor TVA_TVA_CUMBERLAND_BUS_2_pos_V {
+    Magnitude: 2e0b4176-36bc-48a3-ae15-11661c200a40 
+    Angle: e8f9abdc-6969-4518-aae1-15d26b81ad7d 
+}
+
+ECA Phasor TVA_TVA_DVS_DFR3_PMU_V1_Davidson_SVC_pos_V {
+    Magnitude: 1992c9fc-8a19-4426-99d9-10359557340d 
+    Angle: 540c3360-f9c8-4148-a04a-7e1fef13a5c3 
+}
+
+ECA Phasor TVA_TVA_DVS_DFR3_PMU_Va_Davidson_SVC_pos_V {
+    Magnitude: 2797e495-139c-4947-8e85-87c5c23b66d0 
+    Angle: 4bcb2741-eec4-42a1-a522-d44e49b4b78a 
+}
+
+ECA Phasor TVA_TVA_DVS_DFR3_PMU_Vb_Davidson_SVC_0_V {
+    Magnitude: 7cae2713-fc60-4085-bf63-2764589f71da 
+    Angle: 929e583f-64da-4e84-a020-41d8b073f3a1 
+}
+
+ECA Phasor TVA_TVA_DVS_DFR3_PMU_Vc_Davidson_SVC_neg_V {
+    Magnitude: e515b930-9bc6-41e2-a959-672df371cbb4 
+    Angle: dc5571ea-0d63-48e9-8f32-3a47a552628d 
+}
+
+ECA Phasor TVA_TVA_FREEPORT_Bus1_pos_V {
+    Magnitude: 57f6790c-10f4-4b8e-84cc-b1c49b3f72ae 
+    Angle: 0051ac61-39c0-45d2-8233-d6a0e1b607c2 
+}
+
+ECA Phasor TVA_TVA_FREEPORT_Bus2_pos_V {
+    Magnitude: cd418cd5-da51-4ffd-b78a-1adcc04e08e3 
+    Angle: 1c899230-902c-4585-a6ff-f8c5e29054fd 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_V0_pos_V {
+    Magnitude: 2d560bf3-9f4e-474b-a44f-1f82943bf590 
+    Angle: 2513bf47-7c65-458f-8430-31ea5511dd48 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_V1_pos_V {
+    Magnitude: 08c69ba5-9dba-40e0-8938-f7d201ec0d80 
+    Angle: 77d3ff4b-5408-4382-87ce-cc1349a7efb7 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_V2_pos_V {
+    Magnitude: d0baeca8-3ba1-4b69-8f2b-022919db688b 
+    Angle: bbe0525e-db50-4542-bac1-173dc387ce5f 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_VA_pos_V {
+    Magnitude: 5a3fa296-f0a6-4a0a-9c02-92d1def86a71 
+    Angle: 1191d5d7-58f1-4c59-8d78-dcb18da6dae5 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_VB_neg_V {
+    Magnitude: 05419a34-bea4-4303-a5ba-1c50eb349859 
+    Angle: 75e16d65-2a53-4038-a1e2-1a2efc49327b 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_VC_0_V {
+    Magnitude: 06dd3175-b26d-4982-9e99-ee48617ab7a8 
+    Angle: 761c20e4-47d0-40eb-ab06-86a231ad1b96 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_V0_pos_V {
+    Magnitude: fc4d12ca-7bf2-4223-941d-e5e4a870b25d 
+    Angle: c3ffbe1b-5b00-4080-b9d3-0c0ad7c54fb0 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_V1_pos_V {
+    Magnitude: 40ed9ceb-863a-4020-a46f-31ab2696172e 
+    Angle: e5e83974-b7f8-4d33-87f1-a9ad7abbc14b 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_V2_pos_V {
+    Magnitude: 2c462fe4-d196-4f30-a658-1e595c2f4a05 
+    Angle: 1aa4ae63-e972-4189-901d-5411ea187dba 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_VA_pos_V {
+    Magnitude: 5db067a1-1c51-477c-9019-36eec16cf39c 
+    Angle: 1f304a9c-5915-439c-8888-b94bd0662d93 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_VB_neg_V {
+    Magnitude: 0f783402-6841-44a8-8eaa-596fa23d3090 
+    Angle: 52cb1276-93bd-4d01-88e3-0de0ebed6690 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_VC_0_V {
+    Magnitude: 0d302e98-3e2f-4bcf-bad6-462e4dc294dd 
+    Angle: 66791a95-23f5-4fb6-82aa-e5435c36737d 
+}
+
+ECA Phasor TVA_TVA_JOF_PMU_500KV_pos_V {
+    Magnitude: 7247b79a-9409-4acc-a283-6b77767e6274 
+    Angle: daee521e-f594-488b-9792-0ce7a0d306ef 
+}
+
+ECA Phasor TVA_TVA_JOF_PMU_Phasor2_pos_V {
+    Magnitude: 35c519ec-ce4c-41a8-a50c-9f7ee13926da 
+    Angle: a315a3dd-90f8-4f5c-9592-eb843617775d 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_V0_pos_V {
+    Magnitude: cf10de45-3266-4845-83c2-8d0207e9c839 
+    Angle: 77aea721-26e4-4151-b568-05a89e94029a 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_V1_pos_V {
+    Magnitude: 4e7520b7-28d4-440c-8cf7-7a5fbd80e9b8 
+    Angle: bc325f63-2130-4789-b7e5-f013b32a9ebb 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_V2_pos_V {
+    Magnitude: 0e95a07c-2928-428e-a40b-0edd521d3d4f 
+    Angle: 00ccd5a8-2992-4f18-84e3-6c652241edf4 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_VA_pos_V {
+    Magnitude: 5570ad36-ce52-400a-be6e-5a89bf827ac8 
+    Angle: 5af9ce81-2aae-4228-b96c-9c7484f47a8a 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_VB_pos_V {
+    Magnitude: a6e13cd0-67db-4723-80f8-97c0046aa4f6 
+    Angle: bcaead88-a553-4a8b-aae1-c4c6384fcd68 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_VC_pos_V {
+    Magnitude: 87c5debf-6b31-4e25-abd1-8565acd315d4 
+    Angle: 572b3124-c3a1-49bd-b5f8-07e60aec5927 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_V0_pos_V {
+    Magnitude: 405eb0d1-8dc3-4efb-88e8-f0250a76b4f4 
+    Angle: 7e365f90-87cb-41b5-8960-762fd4064b7b 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_V1_pos_V {
+    Magnitude: f15bfa30-a2b2-485e-bf27-388ecdd2b6e6 
+    Angle: 25e5a3b3-3e54-4338-96eb-f875b968c439 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_V2_pos_V {
+    Magnitude: f73439ea-5bbb-4390-813f-826d3caa9b45 
+    Angle: b7bcd68e-7519-4c3c-8cc4-28562671057b 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_VA_pos_V {
+    Magnitude: 85d843cc-faa3-4995-af8e-6a1269803207 
+    Angle: a97068d7-901c-406e-8123-6e73b84f5762 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_VB_neg_V {
+    Magnitude: ea213e5b-f86e-4dc2-849c-68dc320e2758 
+    Angle: 8b495711-15d7-437f-a62c-4693f5e1c432 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_VC_0_V {
+    Magnitude: 03110a94-7571-446a-8e65-b0a697078183 
+    Angle: 38454148-6c1e-4dfd-bb96-6659613e9908 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_V0_pos_V {
+    Magnitude: e3d85804-28af-4e10-9c64-8004da701a8b 
+    Angle: f67d343d-bbd2-461b-bf77-c628a1e5d4ff 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_V1_pos_V {
+    Magnitude: 4b346f48-eb95-42e1-8add-b62204c7f7a3 
+    Angle: 1b45995c-0f54-4f4f-8209-f5458bed9285 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_V2_pos_V {
+    Magnitude: 4d058be0-4bd6-46bd-acd7-5981f2339b5f 
+    Angle: 9aabb037-12c1-49e1-a62e-fc5cacb84c5d 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_VA_pos_V {
+    Magnitude: 144e570b-69e8-445e-877b-7da32769a310 
+    Angle: 2f3f4039-3cc2-41c0-a824-758b7e8c548a 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_VB_neg_V {
+    Magnitude: a83c573b-f04c-4978-b7e7-a711890e7b52 
+    Angle: c120d95b-9483-4435-bd25-02e33c141f98 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_VC_0_V {
+    Magnitude: 29624145-210b-4ca2-825f-016db4bb72d5 
+    Angle: e97e058a-b9e0-4d14-88a9-7fcb4ec78992 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_V0_pos_V {
+    Magnitude: af74795c-919e-42a4-bb62-29bf546f2451 
+    Angle: ce094bde-36d7-4850-91e1-0079d88710df 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_V1_pos_V {
+    Magnitude: 723ea9eb-15c6-4489-b689-ebcd70cabd99 
+    Angle: 76c5ea87-a4cf-4b02-a16e-429dbfdbcc92 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_V2_pos_V {
+    Magnitude: 05fc4010-4568-4d02-909e-196ff13a8880 
+    Angle: 33bea9bf-24de-4d7a-9a37-91cdfab9bcba 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_VA_pos_V {
+    Magnitude: 4c984333-993e-4e13-ae46-aa717141e15a 
+    Angle: 9ea7128f-c141-4127-b4b4-451a6091acf4 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_VB_neg_V {
+    Magnitude: 4691d078-29ad-4c2b-868c-176af3d2092b 
+    Angle: b6dbf7e9-ce98-4a29-af76-2aa657364b5d 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_VC_0_V {
+    Magnitude: ddac47e3-9216-472f-be9c-0ccc6318be00 
+    Angle: c5e6a247-1c01-46ac-bd6d-d31288527b3b 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_V0_pos_V {
+    Magnitude: e4ac8dc6-2e52-4186-9ba6-641ac406272f 
+    Angle: 20112a34-26ee-49d2-aeab-e99318e705bb 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_V1_pos_V {
+    Magnitude: a264c2c2-66f4-4160-a700-eb72d6d2a5a6 
+    Angle: 609f89d4-0c51-49c1-8d27-e3b7aca1453a 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_V2_pos_V {
+    Magnitude: e86f1ab8-47b6-4676-97d1-5aa89ae39424 
+    Angle: f20cf600-db73-4f7a-91c0-c2a33b988ccc 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_VA_pos_V {
+    Magnitude: 3760c1f1-e5ab-47ea-8fb0-bacaec4cb2fa 
+    Angle: 31bd28ca-2b57-44a2-a0f1-778dd062be7a 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_VB_neg_V {
+    Magnitude: 83586b7b-28e9-4606-8ab0-36eaa9022528 
+    Angle: a16c517d-bab0-49fe-bceb-c0097dac30e1 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_VC_0_V {
+    Magnitude: df548300-c9e2-4ead-b2cc-0faa437b0420 
+    Angle: 81dc9920-36fc-4d3b-a4d1-dbf9e3f80010 
+}
+
+ECA Phasor TVA_TVA_LCS_DFR_V1_Lagon_Creek_C_pos_V {
+    Magnitude: 920f8034-3306-4632-b9e0-60d3a0bb9199 
+    Angle: a26e32e7-d9ba-4934-a150-4685203d91ec 
+}
+
+ECA Phasor TVA_TVA_LCS_DFR_Va_Lagon_Creek_A_V {
+    Magnitude: 3ce2c7d7-25b6-4b8f-a57e-fbab5a0328de 
+    Angle: d826e0bb-6aac-48ae-a4af-e34f4b460995 
+}
+
+ECA Phasor TVA_TVA_LCS_DFR_Vb_Lagon_Creek_B_V {
+    Magnitude: 953920e5-0a83-4e00-8629-ce7995123838 
+    Angle: e3dc3aaf-4b03-4ffd-ad6a-4300f0920195 
+}
+
+ECA Phasor TVA_TVA_LCS_DFR_Vc_Lagon_Creek_C_V {
+    Magnitude: 31fdb365-71f7-49b4-820f-8890de221d66 
+    Angle: b2967000-2967-47be-8b4b-b1e490e2d7d9 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU1_V1_Lagon_Creek_C_pos_V {
+    Magnitude: 98021542-0381-4f7a-ae8a-7f444ff9b348 
+    Angle: 15acd9ca-6368-4d19-ba5f-9596f5e01100 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU1_Va_Lagon_Creek_C_pos_V {
+    Magnitude: c104f79d-7911-41ab-979f-c7c928ef81ad 
+    Angle: 975bd3bf-3886-4850-b45d-ead438d87e7a 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU1_Vb_Lagon_Creek_C_neg_V {
+    Magnitude: 6d1ef8db-2ffb-4b16-961f-4ed683912e62 
+    Angle: d58da3ac-bf0e-46d4-b9db-f83d2a6f9f83 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU1_Vc_Lagon_Creek_C_0_V {
+    Magnitude: 55e614ca-5f98-428c-89a8-c3adfefc2aef 
+    Angle: 2dc9af86-032d-441d-847b-3b1bb3451a36 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU2_V1_Shelby_pos_V {
+    Magnitude: 62989a7e-d100-4aee-b4b1-55f7e8cd3c76 
+    Angle: 4f9fd0e1-1e5f-46e9-a8eb-4cd8bed329e9 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU2_Va_Shelby_pos_V {
+    Magnitude: 550eacf4-9c28-4cd0-9aed-1ac62ce3602b 
+    Angle: ddcf0be4-67e2-4312-ac74-4d07bbf6e35d 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU2_Vb_Shelby_neg_V {
+    Magnitude: 45e415a4-cccd-4c00-9f4c-da8aaeffaca9 
+    Angle: 2eb13422-462c-4be2-a075-cb338641abb0 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU2_Vc_Shelby_0_V {
+    Magnitude: d058ce1f-c606-4a3a-8872-1fa613471d2b 
+    Angle: 46959c72-236d-446e-94bc-4cec98d42606 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU3_V1_Weakley_pos_V {
+    Magnitude: 0708b9c8-12e6-40d8-9572-ed18ab3ebbb2 
+    Angle: 10253ac4-b1c4-4c42-a561-19ef0b555c99 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU3_Va_Weakley_pos_V {
+    Magnitude: 2f71b370-1e8b-4d40-82fb-e48030d049f8 
+    Angle: 3a922d35-8bb2-4517-b561-cae160553ee6 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU3_Vb_Weakley_neg_V {
+    Magnitude: e0e844c5-8592-40af-a96b-ff6638b94042 
+    Angle: 3509233e-9e04-4e31-b025-8591fa3f4f48 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU3_Vc_Weakley_0_V {
+    Magnitude: 42739561-7dee-4c1c-a061-4673c8e528ad 
+    Angle: dffb1e03-db9f-4b8e-9cb4-09673e0c4fbf 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU4_V1_CT_Feed_pos_V {
+    Magnitude: 571cdd62-b179-4bd2-a355-ad546a3e2f23 
+    Angle: 884a11ea-5e49-47ec-a293-51af9b590219 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU4_Va_CT_Feed_pos_V {
+    Magnitude: ae4f2ce3-cc03-4019-992e-0bf8a48fd949 
+    Angle: a12505e4-aec9-479b-b420-3ec4c8b3fd60 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU4_Vb_CT_Feed_neg_V {
+    Magnitude: 5bd2f41a-c842-4bde-8043-ae50a0907fae 
+    Angle: 34a509ab-ff38-4c56-8e9a-fb0c3de9f47f 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU4_Vc_CT_Feed_0_V {
+    Magnitude: a1b154a7-e960-4815-a133-417b8b59ca66 
+    Angle: d06722ec-8e9b-44a5-a084-cda3b58b1307 
+}
+
+ECA Phasor TVA_TVA_MARSHALL_161kV_Bus_2_pos_V {
+    Magnitude: 45fbdd17-4dbc-4541-8976-08db3624d07c 
+    Angle: 66f7c435-0b92-4e8f-ac54-a2ef3c65f63d 
+}
+
+ECA Phasor TVA_TVA_MARSHALL_Cumberland_500kV_pos_V {
+    Magnitude: 2a8b7178-47ce-4c3d-b52f-a323495e009f 
+    Angle: 6707a7b6-6be7-40bb-9af6-b5dba57b7c15 
+}
+
+ECA Phasor TVA_TVA_MONTGOMERY_161KV_Bus_1_pos_V {
+    Magnitude: e44547de-1b0c-42ea-af71-e14a6327e756 
+    Angle: f820e3af-4a4b-48aa-8885-4b46d33b1c93 
+}
+
+ECA Phasor TVA_TVA_MONTGOMERY_500KV_Bus_1_pos_V {
+    Magnitude: 93c7ca4b-88bd-4e17-b51f-3e688cc70356 
+    Angle: 88815ab8-4647-48ef-a636-9410742b9ec8 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_V0_pos_V {
+    Magnitude: db85aa7b-8013-42f4-bba2-251472b24517 
+    Angle: 11dcfbe6-6fc3-4674-97e5-943b3da0b4d7 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_V1_pos_V {
+    Magnitude: 58a97a86-c789-4090-96c9-3204e1386397 
+    Angle: 09d8efd5-003e-441e-ac81-1f22c9301df0 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_V2_pos_V {
+    Magnitude: 6843a40a-9ed3-4ef5-9855-96aae1d8a158 
+    Angle: 509f1f17-b403-41dd-99a0-19148ad169f9 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_VA_pos_V {
+    Magnitude: 8d678a0e-2c02-4c77-88a4-4c9ec0103dc3 
+    Angle: 36d463f6-30f9-4734-bdcb-5f010aef1409 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_VB_pos_V {
+    Magnitude: 9e876c83-27a3-4175-8c99-8603fede1094 
+    Angle: d731bf85-53a9-4025-9972-1429ae7e4ddd 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_VC_pos_V {
+    Magnitude: 021563a8-5630-4b0c-b798-f2ef3b68eedb 
+    Angle: 36c1b7dd-52e9-4b91-8364-c50117dd69ff 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_V0_pos_V {
+    Magnitude: 83e29a2f-a854-4de8-98f4-5c74cc8bb964 
+    Angle: af006d4e-f652-474c-9ff5-7ebd864b77f1 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_V1_pos_V {
+    Magnitude: 7053127d-29d4-44c1-a28e-b0546931b85d 
+    Angle: 09bdf892-583a-4332-a3a3-cd7b511741f2 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_V2_pos_V {
+    Magnitude: fb063207-7a39-4bf1-9f60-07d810b05a60 
+    Angle: 46cabb36-6c04-4889-a489-947727af9f82 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_VA_pos_V {
+    Magnitude: 1bf4d666-0a24-488c-865a-9956e568d127 
+    Angle: 544e11c4-7c12-4d92-adc4-c5b4c9371535 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_VB_pos_V {
+    Magnitude: a9d245fe-4dd2-49d7-979b-167c0412e958 
+    Angle: d0acf368-0015-428b-8825-0220178bb563 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_VC_pos_V {
+    Magnitude: 87d06d17-d082-4752-98f7-d0dbd915034e 
+    Angle: c32b0c33-352c-437e-9bfb-936721cf1ab8 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_V0_pos_V {
+    Magnitude: 9bac83bf-7fcd-4b43-aaf9-fa05e1a6ab61 
+    Angle: 9bcb9410-3898-4d2f-9049-6c4c06ae2806 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_V1_pos_V {
+    Magnitude: 14eb60b0-b3f9-4b4b-8346-b8f960c133be 
+    Angle: fbc50155-8471-4ab9-8712-11cebd561d01 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_V2_pos_V {
+    Magnitude: 42cc9132-0590-480f-8fbf-4f2ae1675fcd 
+    Angle: 1550e778-6114-4d16-a267-331dee4729d3 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_VA_pos_V {
+    Magnitude: 4872bc24-e866-4272-9524-0a579aa257ea 
+    Angle: 942ef393-3755-4426-8cb6-339c9bf93adc 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_VB_pos_V {
+    Magnitude: af42ce64-40fc-48af-9f04-0f9b887fed5f 
+    Angle: 6f294238-fe31-4c66-b8be-ac3719292455 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_VC_pos_V {
+    Magnitude: 18e85a20-9faf-482b-a40f-8ce76c0bc90c 
+    Angle: 44a72e60-27fe-4920-9318-865590b7bc93 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_V0_pos_V {
+    Magnitude: 7a43069e-62e9-4432-930f-3fac2ed7abbf 
+    Angle: 8a4631f1-e97c-4eeb-9574-895c22ea221e 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_V1_pos_V {
+    Magnitude: b2d9c7a6-a6e4-43de-9bc4-59094bac91cc 
+    Angle: c98cd5f5-a679-470b-b9b1-76b27c89da1e 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_V2_pos_V {
+    Magnitude: b9d581a5-3e19-4701-8a23-6c2102536b3c 
+    Angle: 948a632d-238e-411e-b2da-4c4aa84d8969 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_VA_pos_V {
+    Magnitude: 639c8bb1-31ca-442e-b46e-e50f863599a6 
+    Angle: 30708f32-c6b1-424e-975d-2ef29e1a11a1 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_VB_pos_V {
+    Magnitude: ef579ff2-b8b6-4d16-9eff-c1ebd15b7d1c 
+    Angle: bfc2e4f2-b3d6-4cfa-bfa5-3ee307ef6034 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_VC_pos_V {
+    Magnitude: 48a95332-1b0b-4293-920d-f3de6d1fa341 
+    Angle: 18f68499-69df-4f4f-9895-b418e674e8bc 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU1_V1_Murfreesboro_pos_V {
+    Magnitude: 617c750c-2744-4527-9ea7-90085fbb95f3 
+    Angle: d0278b79-98fd-467f-bd46-d1155d84d84f 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU1_Va_Murfreesboro_pos_V {
+    Magnitude: c1a475c4-9119-4a75-a767-175c78ff0ed4 
+    Angle: 21c601fc-8265-49af-8619-44ee2743c22f 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU1_Vb_Murfreesboro_neg_V {
+    Magnitude: 9167470d-d4d4-413b-b5dc-db6dcd6efd72 
+    Angle: a1900f97-b264-4d91-b948-c5d63666638b 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU1_Vc_Murfreesboro_0_V {
+    Magnitude: db87ccb7-f2f0-4157-9849-4a8e3c61539d 
+    Angle: c22689c3-ab40-4932-9a71-5a2740eefd19 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU2_V1_Hurricane_Cre_pos_V {
+    Magnitude: 1a495d62-6976-4d00-9dfd-a6fa0594ee90 
+    Angle: 12e446e1-be1a-41cd-8ac6-911e2d951feb 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU2_Va_Hurricane_Cre_pos_V {
+    Magnitude: 47c82b53-9f22-454d-9bc5-9daed97398da 
+    Angle: e4f4582e-970b-4746-be47-140cdcfd6263 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU2_Vb_Hurricane_Cre_neg_V {
+    Magnitude: 68a16ff0-94c3-439e-ab44-e6f89aa3740e 
+    Angle: e789f49a-114a-46c9-87da-5bba6c39e2ba 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU2_Vc_Hurricane_Cre_0_V {
+    Magnitude: 1b79de72-c1d2-4fa0-8bc3-d748285ac21a 
+    Angle: 2995824e-23c0-4665-82a4-c2bf249e1e15 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU3_V1_Cane_Ridge_Li_pos_V {
+    Magnitude: a9ea0e0d-25b0-4d37-b586-ce668b72fb9c 
+    Angle: 358dedba-04a1-4ad9-b40e-455ee54f1521 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU3_Va_Cane_Ridge_Li_pos_V {
+    Magnitude: 0b415492-c43f-488a-b097-182bb4c6c0f2 
+    Angle: d39af15d-077c-4408-af8e-d5194b56f6f8 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU3_Vb_Cane_Ridge_Li_neg_V {
+    Magnitude: 371d9189-7816-4028-b289-dd51b56ce89d 
+    Angle: 59df3201-7b11-4e37-96b2-84111d752a60 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU3_Vc_Cane_Ridge_Li_0_V {
+    Magnitude: fa8dce2a-020d-4f80-a3a9-61db00315ca2 
+    Angle: 19542200-a0b4-4b8e-9db2-7efdeb7101bd 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU4_V1_Smyrna_Line_pos_V {
+    Magnitude: 90c84222-e838-45fd-93e1-e596a170356a 
+    Angle: 84dbfb1d-1e75-4f42-9bcf-78a959803014 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU4_Va_Smyrna_Line_pos_V {
+    Magnitude: 0cc4718a-6e9f-482f-a22d-4f6eb61ef727 
+    Angle: 2b085755-d6e8-4857-b18d-d3ef65e4ea97 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU4_Vb_Smyrna_Line_neg_V {
+    Magnitude: 7871214e-4c9c-49a4-820e-e9ddd1e538a2 
+    Angle: 556d6f0a-26b3-47c4-8b7d-133dddf07cb2 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU4_Vc_Smyrna_Line_0_V {
+    Magnitude: f5bb18f3-4fcb-4c3d-957e-bddb6c353279 
+    Angle: ad1ffe6d-4b29-43f4-8ad5-969a921ab897 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU1_V1_XFMR_161kV_pos_V {
+    Magnitude: 28a6aa59-700e-41ce-a4d7-331c55eb267f 
+    Angle: b96d42f7-b82f-4eb6-9259-4d6015fb8ccb 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU1_Va_XFMR_161kV_pos_V {
+    Magnitude: 3cc4eb36-cd4e-47a3-a270-2631cc0ee34b 
+    Angle: 96011d7b-567a-4da3-9d24-0a67a3b3f9be 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU1_Vb_XFMR_161kV_neg_V {
+    Magnitude: 321464c8-7df1-4256-b4a6-6ced26926222 
+    Angle: 174ad938-d438-4998-ba34-1b3b1ff42384 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU1_Vc_XFMR_161kV_0_V {
+    Magnitude: 1ef6ed90-e649-4266-bcc8-aadeaab8dbc3 
+    Angle: caccc826-2b97-4b61-ab4f-9edf8916e2f8 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU2_V1_948_1046_Wils_pos_V {
+    Magnitude: fd6026fa-e4a7-43ce-b585-389eda13c14d 
+    Angle: 53a63ec8-0bbd-408d-bccd-eac0d1d76371 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU2_Va_948_1046_Wils_pos_V {
+    Magnitude: e96adba4-58b9-4da2-93f0-991efa4c6eb6 
+    Angle: e88087e7-2c33-466c-83bf-19c274910a53 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU2_Vb_948_1046_Wils_neg_V {
+    Magnitude: e734eb3f-facf-499a-bc6f-877f25a33e85 
+    Angle: 19cf20e5-f037-4098-ac6b-8bb9883a3c26 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU2_Vc_948_1046_Wils_0_V {
+    Magnitude: 02c5f940-3bd1-493b-8e4a-5d1fba25b7d8 
+    Angle: 6257dfeb-5941-462f-99b4-398f1dc1e966 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU3_V1_5028_5038_Dav_pos_V {
+    Magnitude: 2f3dcc60-7d82-4bc1-8b83-151e9a0f6bda 
+    Angle: 5958ef96-73d2-43c8-a23c-6845b280bca6 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU3_Va_5028_5038_Dav_pos_V {
+    Magnitude: 31a805a6-a5c4-4f7e-9ec4-b7abbdc244d3 
+    Angle: c893d9db-9de2-490c-86ba-6e9a13280d12 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU3_Vb_5028_5038_Dav_neg_V {
+    Magnitude: 7bf1aa6d-01ad-4a7a-bb2b-926a6002f595 
+    Angle: 57e1a9d4-3039-4693-a982-c34064b9a687 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU3_Vc_5028_5038_Dav_0_V {
+    Magnitude: 7c80e1ce-a5b5-462f-8940-68733d014473 
+    Angle: 788b75e0-892d-44d9-8569-b204bed492fd 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU4_V1_XFMR_500kV_pos_V {
+    Magnitude: a6ec88fb-42a5-44de-bdb2-a23e98b78ba9 
+    Angle: 82c5c9b9-477f-4a45-83de-802439ab87f8 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU4_Va_XFMR_500kV_pos_V {
+    Magnitude: c94feb3b-8330-411c-a8ae-0b00b4287ead 
+    Angle: 6fa101fb-4517-4fa4-a8a6-75685733d57b 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU4_Vb_XFMR_500kV_neg_V {
+    Magnitude: d8a2fabf-c773-4598-a108-8b56c1a0bc61 
+    Angle: 2ec472d0-c469-4ac4-b0ea-a2085d5ca91a 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU4_Vc_XFMR_500kV_0_V {
+    Magnitude: 41a3a2d9-800b-4fd1-9a7f-4a50a9ff0434 
+    Angle: 562ea62a-26a8-4061-ae48-43f9eadacffd 
+}
+
+ECA Phasor TVA_TVA_PICKWICK_Phasor1_pos_V {
+    Magnitude: 5526f283-fb40-421e-a407-7e02dd306e07 
+    Angle: 28cb6319-ca58-4a92-aa55-5ed6c36c87fb 
+}
+
+ECA Phasor TVA_TVA_PICKWICK_Phasor2_pos_V {
+    Magnitude: 8f8005e6-3ff2-4603-8ea6-a369cc7c373f 
+    Angle: 77371334-4f01-42a1-9b3a-cf1c81e226b4 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_V0_pos_V {
+    Magnitude: 1d0d4acb-4acc-49c0-8dfe-7d5114a910f3 
+    Angle: 31b6ec03-0367-4f52-b1b0-d5461fe4c0ba 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_V1_pos_V {
+    Magnitude: 92c443f0-6aec-40ea-b086-3cdba981abff 
+    Angle: 1ee2d292-2e13-48a4-bd9a-ea0f688779dc 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_V2_pos_V {
+    Magnitude: 0cbea139-67ab-4a9a-a761-e387ac144c69 
+    Angle: 8ced2f06-1cbd-428b-97c1-31c1bef3d25d 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_VA_pos_V {
+    Magnitude: 41de65c3-8659-4657-b378-c80069378e10 
+    Angle: 26caabcd-bf62-46a9-b2d2-c920a684903d 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_VB_pos_V {
+    Magnitude: dcbeaf18-dc22-4947-92e8-45a6dc599fca 
+    Angle: 8cb23fdb-31fe-494e-b11e-5c7b49be68e6 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_VC_pos_V {
+    Magnitude: e0892cf0-a96c-47ff-b5b1-1e2a8ea31032 
+    Angle: 96bcb7b5-4eac-4d91-a930-ac50aed6032c 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_V0_pos_V {
+    Magnitude: ae57ca8b-241d-47a9-b871-ca59b921194c 
+    Angle: ad451939-0555-4c81-888e-8f3a41fc18ef 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_V1_pos_V {
+    Magnitude: b57182c1-4039-46d5-8d68-96408e4a2493 
+    Angle: 620a4eec-d3c7-4baf-9781-dab96bdad651 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_V2_pos_V {
+    Magnitude: 34ba12a5-b2f5-423d-bc8a-085ec42c1d0d 
+    Angle: c8d64251-dfee-4309-be48-6f490cff7257 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_VA_pos_V {
+    Magnitude: cd931d9d-b39f-42cf-9e8b-5d814fbf695a 
+    Angle: 834fef5e-3822-4b45-8364-49b0cc15fc6c 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_VB_pos_V {
+    Magnitude: ff6ec500-06ce-436b-8ba8-8f28b784575f 
+    Angle: 5d326b7c-cd15-444a-b91e-69337e90a059 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_VC_pos_V {
+    Magnitude: 78ed3485-6b37-47c8-8642-10c06ddcedf2 
+    Angle: 97395360-87a4-4e73-8187-913541cc2d32 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_V0_pos_V {
+    Magnitude: 30ceeddc-4675-454b-b54e-3aa53729d801 
+    Angle: db23346c-ffec-41a8-ad48-8d8673e31ab0 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_V1_pos_V {
+    Magnitude: 1be20cf9-6432-4660-9d9e-3c9bdaa36bdb 
+    Angle: fe2d3ae1-8c80-4803-8b11-ca37cb4e8d1f 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_V2_pos_V {
+    Magnitude: 7d266e46-cbc9-420f-a57f-22362602d43a 
+    Angle: e21886d4-a70b-4f98-b1c3-8d7f3bd674d2 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_VA_pos_V {
+    Magnitude: 2c96736d-6b22-4f7b-bf65-690a5475a7bf 
+    Angle: d74bb5a5-b0da-407d-a38c-c5e13aa92e1d 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_VB_pos_V {
+    Magnitude: ff67c323-27ef-4f3b-8610-1e4e1615be8f 
+    Angle: 8f95c2af-5462-4db0-8bcf-1c29fc9f8b9b 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_VC_pos_V {
+    Magnitude: d0e0695b-7f7d-42fe-866d-4536ce46ff29 
+    Angle: d300c2b6-537f-4bc5-a396-9b53ca7a0abd 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_V0_pos_V {
+    Magnitude: cb49a712-e4ed-45eb-9707-3ea2d1c7dd82 
+    Angle: 94945200-e910-4d06-8b20-4f8ddc0e5959 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_V1_pos_V {
+    Magnitude: a7a8dde4-20bb-4513-b4fb-96083bca5aa9 
+    Angle: 8b4a09db-f07d-455e-8132-015e475209fe 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_V2_pos_V {
+    Magnitude: 74229a53-ebb4-4440-be2a-b75626fee2d0 
+    Angle: 2fe1c36f-7994-4fc8-af8d-7c46260bfb39 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_VA_pos_V {
+    Magnitude: 665c6f4f-a7fa-4f14-83e6-468a765d5e8e 
+    Angle: bce2526c-1523-4dff-93f2-2edc7f474eb9 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_VB_pos_V {
+    Magnitude: b679428f-4d80-4791-9b18-9b92d8b1cf33 
+    Angle: 1e902136-37cf-492d-9669-0dc46c4a92ae 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_VC_pos_V {
+    Magnitude: 6f895c47-9f10-4e37-966c-878bdffcdff3 
+    Angle: abe07268-9049-4002-9fdf-3b9591d947ba 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_V0_pos_V {
+    Magnitude: 8668aa8c-8817-4b64-a65c-787e6f54e621 
+    Angle: ad82021d-94fc-4115-95ae-01b617ce7f98 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_V1_pos_V {
+    Magnitude: c56b85f7-5bf6-46b1-925b-ab2280a8a190 
+    Angle: 2f9cfe71-f95d-4a15-9cfa-3dabffdf3fe3 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_V2_pos_V {
+    Magnitude: 8c1d4c23-cf54-4207-98f5-23f0341996b5 
+    Angle: 1addb402-4e95-492e-befc-881c276aa3e7 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_VA_pos_V {
+    Magnitude: e3432532-659a-465b-a8f6-97971d922a57 
+    Angle: 3f16349f-c147-47d4-a888-6e030d0e4513 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_VB_pos_V {
+    Magnitude: 7a91c9d9-4cf5-45eb-8968-daf0e0b07f1c 
+    Angle: 9605af48-8f70-4f21-8261-3db9ca43c31f 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_VC_pos_V {
+    Magnitude: 401de0c8-cf4f-415c-940e-a46efac8623f 
+    Angle: b367a7ec-3af2-4cc3-ab7a-a09ccc8756b8 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_V0_pos_V {
+    Magnitude: 9c1abe8d-1101-4e22-9d53-ac6d3fa7fc31 
+    Angle: efe0c8fa-0cb5-48e2-b8ef-d167014fcd04 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_V1_pos_V {
+    Magnitude: dacc6559-1e1e-42dc-aeed-4fa03dc02ca2 
+    Angle: 051ca282-8d97-41d9-ac2b-eaa131beda21 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_V2_pos_V {
+    Magnitude: 78a90724-6ef4-497e-9437-927052a0e999 
+    Angle: ff28f472-b100-4a32-9b0a-c892861cbc53 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_VA_pos_V {
+    Magnitude: b94ab0af-2e7b-4027-81ea-6dfdc6dcb0f3 
+    Angle: fbc2fe8b-b7e4-48b2-b604-9d3810da827f 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_VB_pos_V {
+    Magnitude: 70928762-6669-4e11-9a2c-fefbca3e93d7 
+    Angle: c6ea31f7-8013-4048-b5a4-fab3240b4b41 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_VC_pos_V {
+    Magnitude: 94d25ce3-5408-4445-a6ca-2dca48bc77f1 
+    Angle: 70319d2c-1c94-4857-b552-7a91991294e8 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_V0_pos_V {
+    Magnitude: b22b249d-b813-49ab-93da-d8c4bcff277d 
+    Angle: 9a9fa8c3-b924-44cc-967d-0c89f0f40bbe 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_V1_pos_V {
+    Magnitude: d80478a9-f0e9-4a2d-84f7-abd3ffd0ecff 
+    Angle: 78d5adaa-295d-4947-adf1-4d89247153c5 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_V2_pos_V {
+    Magnitude: 3bfc503f-363d-4032-aebf-03049fda4f6c 
+    Angle: afa1a8c5-ad2c-48a5-8443-32ddb070f488 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_VA_pos_V {
+    Magnitude: 86e8202c-3829-436d-8a74-b1cb7f12d525 
+    Angle: 2fa53f22-055b-4574-9219-3cc9a7268c64 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_VB_pos_V {
+    Magnitude: 596ab446-fd50-497d-9cc1-166e675265db 
+    Angle: e0b57482-6713-434e-becb-48c68009218d 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_VC_pos_V {
+    Magnitude: c8b0a6d4-e2d5-43d8-a739-9f7b84506968 
+    Angle: 3d5dc202-9b0b-4fbb-bc81-e3a6a8f02bad 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_V0_pos_V {
+    Magnitude: 45a05ecb-f05c-4f5a-b747-26eb56710e32 
+    Angle: d023e390-72ea-4aca-9cce-86ccbc9f106b 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_V1_pos_V {
+    Magnitude: 4b5ebc60-37d6-45a6-a5dc-42b6cd928301 
+    Angle: ce5f8270-6cca-4937-91f1-13c6b5823160 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_V2_pos_V {
+    Magnitude: 0c346aa4-c0b7-4f7d-88cd-0d11188b3bcd 
+    Angle: e5af321f-5f9c-4548-b34a-368950f87235 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_VA_pos_V {
+    Magnitude: 0a9a19e4-c144-497a-9730-fc1619f42563 
+    Angle: 0c3e83a2-6db7-4654-bad6-d20711038135 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_VB_pos_V {
+    Magnitude: 426525bc-6a3b-461b-b650-1796a4be2e1d 
+    Angle: 89061fd5-22f3-49dd-83b3-2b1ba042ab47 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_VC_pos_V {
+    Magnitude: 1336727f-7e80-4de8-9026-6144eeaf1e17 
+    Angle: dda67195-9b17-461a-9cc8-18286b24f37f 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_V0_pos_V {
+    Magnitude: 1ba1edec-d8df-4e2c-9a57-67042ca3421e 
+    Angle: 0070cdba-956d-477c-a457-ce56c217cafb 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_V1_pos_V {
+    Magnitude: cb0f1bf5-23a5-4fff-bb2c-e22dbd22ec59 
+    Angle: 83677bb3-2590-415f-bc59-22f7ffdc9698 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_V2_pos_V {
+    Magnitude: 8477d6a1-4d86-48b0-898b-d2593224f229 
+    Angle: e44524ef-85f0-4088-afd7-24137695518a 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_VA_pos_V {
+    Magnitude: e0e012aa-0d58-4bfb-bd93-883facbac6f3 
+    Angle: 477b364c-2869-4b86-9bd8-25b8fe71b466 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_VB_neg_V {
+    Magnitude: 38d9e6c3-53f8-4ca4-bb63-9e191b211498 
+    Angle: 5358ee9c-d5ef-4b6f-8b65-e4a229a0bc22 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_VC_0_V {
+    Magnitude: eafff322-f323-4c8c-b11b-f83662234fa6 
+    Angle: 79207430-8103-4996-a419-32d5a1012607 
+}
+
+ECA Phasor TVA_TVA_SEBASTOPOL_161kV_Main_Bus_pos_V {
+    Magnitude: bfc2de34-3d7f-407e-a9d4-34456c2ab5db 
+    Angle: 4730f04c-fb95-40e7-8ef8-c268bbc8e403 
+}
+
+ECA Phasor TVA_TVA_SEBASTOPOL_PhasorU2_pos_V {
+    Magnitude: 4e2867d7-fa5f-4d4d-91f5-eee779bbd6ac 
+    Angle: 574f7d56-476c-4494-99f6-cdd3faa74f23 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU1_V1_West_Adamsvil_pos_V {
+    Magnitude: cc5d69e9-fe06-44bc-8fa4-77283ad92382 
+    Angle: fc2fc6b8-4fa6-450f-a4de-1deeb9c75742 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU1_Va_West_Adamsvil_pos_V {
+    Magnitude: 603e9678-9d89-47c8-ad7f-6c5055a29c4c 
+    Angle: e949a979-e038-4767-9fc8-4f0a68e5d9dd 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU1_Vb_West_Adamsvil_pos_V {
+    Magnitude: 5831971e-9d36-4086-b35c-d60856ba4d38 
+    Angle: a0fdc454-b637-4210-8367-978a08005960 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU1_Vc_West_Adamsvil_pos_V {
+    Magnitude: b5274278-1079-4cff-98c1-836a0c7a1e90 
+    Angle: a51597d7-a775-446a-9ed3-1cc43dcafdf7 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU2_V1_Colbert_pos_V {
+    Magnitude: 88f102c2-6b47-4269-8d15-f4a9f7ba4245 
+    Angle: 2898ea50-c348-4dd2-9ad0-07a74da1ee85 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU2_Va_Colbert_pos_V {
+    Magnitude: e0be063c-6c15-44cf-a592-e8055289a984 
+    Angle: 56998d8e-517f-4c98-9208-8526a0be90bb 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU2_Vb_Colbert_pos_V {
+    Magnitude: 7558ab8e-0471-4d7f-95e6-31439c378726 
+    Angle: a658e5c1-015f-43f5-9b95-f87d4a9db936 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU2_Vc_Colbert_pos_V {
+    Magnitude: 8f574516-a4e3-4a17-9506-c109f5df1235 
+    Angle: 7a8e835b-8f02-4f46-bf0f-ebe07d7f496d 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU3_V1_Forest_Hill_pos_V {
+    Magnitude: c832af2d-aba3-45f4-9e3e-ca690587caaa 
+    Angle: c9ffa2b3-ecfb-4103-9511-e2fdb4b915e8 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU3_Va_Forest_Hill_pos_V {
+    Magnitude: 6960a3f2-7eed-41db-a7f2-056daf063310 
+    Angle: 335997b0-1704-4402-a520-376d27567961 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU3_Vb_Forest_Hill_pos_V {
+    Magnitude: 17d1c18d-0592-4df6-a818-a227f66eea2d 
+    Angle: e74b2c37-f2c7-4893-91c2-51858d51c5a5 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU3_Vc_Forest_Hill_pos_V {
+    Magnitude: c95c5886-7bf6-473a-80f9-a128716f56e2 
+    Angle: d407e5f4-13d3-453a-b027-d5daa87386d3 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU4_V1_Bolivar_pos_V {
+    Magnitude: 696f7af8-4ed7-441c-b022-ec6afbf255e6 
+    Angle: 50f97b9e-016f-4f1f-92d3-a239c1fe4b02 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU4_Va_Bolivar_pos_V {
+    Magnitude: 89289afd-93f9-412f-af2b-96de603bc442 
+    Angle: 66237ba7-b5c3-47aa-bfce-c063211699af 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU4_Vb_Bolivar_pos_V {
+    Magnitude: fdfad6ed-015a-47eb-8692-9f734133af76 
+    Angle: cf8f32c7-d57f-4f52-b0f1-5b5426feda2c 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU4_Vc_Bolivar_pos_V {
+    Magnitude: 6b81780f-7691-4b36-ac03-73b820ef8bdd 
+    Angle: 042bcb68-9d1b-4b4e-9cb1-866fbffc5c63 
+}
+
+ECA Phasor TVA_TVA_SHELBY_Bus_1_pos_V {
+    Magnitude: 0af8466e-f461-4a3e-aba7-a365c78e95e9 
+    Angle: d9b2e0e7-fa17-434f-a1ff-38988588392e 
+}
+
+ECA Phasor TVA_TVA_SHELBY_Bus_2_pos_V {
+    Magnitude: de57f204-3f7d-4785-b257-658c0e6af269 
+    Angle: db26b03f-e4af-451d-a102-6f4e0f226b89 
+}
+
+ECA Phasor TVA_TVA_SLS_PMU1_161kV_Bus_1_Sec2_pos_V {
+    Magnitude: 33cf6b2d-9d5c-451e-8d95-1a5e651c2503 
+    Angle: d1077ebe-f44e-4d83-82d9-a016c96bee74 
+}
+
+ECA Phasor TVA_TVA_SLS_PMU1_500kV_Bus_1_Sec1_pos_V {
+    Magnitude: 608a0dc4-c132-404a-8a1a-22ebc98cf369 
+    Angle: d0642392-2cd8-45c6-b0fd-1470c58fe625 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU1_V1_918_Craighead_pos_V {
+    Magnitude: 015ef2bb-70da-4ee3-8ae7-6879ef7418f2 
+    Angle: b318642d-6748-4475-8103-4130c01231c9 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU1_Va_918_Craighead_pos_V {
+    Magnitude: 707941d9-005f-4051-8b72-4eb16275d62e 
+    Angle: 90a0fcdc-4792-4923-8f7b-53219869faf3 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU1_Vb_918_Craighead_neg_V {
+    Magnitude: ffe6d850-979c-49df-987c-510e94329fb8 
+    Angle: 31d30278-6f16-4920-b7b5-81ccdc8ec6fd 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU1_Vc_918_Craighead_0_V {
+    Magnitude: b095dd71-56a2-48b4-9fc8-977b1acc2fd1 
+    Angle: a0170d15-ec1f-494d-9ab0-adaab3793b78 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU2_V1_928_Airport_L_pos_V {
+    Magnitude: 1e4d4b77-3840-4765-adff-b56bb3f901b1 
+    Angle: 4b4604b8-fb59-46df-99de-a59b12763e16 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU2_Va_928_Airport_L_pos_V {
+    Magnitude: ce3ff9c4-cac8-4e20-93af-64c8304829f7 
+    Angle: 5acabfeb-4307-41d9-b86a-75687d115300 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU2_Vb_928_Airport_L_neg_V {
+    Magnitude: cdff6567-477c-4e06-8172-eee41499cfc4 
+    Angle: a3c76461-629e-493f-b2f9-d2c4859c9ff0 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU2_Vc_928_Airport_L_0_V {
+    Magnitude: a1ac389c-29a8-44a7-a69d-7a48340ba40e 
+    Angle: b5568b98-5170-463a-8e87-dd0ce6b3a42d 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU3_V1_938_Donelson_pos_V {
+    Magnitude: b8a73bb2-db6f-40bb-a3ae-1faa4c059e38 
+    Angle: 5d8e2d24-80be-4857-861a-77289292de3b 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU3_Va_938_Donelson_pos_V {
+    Magnitude: 7701b5d7-2806-4e3c-8a9b-404f00555f14 
+    Angle: 588b5305-c7b8-47b8-bfb0-6323e2d9a2d2 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU3_Vb_938_Donelson_neg_V {
+    Magnitude: 3100c6de-dcc5-4e59-8c8c-739eaa970143 
+    Angle: fc2a9b97-6b2d-4d7f-a2ea-bd1ce7f9e988 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU3_Vc_938_Donelson_0_V {
+    Magnitude: 3eac7937-126d-4e64-8755-fc9ab643e559 
+    Angle: bfe72576-5be4-44d8-9ccf-54a186093f64 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU4_V1_964_Trinity_H_pos_V {
+    Magnitude: 94f4bd34-6853-4bcc-bd6a-40638d9dd5a5 
+    Angle: d8ccc765-d3f9-4792-95a1-4aa449d0afbb 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU4_Va_964_Trinity_H_pos_V {
+    Magnitude: 66174c9e-027c-4800-8d4c-86f91af395b5 
+    Angle: 06cd7043-f9c4-4cfa-bb76-811ebedba1b1 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU4_Vb_964_Trinity_H_neg_V {
+    Magnitude: 4c6a5426-6b24-4d48-bf6a-28ff5d6a014e 
+    Angle: 8370865d-a68b-4aa3-896d-f1640f22d8ac 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU4_Vc_964_Trinity_H_0_V {
+    Magnitude: 7b02c6ba-baaa-4c83-bb53-b8e1b50697f9 
+    Angle: 74db967a-1fb9-428b-bd13-406f0f9c7f70 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU5_V1_974_Gallatin_pos_V {
+    Magnitude: 3d1ad916-2b32-4e9c-b7b4-b840399e2482 
+    Angle: 1fe4f44e-89e4-4359-b558-a5f0452741d1 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU5_Va_974_Gallatin_pos_V {
+    Magnitude: ce43c80a-eec3-42c9-9393-600282b6bb42 
+    Angle: a3f55741-2138-4141-806f-8789d6fc54b8 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU5_Vb_974_Gallatin_neg_V {
+    Magnitude: 72ab63db-33b1-4e53-a252-f70c5825d5b0 
+    Angle: 8f3eb85e-8ed7-40d0-ac2e-db387e9c2cb5 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU5_Vc_974_Gallatin_0_V {
+    Magnitude: 398f546e-2ad1-407d-bee6-78128d91ab6b 
+    Angle: c7b53fb1-347f-4307-a459-fb6974e17c0e 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_V0_pos_V {
+    Magnitude: 65f986a1-463f-41c0-a567-ab8456516916 
+    Angle: 8678a1ff-57c9-4e90-ae91-6743cbdc7158 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_V1_pos_V {
+    Magnitude: 051cd4ae-9f0b-4a9a-846d-a5c31cc403f8 
+    Angle: c4344233-c2f6-4aa1-a7f0-e4bf6330b236 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_V2_pos_V {
+    Magnitude: e77e2a0f-8df3-4f64-a179-52fc212ddc4b 
+    Angle: 57443e60-edb3-4042-b0fc-6c1bbef12d16 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_VA_pos_V {
+    Magnitude: edc5c803-4f7c-4d6a-8545-87ad5c3305fc 
+    Angle: 832945fb-c660-4d59-8866-af9f6abca0f7 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_VB_neg_V {
+    Magnitude: 73dd6466-de2b-442e-af9b-180c2dfacfe5 
+    Angle: b62eaf71-12c0-47e9-a7a1-85a957e539a7 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_VC_0_V {
+    Magnitude: c268048a-6de3-4466-9f60-a18e2a576305 
+    Angle: 18c94a0c-4111-4832-b155-77539cd0fcc0 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_V0_pos_V {
+    Magnitude: 52571637-7cb9-4575-8bea-ae8301a741dd 
+    Angle: 49720db1-f831-484f-a675-1b21be811630 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_V1_pos_V {
+    Magnitude: e44b569e-c39c-40c4-80b1-2477a1d6ea61 
+    Angle: 1719b678-3d09-4579-92b0-bef7f05e8513 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_V2_pos_V {
+    Magnitude: 23c181d4-6756-4da4-9cce-112be9b99ce3 
+    Angle: b5830840-0170-40d6-bc11-c90cb9bf663a 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_VA_pos_V {
+    Magnitude: 1399fade-e186-4b70-b716-804a68bc12a8 
+    Angle: f8dcd222-4771-48eb-aa37-2fce8b193add 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_VB_neg_V {
+    Magnitude: 03cbfcfa-495b-49a6-b0bd-ac05c2ee05d8 
+    Angle: 3f64eef1-0eb7-4eed-b396-767e109450a5 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_VC_0_V {
+    Magnitude: aec466e8-baf5-4ea9-af27-a1f227ad421f 
+    Angle: 604dde5c-258e-4b1c-838f-eea289f7e537 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_V0_pos_V {
+    Magnitude: b17489ae-32f7-4873-b2b1-ce6879bfb32c 
+    Angle: 1a8a5857-cc4d-4cb9-be69-427448e063f2 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_V1_pos_V {
+    Magnitude: db520779-d55b-427a-942f-95fb90b99d41 
+    Angle: 99dfa69d-e8a4-4afc-974a-cdd72818c699 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_V2_pos_V {
+    Magnitude: e729f825-34a4-438d-9614-2771bee9d15e 
+    Angle: 1b72f357-8e7b-46fd-bdfa-1d8d03608ece 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_VA_pos_V {
+    Magnitude: dc659f5c-062c-4a2b-aa11-530d61b3645b 
+    Angle: 9d478be2-a2af-4669-a27c-19a9257cb7e2 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_VB_neg_V {
+    Magnitude: 74a48811-df65-4519-a779-e1a709522b97 
+    Angle: e2baf2f1-635f-4513-b66d-cecd692e1166 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_VC_0_V {
+    Magnitude: 557036d0-8a7c-477c-b823-3dabcdf1cecd 
+    Angle: d52e7446-9ef5-4c48-a2af-3131a3726581 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_V0_pos_V {
+    Magnitude: 2e82389d-c6b9-4cbd-8e0f-7b40a0724f4d 
+    Angle: 4d5997f5-2395-4811-bbbd-ce9bebf83282 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_V1_pos_V {
+    Magnitude: 747f4431-51ac-4d2f-917c-84947e0a3385 
+    Angle: 11705ecc-aabf-4518-a710-048cb7a36bdf 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_V2_pos_V {
+    Magnitude: dcfbc79d-92f0-41ca-802c-d843d78370ba 
+    Angle: 4c2db9ff-5f50-41a4-af58-d46cacfa81eb 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_VA_pos_V {
+    Magnitude: 177fa7f1-46ce-476f-8f4c-0af68a6d1eee 
+    Angle: 69af7a6c-19b5-4ab7-9a8d-cdcbab187cd6 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_VB_neg_V {
+    Magnitude: efb44d86-03d9-4f3e-8017-84203713231d 
+    Angle: 4a5d31f3-168b-4871-abb3-0393af843a5a 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_VC_0_V {
+    Magnitude: 3cf3fdb3-5300-4db8-a372-bb4ce248df80 
+    Angle: 8c3d21fe-e7e1-4082-a32c-07b9b2be970a 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU1_V1_828_Wolf_Cree_pos_V {
+    Magnitude: f8db87ce-eb2a-4cd4-89c3-a052d325bbf8 
+    Angle: 73928a85-9631-45e3-adab-8d350a4dbe2a 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU1_Va_828_Wolf_Cree_pos_V {
+    Magnitude: 2d5d8ddb-7325-4e2d-8063-f3dcd9e0f185 
+    Angle: 0c8c2eff-f1a4-49fd-b4a8-da3f3609d610 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU1_Vb_828_Wolf_Cree_neg_V {
+    Magnitude: b5c5b1f9-b793-4016-a148-d08e6314d15f 
+    Angle: bb6348c7-da89-4470-8631-5b50543de352 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU1_Vc_828_Wolf_Cree_0_V {
+    Magnitude: 5dc0656e-6283-46b4-8ead-d66e885f6c98 
+    Angle: d59e845e-2bec-4224-a84d-c846b2403ca2 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU2_V1_818_Lafayette_pos_V {
+    Magnitude: 72deb4cf-d3f6-4853-b73c-1c76099c9e66 
+    Angle: 494fd5ae-5ac0-472d-a0ef-5f260fd52738 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU2_Va_818_Lafayette_pos_V {
+    Magnitude: 041d867a-00c4-447f-8ea9-56bb629dd267 
+    Angle: 8c554bac-5061-4dbc-b922-47b4c00f626d 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU2_Vb_818_Lafayette_neg_V {
+    Magnitude: 08d5520f-cf5e-40ab-b458-a8016fddf0cb 
+    Angle: 4c1a969f-e04c-4475-aa87-fb03fe67229d 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU2_Vc_818_Lafayette_0_V {
+    Magnitude: 302d188f-5d21-4956-8190-9e08e5eba766 
+    Angle: e0e7cee8-a315-4c3d-9533-db2ec79648c6 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU3_V1_988_Blue_Lick_pos_V {
+    Magnitude: 5c60f7e7-b88e-48fb-875f-b398c1b104a9 
+    Angle: 944e51e6-0d08-4384-8e98-82beaaad518a 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU3_Va_988_Blue_Lick_pos_V {
+    Magnitude: e071222d-9002-41e2-91e8-75132ef2fa41 
+    Angle: 839b910e-3182-42e6-a232-c6db86bd0036 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU3_Vb_988_Blue_Lick_neg_V {
+    Magnitude: b41701ab-95b3-465c-8d51-0e4819b311df 
+    Angle: 7998af7c-f9f1-4a73-bf1f-1523103d6346 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU3_Vc_988_Blue_Lick_0_V {
+    Magnitude: b79d5b18-15b3-4b67-9eac-79d58c67279d 
+    Angle: 47a22677-21ff-443a-9b1d-162021a9d2b2 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU4_V1_924_EKPC_161k_pos_V {
+    Magnitude: 6a2c9975-159f-44a6-b398-9ec1a92ca935 
+    Angle: 7c596b96-42cc-4e4f-8cc7-4ea94d3eb966 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU4_Va_924_EKPC_161k_pos_V {
+    Magnitude: bf2036bc-6272-4c84-b8c3-cbd4cf6a144b 
+    Angle: 50090c03-6908-4b09-a27b-3095599acbda 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU4_Vb_924_EKPC_161k_neg_V {
+    Magnitude: a7d15386-7d22-4447-9505-0ec01a8e37f9 
+    Angle: 95f2691d-cb23-4a71-a077-3cab03b170fa 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU4_Vc_924_EKPC_161k_0_V {
+    Magnitude: 2fc99e51-9e61-4b4f-a16e-b08dad7cd388 
+    Angle: 637f8962-9e62-4d81-ab4c-b973186f30ad 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU5_V1_964_Wolf_Cree_pos_V {
+    Magnitude: 3e2122af-dd84-4ad6-9b10-e32c2dc34419 
+    Angle: 0c43b017-db6d-412b-81cd-f21efbbdb992 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU5_Va_964_Wolf_Cree_pos_V {
+    Magnitude: c920d830-515d-4995-b59a-0d478bffde73 
+    Angle: 4eea58f5-f6c9-4c11-ace3-0496c2471e54 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU5_Vb_964_Wolf_Cree_neg_V {
+    Magnitude: c7a5641f-e2df-47fb-9f21-c1afdb551be0 
+    Angle: 8d7b1e13-cef1-4482-a071-a9890eba9a79 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU5_Vc_964_Wolf_Cree_0_V {
+    Magnitude: 98aba183-c095-45ea-b6a0-b4eac6e437a8 
+    Angle: b6d3499e-dba3-4b21-a04c-41ecefe12224 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU6_V1_954_Paddys_R_pos_V {
+    Magnitude: f4e0f4bf-671b-4aec-98f6-f9d036f113d0 
+    Angle: 5713ac39-b91b-4cab-b7d3-3935bd706ca4 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU6_Va_954_Paddys_R_pos_V {
+    Magnitude: 2fb6e34f-47cd-429a-8da5-d71ec0a51e9d 
+    Angle: ff6c0b52-13ac-46f9-b1f1-a86191ca7dc9 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU6_Vb_954_Paddys_R_neg_V {
+    Magnitude: 5869c1fe-6412-4ae2-a625-a58fafa2cc3a 
+    Angle: 16cd6b91-1848-4781-9102-2aac15787982 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU6_Vc_954_Paddys_R_0_V {
+    Magnitude: d3e2455a-8cd3-4e4d-aab2-4fcd7399762f 
+    Angle: 75461994-d742-4e70-acc6-ef98a1773100 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU7_V1_934_E_Bowling_pos_V {
+    Magnitude: 8a9171cd-232a-481c-bd0b-a7f28548e1ac 
+    Angle: f1e3a0df-55c0-424f-be62-73384694d6aa 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU7_Va_934_E_Bowling_pos_V {
+    Magnitude: 4a8811a0-d5d8-4121-8708-4bdd92e37d95 
+    Angle: da0af9d0-1f2c-432f-9f0f-8b9296809801 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU7_Vb_934_E_Bowling_neg_V {
+    Magnitude: 13001f55-1aba-4768-9a6a-dc9451a95a4a 
+    Angle: dae69de0-91c4-41e1-abff-13b851ed19f2 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU7_Vc_934_E_Bowling_0_V {
+    Magnitude: 54562f60-9c2e-41ee-aa56-00997cce7d4d 
+    Angle: 3d1ed87e-404d-4f4c-af81-256c012ea430 
+}
+
+ECA Phasor TVA_TVA_VOLUNTEER_Bus1_pos_V {
+    Magnitude: 4e776422-ab5f-44d2-a27e-a6678cdb7e5b 
+    Angle: 9c3b75dd-3c96-4c89-8c75-2a8135d6b5bb 
+}
+
+ECA Phasor TVA_TVA_VOLUNTEER_Bus2_pos_V {
+    Magnitude: 2449678f-7ce0-4278-9776-c232fb37fa43 
+    Angle: 92fe12a3-984c-4659-9638-17f0bcf51c6f 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR1_Bus_pos_V {
+    Magnitude: 01495fda-c6a5-4754-883b-a81775e47b54 
+    Angle: 218201cb-4c29-49fe-b598-e309ef4d4be8 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR1_undefined_pos_V {
+    Magnitude: e993404f-ce21-4208-866c-4a0448683fe7 
+    Angle: 62f15039-0a0e-4287-a726-9ea5182c8876 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR2_Bus2_pos_V {
+    Magnitude: e16aeca5-8e69-4d01-9256-6393c1cd43d5 
+    Angle: 24176aad-d49a-4c69-bc58-2cac7c7680bd 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR2_Phasor2_pos_V {
+    Magnitude: 6226e901-be4b-40f9-9079-d89e595e1da8 
+    Angle: c1a32059-0ccb-4442-83db-3595d498e781 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU1_V1_914_Severcorr_pos_V {
+    Magnitude: b03be57f-40ca-4419-96f0-bf4111393cd5 
+    Angle: 7fb45fd8-e542-4d15-857b-24f41f640f9c 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU1_Va_914_Severcorr_pos_V {
+    Magnitude: 2e816546-7801-4069-aa73-17254323a08d 
+    Angle: 689decc6-823e-4ceb-9033-b406a9dddcc3 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU1_Vb_914_Severcorr_neg_V {
+    Magnitude: df780398-2669-410b-bf01-fabe0f4e247c 
+    Angle: fd457857-1499-47fc-8987-48d894efb467 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU1_Vc_914_Severcorr_0_V {
+    Magnitude: 6ca63273-728e-413d-8d06-ae3b420899f7 
+    Angle: 3eae1f0e-9064-4a17-ad22-2eef14f48f15 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU2_V1_924_West_Poin_pos_V {
+    Magnitude: 61bd447b-cda8-4092-bb38-23cb809b0041 
+    Angle: 39446818-f3c3-4d28-8545-3ada51713219 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU2_Va_924_West_Poin_pos_V {
+    Magnitude: 6a314d69-e3ef-4616-8260-b4aadcaa8b82 
+    Angle: 963c7162-194e-4e0c-91bc-b4c574d739e6 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU2_Vb_924_West_Poin_neg_V {
+    Magnitude: 7677efec-b5c9-4440-8a67-614a389f6bb2 
+    Angle: 84b0b9dc-704a-4dea-a285-364458f709b4 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU2_Vc_924_West_Poin_0_V {
+    Magnitude: 720b3ed4-f73f-4dbb-8a11-892b8f083f0b 
+    Angle: 147569c8-3ae9-4100-ad47-3d722061890e 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU3_V1_934_Columbus_pos_V {
+    Magnitude: 8b2ef0a4-6522-4b23-a790-6a6435ec4249 
+    Angle: 142bb7ed-da92-492e-ae5c-b081bf790647 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU3_Va_934_Columbus_pos_V {
+    Magnitude: 4cc42453-688f-4117-9e27-0cc7f1a68644 
+    Angle: 61dc04f9-52d0-4be8-aaa4-ae8ed9fb09fd 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU3_Vb_934_Columbus_neg_V {
+    Magnitude: 52c6074b-e54c-4ca7-b563-fff7a6692de4 
+    Angle: c4fd3288-1378-46b5-9c4d-e5ae32a4ddb7 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU3_Vc_934_Columbus_0_V {
+    Magnitude: cd86d4d0-7ab5-4aa6-9a91-960a4ff29478 
+    Angle: 292f787b-6f87-45c5-b44d-d58f42ef70b6 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU4_V1_944_Columbus_pos_V {
+    Magnitude: 337bc962-76c4-46d9-a9f5-0e2629ba1cfc 
+    Angle: b3711694-8ec6-4648-ae8d-58fdcd5dc3ce 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU4_Va_944_Columbus_pos_V {
+    Magnitude: 8cab5de0-b996-4ee1-bab1-73e7f2aec04e 
+    Angle: f26be476-b8c9-4f0f-9b7d-e2a421f5af7c 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU4_Vb_944_Columbus_neg_V {
+    Magnitude: fe379eff-ba9b-4ad9-ab9f-88b8d7520922 
+    Angle: c74c7ecc-465a-4521-9bba-e5f35d607dd8 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU4_Vc_944_Columbus_0_V {
+    Magnitude: 15d3e8ea-4aa5-4505-993f-b69ea95a8c50 
+    Angle: f159864a-af8c-454d-9e5a-19288d73f374 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU5_V1_954_CAFB_pos_V {
+    Magnitude: a147a173-c208-4198-8dd0-55551a05256b 
+    Angle: d5dce094-8aaf-4036-bed2-ccce9284889e 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU5_Va_954_CAFB_pos_V {
+    Magnitude: f6aced76-3862-4cea-8e54-fd8223e6c992 
+    Angle: 66017e2b-bd0d-455d-8160-0a14cf282deb 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU5_Vb_954_CAFB_neg_V {
+    Magnitude: 1d05408d-39ed-4d77-8457-d65f3ccf0bad 
+    Angle: d558ea1d-309e-43b9-b146-189d0826ec83 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU5_Vc_954_CAFB_0_V {
+    Magnitude: 46b3d739-f268-4147-9cdd-a3bc0d3c70d5 
+    Angle: 84a19294-12ca-4d21-b437-aa3b17f3b913 
+}
+
+ECA Phasor TVA_TVA_WIDOWSCREEK_500kv_Bus_1sect1_pos_V {
+    Magnitude: 057acf33-d9d9-438f-8678-09f6b34a7c6d 
+    Angle: 166069b3-d2b7-400d-a687-11b9ba7f0f15 
+}
+
+ECA Phasor TVA_TVA_WIDOWSCREEK_500kv_Bus_1sect2_pos_V {
+    Magnitude: 2b150ccf-5328-4972-9674-4e1488453438 
+    Angle: ae8313a6-4969-4748-8c43-d8eb8cd48c07 
+}
+
+ECA PhasorCollection AllCurrentPhasors {
+    Phasors: { FILTER Mappings WHERE TypeCategory='ECA' AND TypeIdentifier='Phasor' AND MappingIdentifier LIKE '%_I' } 
+}
+
+ECA Phasor TVA_SQN_UPMU1_C1MagAng_pos_I {
+    Magnitude: ca902a83-61c2-4d10-ab5c-8322b938e551 
+    Angle: ef728a3b-f8fa-4b3f-b0fc-b46598e16c82 
+}
+
+ECA Phasor TVA_SQN_UPMU1_C2MagAng_pos_I {
+    Magnitude: 54aed2cd-1890-4d09-8f9b-80607b10492d 
+    Angle: fe9de26a-da7c-4dff-83fb-9704c980e2e6 
+}
+
+ECA Phasor TVA_SQN_UPMU1_C3MagAng_pos_I {
+    Magnitude: 5c05a06c-e72e-422b-ba31-f63d5b1f1d69 
+    Angle: 25b4c9e6-df8c-4661-b889-f81bd4acc995 
+}
+
+ECA Phasor TVA_SQN_UPMU2_C1MagAng_pos_I {
+    Magnitude: 9e17d9d3-2b2a-4f06-9844-43852c53d4f3 
+    Angle: 26beefe9-8cff-47a5-b367-14f46c8f8004 
+}
+
+ECA Phasor TVA_SQN_UPMU2_C2MagAng_pos_I {
+    Magnitude: 47aeba7e-2e6f-4071-acb7-2b477b383a25 
+    Angle: dfb37813-99e2-4ca0-8913-d304923658bd 
+}
+
+ECA Phasor TVA_SQN_UPMU2_C3MagAng_pos_I {
+    Magnitude: 0aeaf4bd-9dd4-4ec1-8e39-32a5ad847a85 
+    Angle: 9d1cc7eb-3ffe-4c21-8f54-2e761a18b2a7 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU1_I1_Gen_3_pos_I {
+    Magnitude: e17a6bd0-068a-4f61-89f3-3efc16534e8c 
+    Angle: f9d078c7-2790-4030-b579-69075a3af2a3 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU1_Ia_Gen_3_pos_I {
+    Magnitude: 54227675-ab64-466b-952c-2857ea97fd74 
+    Angle: 00f1292e-d6e6-44ff-85ad-1608a9f752d0 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU1_Ib_Gen_3_neg_I {
+    Magnitude: d4a3b6bb-4d4a-4973-b90d-3d34c420855e 
+    Angle: 98e82249-ee9e-407f-b68d-e5f282e3fd08 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU1_Ic_Gen_3_0_I {
+    Magnitude: 0f229d10-11d8-4f90-a887-cbc091bed7e9 
+    Angle: fa939c47-1063-4803-b751-0ef2ee365f85 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU2_I1_964_GT_pos_I {
+    Magnitude: 95b36e0a-ec4f-46e2-b41c-f8dd19ebe0bc 
+    Angle: 6d1ac328-5111-49c4-9f4f-223768383746 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU2_Ia_964_GT_pos_I {
+    Magnitude: a5dde5aa-1a99-44ca-b1ef-12db8d8145e2 
+    Angle: 582bbacf-9584-4ea3-977e-7d022fc87b68 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU2_Ib_964_GT_neg_I {
+    Magnitude: 0b6bfb62-fb99-42d9-8bf9-11c01c93a50b 
+    Angle: 8d466645-8f10-4440-b385-b696410abb0f 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU2_Ic_964_GT_0_I {
+    Magnitude: cb66b326-4630-4667-b925-54ae643604fa 
+    Angle: 3e42e8b3-c844-4bd7-8d57-3917dae278ca 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU3_I1_954_GT_17_20_pos_I {
+    Magnitude: b03351db-d7b0-47c1-b847-72381249ad8c 
+    Angle: d3d18b29-6004-4082-8da9-d12339b8105e 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU3_Ia_954_GT_17_20_pos_I {
+    Magnitude: 34af8453-1320-4ad0-bab3-ebb2b6d21e78 
+    Angle: 0fab8092-dca5-4b82-87fc-aa24985e3676 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU3_Ib_954_GT_17_20_neg_I {
+    Magnitude: 162a705f-f553-4bfa-8b16-3e967f8d813c 
+    Angle: 02a3aa59-96e0-4d0e-bd28-50556ed86319 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU3_Ic_954_GT_17_20_0_I {
+    Magnitude: 8ae938cd-0e50-4951-bf23-ed4c80487651 
+    Angle: af9858fb-bbd6-44a4-a057-ea409c98c1e6 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU4_I1_944_Horn_Lake_pos_I {
+    Magnitude: e9224def-6a73-4995-aba1-a5af8c9b2c03 
+    Angle: dbbf3ed7-3cd5-4fef-87a9-a128b6e77315 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU4_Ia_944_Horn_Lake_pos_I {
+    Magnitude: 6f3496bc-246e-45b3-9128-b7f7105854a7 
+    Angle: d6104419-a7ab-4bd8-802e-b54cb26a67e7 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU4_Ib_944_Horn_Lake_neg_I {
+    Magnitude: 19611984-f589-4e79-9396-3c0d98304174 
+    Angle: f720b880-0f8e-49c0-b4bf-2961e207f8b6 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU4_Ic_944_Horn_Lake_0_I {
+    Magnitude: e0d51b70-ee62-4908-8476-f89353aa2f6b 
+    Angle: b1e6f75e-367c-4319-8ec8-a02ed5d1dfe2 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU5_I1_Gen_1_24kV_pos_I {
+    Magnitude: e8c1b707-81a9-4710-a8d6-56d5466954c1 
+    Angle: b8258fe2-5ea6-4cfd-ac48-d4917299755c 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU5_Ia_Gen_1_24kV_pos_I {
+    Magnitude: 0bc8fb03-0726-4176-8697-7bcd879aecc7 
+    Angle: 304de264-c39f-41f4-b10d-64f15de39741 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU5_Ib_Gen_1_24kV_neg_I {
+    Magnitude: 349038c9-ab01-448e-8154-aa961b7b09b5 
+    Angle: c0ff87ee-bd5d-4639-8241-e93630ed447c 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU5_Ic_Gen_1_24kV_0_I {
+    Magnitude: 1fb07c62-a101-4738-ba0e-6f032bf84051 
+    Angle: 514a14c7-93e9-4de5-860d-fd6d86c4a55d 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU6_I1_Gen_2_24kV_pos_I {
+    Magnitude: 36dc3f63-7ddb-419e-a920-28a902bcc2a3 
+    Angle: ccfed7ad-5710-4d2c-83d9-0f37a98021cf 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU6_Ia_Gen_2_24kV_pos_I {
+    Magnitude: 4ddb06ea-c529-4299-a24c-60d631672d09 
+    Angle: b54ee86a-d7e1-4f13-920b-c74bf6e53212 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU6_Ib_Gen_2_24kV_neg_I {
+    Magnitude: 93f2fc51-191f-4f90-b2bb-a3f4a3630eaa 
+    Angle: a9aa9805-573f-41da-ba24-d53e8cbccd15 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU6_Ic_Gen_2_24kV_0_I {
+    Magnitude: c1e94b48-7bb6-4056-a9d8-bf71ae4f31e9 
+    Angle: 0211acb0-0f73-4df6-90be-a946e4401dd3 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU7_I1_914_Unit_1_pos_I {
+    Magnitude: 10398eca-85ba-4d7f-9b6e-39458e049736 
+    Angle: b1767520-d6a3-4c25-88d3-377ec9def8ef 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU7_Ia_914_Unit_1_pos_I {
+    Magnitude: 3b74778a-a52c-4b99-8d01-43e7fd0a6b5a 
+    Angle: 940a020a-cb64-412c-af9c-84bfd2cb554b 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU7_Ib_914_Unit_1_neg_I {
+    Magnitude: 91965e9d-46bc-4f64-8292-ffd1cd885115 
+    Angle: 7ac80069-84e3-4d23-943c-4bcb99f3b05d 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU7_Ic_914_Unit_1_0_I {
+    Magnitude: a1db98d1-8a5c-4cd9-9406-69dfe6491c14 
+    Angle: b03271eb-ee59-4865-8b85-13414c0c15e2 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU8_I1_924_Unit_2_pos_I {
+    Magnitude: 7bd8afcd-be20-4dd4-aabb-e8816cc64ac3 
+    Angle: b761c8bd-29ac-4dfc-9672-1a8782380e5e 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU8_Ia_924_Unit_2_pos_I {
+    Magnitude: a1324513-fa01-408d-8668-016dd2567e96 
+    Angle: 717ec141-de0d-4910-9943-fd7856cb975c 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU8_Ib_924_Unit_2_neg_I {
+    Magnitude: a291f326-e84e-4ea5-b9a4-17d418e1ea0c 
+    Angle: 29290958-4c66-426d-97f2-a57cfdc9dde5 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU8_Ic_924_Unit_2_0_I {
+    Magnitude: 1827a1db-7a9f-4b32-8bc9-95308f698b3d 
+    Angle: 2c54e41f-b119-4e6f-84dd-2eb56a58ea86 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU9_I1_934_Unit_3_pos_I {
+    Magnitude: 666c2acb-9599-499f-84e9-8505be137a2a 
+    Angle: 90e5737d-4ee1-49ce-ae77-93a77837f1f1 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU9_Ia_934_Unit_3_pos_I {
+    Magnitude: 3542e3d4-2273-4949-b44a-d71295514ee1 
+    Angle: 2d5724e5-cb84-435b-bc4c-291ddc143aad 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU9_Ib_934_Unit_3_neg_I {
+    Magnitude: 641f47a2-a45a-4b5b-9758-68a3e23a22ea 
+    Angle: 111a0de0-2b4e-417b-ab6c-558955ea227b 
+}
+
+ECA Phasor TVA_TVA_ALF1_PMU9_Ic_934_Unit_3_0_I {
+    Magnitude: 13d1458d-f32e-4ec2-b840-22fb90658dc2 
+    Angle: 87038c6b-a75c-4703-b557-321d1ed7a069 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_I0_pos_I {
+    Magnitude: e40b7dd2-3866-4880-bb4f-8faaabbf8f47 
+    Angle: 8fa557af-abea-4c75-ad48-3be6a8ae9711 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_I1_pos_I {
+    Magnitude: 66943d86-9323-41e4-9c98-247d03ec70f1 
+    Angle: 17bc2e8b-7b08-4ba6-98c7-67e58ec56562 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_I2_pos_I {
+    Magnitude: 503a4ed8-b91e-4c34-a606-90dffed7a092 
+    Angle: 49ac5e79-b877-4434-85af-67fb6ccfa0ec 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_IA_pos_I {
+    Magnitude: 64829d94-044e-4852-8e3d-4cc504d877c3 
+    Angle: 3976065a-a7eb-4fd7-a476-c299c358d935 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_IB_pos_I {
+    Magnitude: c7569697-9538-4b50-b2f6-f56aef770bb7 
+    Angle: 6199dec1-5956-4cd9-9003-6ada87ad498b 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_1_BFN1_IC_pos_I {
+    Magnitude: df12be23-43ec-4de8-984e-8720a889a6e8 
+    Angle: 9ac3d968-0692-4153-9c62-647f24867350 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_I0_pos_I {
+    Magnitude: dfc175fc-2f41-4f5c-8a68-beac11fae1c8 
+    Angle: bdb490a8-c500-401b-9ad8-00b7f7ffd7ba 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_I1_pos_I {
+    Magnitude: 26019dab-0f57-46ac-bc8f-6f46bd3db2d0 
+    Angle: 89203ae5-d184-4d07-ad24-040a76897677 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_I2_pos_I {
+    Magnitude: 5ab74b6e-7d14-4263-aabc-88cc852e4d81 
+    Angle: df0b05ec-3826-4744-beff-776a3950598d 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_IA_pos_I {
+    Magnitude: 5d9ad824-6bb3-41ee-b524-6d8421482433 
+    Angle: 089061a5-f5cc-4598-92e7-3f08b7f3276f 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_IB_pos_I {
+    Magnitude: 069f9de9-fc58-4d03-936f-2cb3177bcf7f 
+    Angle: 4096ecae-cb00-4598-b624-8c54fdfdb791 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_2_BFN2_IC_pos_I {
+    Magnitude: 81b12910-edd4-4ea5-9d2e-08f69f621184 
+    Angle: a9a35f50-19c3-4e4c-a5af-c53bff14692b 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN2_I2_pos_I {
+    Magnitude: 26a4bab3-e52c-4d27-8664-3f2b6cab7823 
+    Angle: 1338ebc1-9ff0-4047-b0e6-6fa5f356ee4c 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_I0_pos_I {
+    Magnitude: e12cdf4d-224d-44b9-b6b9-e6de52fa29dd 
+    Angle: 67950b74-e3ec-411b-960a-8c83a9c05756 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_I1_pos_I {
+    Magnitude: f99ec5c1-9f8b-47e4-981e-445d181df815 
+    Angle: 63f5008d-3bf5-48bf-a7ea-d2fae59be3a9 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_IA_pos_I {
+    Magnitude: c0dd4be3-2fe2-4fd8-939e-cf63fbbbd6a5 
+    Angle: 294935c5-fd75-433f-bd71-59d3c0efba32 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_IB_pos_I {
+    Magnitude: 7aae65cd-0196-46d3-8477-ee46053fec09 
+    Angle: 761b1b5b-69ad-4115-bdfd-1b3b8565fe96 
+}
+
+ECA Phasor TVA_TVA_BFN_UNIT_3_BFN3_IC_pos_I {
+    Magnitude: 3b47f884-9b57-4f68-b2f2-3a338f422250 
+    Angle: d7e9094e-d805-44b9-b079-2fe8612b43d5 
+}
+
+ECA Phasor TVA_TVA_BULL_RUN_500_Bank_pos_I {
+    Magnitude: bf63fa59-6ad7-4f4c-b0f0-a89075c8b5ad 
+    Angle: 32227e8a-568b-4cfb-9a52-2d21fb069c99 
+}
+
+ECA Phasor TVA_TVA_BULL_RUN_Roane_pos_I {
+    Magnitude: 71c4acff-651d-4634-8a74-34facbdf079b 
+    Angle: c17d1511-69a9-4d8c-88f1-00e533edd400 
+}
+
+ECA Phasor TVA_TVA_BULL_RUN_Volunteer_pos_I {
+    Magnitude: f1849dca-beed-439b-b6d9-7901de3335cb 
+    Angle: 35dcf075-b292-4f3c-9f62-893e75b3e0a0 
+}
+
+ECA Phasor TVA_TVA_BULL_RUN_Watts_Bar_pos_I {
+    Magnitude: 471b40b3-dd88-4205-943a-77d02994cd22 
+    Angle: 1e3574ed-a71f-4da1-9d5d-8be3c984e567 
+}
+
+ECA Phasor TVA_TVA_CORDOVA_Benton_pos_I {
+    Magnitude: 26cd3fb1-b5ad-439d-89de-fc9ff7da1adb 
+    Angle: d8a3a7d9-c88a-4f3f-86fd-74e41408ce7a 
+}
+
+ECA Phasor TVA_TVA_CORDOVA_Freeport_pos_I {
+    Magnitude: 7b6c06ac-c111-440e-a882-e3eb28549945 
+    Angle: db97c17f-b328-4cb2-ad8a-94c3289102f6 
+}
+
+ECA Phasor TVA_TVA_CORDOVA_Haywood_pos_I {
+    Magnitude: dede97d0-68ea-4996-ac4b-f89c1db2dc15 
+    Angle: accab49f-d10b-4732-a539-685dadf3db96 
+}
+
+ECA Phasor TVA_TVA_CORDOVA_Shelby_pos_I {
+    Magnitude: fdc1a603-1dce-41ed-9138-2f89b6ec5e86 
+    Angle: 30575b3f-7828-43d6-b7cb-306d8d37bd3c 
+}
+
+ECA Phasor TVA_TVA_CUMBERLAND_DAVIDSON_pos_I {
+    Magnitude: 1d62c837-a079-4c61-a519-6b1ff44439eb 
+    Angle: db1fa823-b4fa-4f6b-840b-463f1b853275 
+}
+
+ECA Phasor TVA_TVA_CUMBERLAND_JOHNSONVILLE_pos_I {
+    Magnitude: 626133f5-c96f-46a2-8f2a-bc3c65f184fb 
+    Angle: c7d75cf8-7212-47c6-b7c3-572612f90ce2 
+}
+
+ECA Phasor TVA_TVA_CUMBERLAND_MARSHALL_pos_I {
+    Magnitude: f2bb5705-b955-42cb-861c-98c30a72ebbe 
+    Angle: 17994e63-448b-46dc-bab7-a027fd338471 
+}
+
+ECA Phasor TVA_TVA_CUMBERLAND_MONTGOMERY_pos_I {
+    Magnitude: 0ac5dd08-0b12-4f7e-85ef-8f3922f8d344 
+    Angle: 34281275-f1b0-451d-9530-1e6fb6471c86 
+}
+
+ECA Phasor TVA_TVA_DVS_DFR3_PMU_I1_Davidson_SVC_pos_I {
+    Magnitude: f03a2cdf-833c-405a-90de-a743fa0772da 
+    Angle: 3819449b-95e1-4de0-9772-ba3fa6858c7d 
+}
+
+ECA Phasor TVA_TVA_DVS_DFR3_PMU_Ia_Davidson_SVC_pos_I {
+    Magnitude: dc7dc88c-cb40-44eb-9950-da0838f4666d 
+    Angle: 6d70a4d2-ebe4-4039-8d80-c8317c2d3236 
+}
+
+ECA Phasor TVA_TVA_DVS_DFR3_PMU_Ib_Davidson_SVC_0_I {
+    Magnitude: 6bf26feb-20c9-4b92-94f8-ee855086b01a 
+    Angle: 66c1e16e-e4ea-4efd-93fe-fe86714da959 
+}
+
+ECA Phasor TVA_TVA_DVS_DFR3_PMU_Ic_Davidson_SVC_neg_I {
+    Magnitude: 88b391ed-5637-463f-8431-096139709997 
+    Angle: 9b386c4e-2f03-4f3f-9cd8-a7b22c7ac87e 
+}
+
+ECA Phasor TVA_TVA_FREEPORT_Cordova_pos_I {
+    Magnitude: 005fc0d5-318c-4b41-8e79-439a94b05c8c 
+    Angle: 3a16a487-562f-41d9-90ad-822b96bbffd5 
+}
+
+ECA Phasor TVA_TVA_FREEPORT_Phasor3_pos_I {
+    Magnitude: 93659c2a-8c10-460a-8b12-ac325af6d4df 
+    Angle: 66e4cfc4-193d-40a9-8fee-6676abf9c71a 
+}
+
+ECA Phasor TVA_TVA_FREEPORT_Phasor4_pos_I {
+    Magnitude: b6c7382d-8e85-4b5c-8893-a451287ad805 
+    Angle: 683c48b1-30fc-4b83-906d-a6d72010e591 
+}
+
+ECA Phasor TVA_TVA_FREEPORT_Phasor6_pos_I {
+    Magnitude: 9d709f88-3e63-43e7-9a91-cfc1cc2631cb 
+    Angle: a61a1c16-b4a8-4e14-85e1-166c868be7bb 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_I0_pos_I {
+    Magnitude: a1b45446-44e6-47da-af86-cb56a2d416b8 
+    Angle: d44f780e-9b39-4ba5-8e2b-16cc177b0586 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_I1_pos_I {
+    Magnitude: 57b7e64c-eeb9-4779-a5ad-b717fa7b63ff 
+    Angle: 9139130d-ef00-4cd7-8bfb-faea05d49a04 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_I2_pos_I {
+    Magnitude: 5fd28d92-af14-4a8b-a17f-aacb3c132a48 
+    Angle: f1d3c48a-7d68-4ff0-ac98-9a5e8cf2e1c7 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_IA_pos_I {
+    Magnitude: 596bc600-64d1-4ce9-915f-efe343642690 
+    Angle: 86c1cdcd-5307-4d9c-a24d-8dd21b25b891 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_IB_neg_I {
+    Magnitude: 2f6208e3-63f1-4a1d-b5db-0e5780ce79ae 
+    Angle: 20410736-dd51-4104-a0d7-354e5543002f 
+}
+
+ECA Phasor TVA_TVA_HIS_SQN_500_LINE_PMU1_IC_0_I {
+    Magnitude: 6d8119ca-5755-4527-859c-5e3ee092549b 
+    Angle: 6505122a-f5ab-4f41-a0c3-6e4890389e37 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_I0_pos_I {
+    Magnitude: 1e224e93-461a-435e-b4ec-bf91f3fc78ba 
+    Angle: e66d4d9d-53cd-43f6-9bfd-b260bb331ca3 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_I1_pos_I {
+    Magnitude: e939c838-e6b2-4719-a69c-0346c5dd9871 
+    Angle: 5da69278-6754-4acc-8cf8-c71b3b2925fb 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_I2_pos_I {
+    Magnitude: c62f8590-5bab-4411-b122-758ae2263a44 
+    Angle: b334dce5-a92f-4066-a96d-bbff550e895d 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_IA_pos_I {
+    Magnitude: f93a8ef4-7d29-437b-9545-c140ebeacc51 
+    Angle: 58889ff6-58f8-4121-b1fb-139f00a2cc5c 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_IB_neg_I {
+    Magnitude: b629dc91-9e7f-43ad-aa2b-8935413059f5 
+    Angle: 9d75ca90-bb12-4ca5-b7cd-1c98fa0d33f5 
+}
+
+ECA Phasor TVA_TVA_HIS_WBN_500_LINE_PMU2_IC_0_I {
+    Magnitude: 694a1a84-b2bb-447c-9fc9-00e278c316e9 
+    Angle: 33255b5a-c4c6-40f5-a9ce-6b974a4dead4 
+}
+
+ECA Phasor TVA_TVA_JOF_PMU_Cumberland_pos_I {
+    Magnitude: 00b8d7ea-833b-4dd6-aafc-64ab3d45f0d4 
+    Angle: f59849be-19b2-4254-959c-4a1b57ea3b98 
+}
+
+ECA Phasor TVA_TVA_JOF_PMU_Davidson_pos_I {
+    Magnitude: cd3989f4-de53-4e8d-9aa6-998b09499c3f 
+    Angle: 5562fed9-758b-4a64-9ff7-577b3be4b050 
+}
+
+ECA Phasor TVA_TVA_JOF_PMU_Gleason_pos_I {
+    Magnitude: 517c0a11-a486-4d01-8d80-e86d9d56d34d 
+    Angle: e0c6365e-9b87-426c-af93-b3df3121f462 
+}
+
+ECA Phasor TVA_TVA_JOF_PMU_Jackson_pos_I {
+    Magnitude: 3df3c955-7c5b-4f7e-af5c-dad00da80cdd 
+    Angle: e04cf496-492c-4224-99a6-85284724c55f 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_I0_pos_I {
+    Magnitude: 61b3b741-8211-4176-837e-e6ee0071b6ed 
+    Angle: 7988268f-cbd8-4835-9399-a06fae7cbef1 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_I1_pos_I {
+    Magnitude: 1905dc4c-ce93-4bf2-bbd0-accb796145b8 
+    Angle: 48648dbd-947b-4c41-ab7b-17ff4b2dabfd 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_I2_pos_I {
+    Magnitude: 7e5dfb15-d1dd-40db-85df-5a6f87e729b5 
+    Angle: b81723d5-e3b5-4e06-b83e-115201c4de3b 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_IA_pos_I {
+    Magnitude: 247a48ed-e320-45c2-9172-32296050a4fa 
+    Angle: 30552263-c190-4446-8dce-2323375250b0 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_IB_pos_I {
+    Magnitude: d511b260-7a83-4e06-9813-aef3034d3406 
+    Angle: 426f8cf7-c282-48b3-95bf-c0c2ff33a69a 
+}
+
+ECA Phasor TVA_TVA_JOFB_DAVIDSON_PMU1_IC_pos_I {
+    Magnitude: b659aced-5bd1-40ce-bb21-27995105c646 
+    Angle: 3e571e27-99a0-46c0-b7ab-2432cb863e65 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_I0_pos_I {
+    Magnitude: 1eac9d1d-ef61-4d92-95d7-f5bd549116a4 
+    Angle: e116dbaa-2dcc-43a6-9a77-7ce8aa3925c2 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_I1_pos_I {
+    Magnitude: 95c1d62a-f784-475f-b53a-c7b78a8e8b89 
+    Angle: 6e369256-208d-4943-a998-3cbf6eed484c 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_I2_pos_I {
+    Magnitude: a78848d0-d102-4e9f-bd29-be3649fd0a4b 
+    Angle: 17dfb9fe-2675-4700-9451-3c1120fff05c 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_IA_pos_I {
+    Magnitude: 0c33c08f-fd02-41ec-b272-68c57ef1bacc 
+    Angle: fe61a4b3-fa4c-48fe-8d4f-49d84868d4f4 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_IB_neg_I {
+    Magnitude: 68652e0c-c88d-4f65-9314-cb794efce525 
+    Angle: bb8e09d8-a434-48b0-9f89-129ea3f38722 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG1_PMU1_IC_0_I {
+    Magnitude: 5e40f091-4b79-4f7a-9b7b-c728631d625d 
+    Angle: 5a7e16a6-f433-41a4-880f-563d2fad23fe 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_I0_pos_I {
+    Magnitude: 6da49b36-7976-493e-864c-62bf3ec3c44f 
+    Angle: e0aa0b78-1a17-40f7-8b40-675fe01c3b8b 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_I1_pos_I {
+    Magnitude: 5e016bab-d56b-4713-a702-008869e37c6e 
+    Angle: febe9a0d-6c2a-4f1c-96fd-922ed4ab53bd 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_I2_pos_I {
+    Magnitude: ce0ea226-6fef-48d2-bde7-bc879a8106ac 
+    Angle: 39bb2ef2-4444-4975-8684-3648086ff12b 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_IA_pos_I {
+    Magnitude: 37214ff8-c871-4ff6-9b62-87a0c8331d32 
+    Angle: fc21b884-603a-477d-9856-c6b6aded2fa0 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_IB_neg_I {
+    Magnitude: 03486c10-c5ed-4247-9c01-358ec11a9bb1 
+    Angle: 593c7fc1-6734-4abb-be24-574f7a4b709d 
+}
+
+ECA Phasor TVA_TVA_JST1_JSCC_CTG2_PMU2_IC_0_I {
+    Magnitude: f080e06f-3da2-4558-98c0-9c1554b07f7a 
+    Angle: 6dc61e84-93bf-4430-a930-8c75aeaca7fd 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_I0_pos_I {
+    Magnitude: bfae9b87-6684-46ec-95ff-16f20abb964d 
+    Angle: c09ccc07-b674-4959-8e2a-1b621fad1174 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_I1_pos_I {
+    Magnitude: f07c8242-1b0b-4af6-9d6e-ea95fc894d71 
+    Angle: 8eb670ae-bfbc-40c5-bc22-e8b40169bdf2 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_I2_pos_I {
+    Magnitude: 04a5f1d6-c0de-4a99-92c5-08b129846e79 
+    Angle: aa65c548-a937-4495-93f4-6ea5a7e4f3c5 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_IA_pos_I {
+    Magnitude: ba121051-b248-453a-8385-1fcf6c812e77 
+    Angle: 9addb037-55e7-4960-8334-667dfe3e58c6 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_IB_neg_I {
+    Magnitude: 7a6044a4-6222-4250-925a-785bf949b99e 
+    Angle: 33536498-8e1d-45bc-9eb6-6849d07dcda6 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_CTG3_PMU1_IC_0_I {
+    Magnitude: 67f88c3b-89cc-4a36-b3da-325d4324f4fa 
+    Angle: 777c9c9b-218c-4985-9c7c-a48ad1ccc43e 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_I0_pos_I {
+    Magnitude: 93a48b7c-c23b-4a7a-b16c-67f96e947632 
+    Angle: 6745a761-d756-4272-a932-715d711cd846 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_I1_pos_I {
+    Magnitude: dd0ff09c-72cb-4412-b500-5c28e2622b36 
+    Angle: b8bc2eba-3b67-49b4-b5e8-13d01b25476b 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_I2_pos_I {
+    Magnitude: fa7c8e83-82f8-4594-9463-00bef28ac662 
+    Angle: 0ca88488-c88c-4aa8-a6ba-97ca0f1fea0c 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_IA_pos_I {
+    Magnitude: 7bd0bb95-5022-43f6-865f-88ba0e7b1703 
+    Angle: 7d41133b-fa00-48bb-bb44-a1c4ef2c75a1 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_IB_neg_I {
+    Magnitude: 974f28aa-391e-4fc1-ad1f-9e3503e70a97 
+    Angle: d1ba70ea-f1d6-43be-9215-ca5d9c7577ae 
+}
+
+ECA Phasor TVA_TVA_JST2_JSCC_STG_PMU2_IC_0_I {
+    Magnitude: b227fafb-7d4d-4456-8320-019ebcfb09e6 
+    Angle: 6f18d299-7c00-4db3-a320-019cab0c1b4c 
+}
+
+ECA Phasor TVA_TVA_LCS_DFR_I1_Lagon_Creek_C_pos_I {
+    Magnitude: 2a5193b5-65dd-48f3-83a8-549c6b17a5f9 
+    Angle: ea3b2161-e7c4-4dbf-8add-817c37a9f4ce 
+}
+
+ECA Phasor TVA_TVA_LCS_DFR_Ia_Lagon_Creek_A_I {
+    Magnitude: 89a9b1ad-1f4c-4d0b-8dfb-241b701fceb6 
+    Angle: 7220b05a-f4c0-4a84-8a5a-3be9298257fc 
+}
+
+ECA Phasor TVA_TVA_LCS_DFR_Ib_Lagon_Creek_B_I {
+    Magnitude: 60cb1ed5-6543-4c4d-8a5a-80ef4ee6012c 
+    Angle: d8a3a8bf-3deb-4827-b117-57c54b608fba 
+}
+
+ECA Phasor TVA_TVA_LCS_DFR_Ic_Lagon_Creek_C_I {
+    Magnitude: 77f33345-3e73-435d-9de3-6d6a64369e5e 
+    Angle: 6705a261-922f-4f77-8739-32c909fcb89a 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU1_I1_Lagon_Creek_C_pos_I {
+    Magnitude: 901247f8-028c-4fab-a76e-7b726ea13e78 
+    Angle: d4159b2a-e4ac-4aad-9abf-64611d5f951b 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU1_Ia_Lagon_Creek_C_pos_I {
+    Magnitude: 5dcc3c50-b144-446e-9ffa-8670db785f68 
+    Angle: e9cae44d-f283-47ee-8360-2db6b793a735 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU1_Ib_Lagon_Creek_C_neg_I {
+    Magnitude: ac9e7624-9139-4141-8810-63984f9e9f38 
+    Angle: ccc45475-d493-4c74-8b33-0567c92e57b1 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU1_Ic_Lagon_Creek_C_0_I {
+    Magnitude: 52cd3109-5eee-4a12-823f-bbb67466efe3 
+    Angle: a18a7719-fac7-4ba3-8cde-a92543f308dc 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU2_I1_Shelby_pos_I {
+    Magnitude: 2855c1e8-f302-43f2-9e2b-c5a069e0a873 
+    Angle: 43b73fad-a5b6-4a8e-8be8-f912c52f9f24 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU2_Ia_Shelby_pos_I {
+    Magnitude: 7052a8c7-98a4-4836-8c6c-095df57d0b31 
+    Angle: e7742936-d980-4b4e-bfe0-765eb2528948 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU2_Ib_Shelby_neg_I {
+    Magnitude: 39ab6197-ede0-4661-b2ed-8984413716ad 
+    Angle: d39a71d6-8370-47da-94df-1e8cfb3d0269 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU2_Ic_Shelby_0_I {
+    Magnitude: 1a7a7c6b-917e-4f94-a0bb-e23ec83c66d9 
+    Angle: 5d6b1e8e-e707-4afe-8f3f-1133bfe81750 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU3_I1_Weakley_pos_I {
+    Magnitude: b755c4c9-7f5b-4f77-8d7f-a960159cfffc 
+    Angle: cf2af440-59b2-4075-9d21-ce8d374681e7 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU3_Ia_Weakley_pos_I {
+    Magnitude: 5db0d47f-4b9b-471a-b736-1319e9d02f9d 
+    Angle: e5566a32-6e22-41f4-b4ec-fc5e58ece9d0 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU3_Ib_Weakley_neg_I {
+    Magnitude: 2edfcd26-0948-439b-8349-056c8113d1d9 
+    Angle: e059c46f-382f-41ec-92a1-bab9a2d63b29 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU3_Ic_Weakley_0_I {
+    Magnitude: bf4e9392-d976-4b46-9eab-09661d28a16e 
+    Angle: 0e1a2674-0afe-4de7-9c02-0e14c935dd1b 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU4_I1_CT_Feed_pos_I {
+    Magnitude: 587bdfe3-9f73-48a8-8a47-6c6cd90f72ea 
+    Angle: 1f02b465-61a7-4b74-8104-3cd26ed818ca 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU4_Ia_CT_Feed_pos_I {
+    Magnitude: 29dd87f0-5fd2-419e-9401-81c4a1c451b6 
+    Angle: 67dd4cff-ecee-4571-98a9-84640faaff74 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU4_Ib_CT_Feed_neg_I {
+    Magnitude: 99a36494-4b7e-4a7f-89be-be170ea79918 
+    Angle: fe8755c5-231d-4853-a654-32b3230e3f4e 
+}
+
+ECA Phasor TVA_TVA_LCS_PMU4_Ic_CT_Feed_0_I {
+    Magnitude: 30d5e645-5f68-450c-917f-874d09d6bbf8 
+    Angle: f8d05988-330e-4626-a79f-b86347396db0 
+}
+
+ECA Phasor TVA_TVA_MARSHALL_500kV_XFMR_BANK_pos_I {
+    Magnitude: 7615c2af-25be-4fd6-8240-93202bb89d58 
+    Angle: fafd6a13-394d-4b37-b792-0ea1f2070a53 
+}
+
+ECA Phasor TVA_TVA_MARSHALL_Cumberland_500kV_pos_I {
+    Magnitude: c963613e-7490-4a76-a098-165948bc4507 
+    Angle: f6c28953-eb1e-4df4-b9a3-b7aa79e315c2 
+}
+
+ECA Phasor TVA_TVA_MARSHALL_DOE_C33_161kV_pos_I {
+    Magnitude: 930d4f5a-8618-40b3-ba85-a2b2ab17953a 
+    Angle: b1a46c37-194c-4c6b-897a-9666698ac745 
+}
+
+ECA Phasor TVA_TVA_MARSHALL_Mayfield_161kV_pos_I {
+    Magnitude: 6a0748eb-8405-46f8-b63c-715cfd1c6aa4 
+    Angle: 4d9ed52a-24c9-49d7-831d-eb91d4a7d49b 
+}
+
+ECA Phasor TVA_TVA_MONTGOMERY_Cumberland_pos_I {
+    Magnitude: bce98fcf-7645-43b4-918c-4e2304af9e93 
+    Angle: b20daa77-509f-47f9-8400-0a4f12615149 
+}
+
+ECA Phasor TVA_TVA_MONTGOMERY_Davidson_pos_I {
+    Magnitude: a9c95300-c6bd-4646-8a9e-61721aaf3791 
+    Angle: b488569e-3f19-4910-9057-58662131d0f8 
+}
+
+ECA Phasor TVA_TVA_MONTGOMERY_Paradise_pos_I {
+    Magnitude: e6888f36-bd8e-4377-be98-80038fb5d5c2 
+    Angle: 6189ad56-d171-44c0-acab-b04ecd66541f 
+}
+
+ECA Phasor TVA_TVA_MONTGOMERY_Wilson_pos_I {
+    Magnitude: f7e33d9d-750c-4555-9cc8-d05e3a267345 
+    Angle: 203a267f-9c12-471b-b99e-171add99e816 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_I0_pos_I {
+    Magnitude: da78f2b2-82ac-4451-ba79-bc3f2cc42455 
+    Angle: 971b6bbf-eb6c-4ff0-8f39-55f4e9130714 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_I1_pos_I {
+    Magnitude: a68f3463-1fb3-4c10-a319-c28e512afe3d 
+    Angle: aee47e5f-5565-4346-96b2-ced5bec1d4b3 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_I2_pos_I {
+    Magnitude: f8fd38eb-87a7-4c5d-a7a1-45cbf934236c 
+    Angle: cc413b12-b677-4e0c-b1a5-7b27ddb78ce2 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_IA_pos_I {
+    Magnitude: 36577556-3c60-4ef2-814d-96d060ba2350 
+    Angle: fd390db1-6e69-44e8-85b6-b1f1989fef4b 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_IB_pos_I {
+    Magnitude: 879a5313-37d1-41d6-a074-ad302e8ee63f 
+    Angle: eee15728-2bc3-40e2-b8ba-3d912bd1648d 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU1_PACC_CT1_IC_pos_I {
+    Magnitude: 253858e2-b460-48c3-a3da-f5e1fea1a358 
+    Angle: 1f55e04c-1856-475a-a851-0f275cc62d23 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_I0_pos_I {
+    Magnitude: 927cba41-5d41-4850-aaac-de9a33c7795e 
+    Angle: 34f27d99-097b-4e95-83d1-b6d65581322d 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_I1_pos_I {
+    Magnitude: 87c45264-05ed-4bbf-aa86-5c6dfc0292e8 
+    Angle: fbedb31e-343e-45c9-ab37-9ee7987fe99c 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_I2_pos_I {
+    Magnitude: f0cbef8c-c1e5-4fc5-a3c6-f9459532c174 
+    Angle: 4a129397-97f8-40c5-90c2-4b32fb27bcf3 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_IA_pos_I {
+    Magnitude: 1f6dd4cb-7732-4762-88aa-a3b521ae2afd 
+    Angle: 8cf6915a-c00a-4210-87f8-5fe4a5d799b8 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_IB_pos_I {
+    Magnitude: 23e13106-95ef-4b4a-aacf-4e1881ec5914 
+    Angle: 1f6619a2-b1a6-4592-ba23-b7b39b0702d7 
+}
+
+ECA Phasor TVA_TVA_PACC1_PMU2_PACC_CT2_IC_pos_I {
+    Magnitude: f85d07c2-360e-4e6c-ac85-0664306da4a1 
+    Angle: c3913111-bd90-4c48-ba84-2feaa09aed97 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_I0_pos_I {
+    Magnitude: dcb92029-7aca-4e67-9ef3-bceaa07432e3 
+    Angle: bb8754aa-997d-494a-9397-f69908f49a8e 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_I1_pos_I {
+    Magnitude: 05aaf056-3ab2-4dbf-b7bc-5c8efcd97a75 
+    Angle: b450ef8e-eecc-4cb1-8479-180c1e11f643 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_I2_pos_I {
+    Magnitude: 07ba5617-dd29-470a-8ff3-f14782c5703f 
+    Angle: 18218e07-5254-4b8a-bdf2-f7ea06fb531e 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_IA_pos_I {
+    Magnitude: 8dcd2cf8-5041-4644-8e78-0bf224fb0b3b 
+    Angle: a1492d9a-c65a-4bd9-836c-3eab8c121cce 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_IB_pos_I {
+    Magnitude: 505179d8-e06f-4a63-8b41-313735acc690 
+    Angle: c0765401-7756-4aac-b0d2-ecac7f8d26c8 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU1_PACC_CT3_IC_pos_I {
+    Magnitude: 00828179-77eb-4bec-b221-1eb056c8e924 
+    Angle: 0e6de7ea-998e-4f4b-8cc7-1544b1d42968 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_I0_pos_I {
+    Magnitude: 07d5c6c0-eb6e-4f76-9eda-6c44dcf7e30c 
+    Angle: ba213978-67cf-4a38-a747-4396a255a063 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_I1_pos_I {
+    Magnitude: 829edc17-c6fd-485b-ac58-b058b41b383e 
+    Angle: aa7f4a2a-ab83-4656-8c2a-5616402cdbf7 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_I2_pos_I {
+    Magnitude: ce392aae-a1f0-4ddf-bd00-bec9ef5a25b5 
+    Angle: 395d74c8-5a6e-41aa-8b9a-548c4b17144c 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_IA_pos_I {
+    Magnitude: 2a2f6b92-c9fd-4013-a9e7-729595b2e777 
+    Angle: 3c9c5675-7b55-48b5-8e4e-c68b680f955d 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_IB_pos_I {
+    Magnitude: 013679c3-9ad8-4f77-aa3a-aaa1195c37ff 
+    Angle: 905aa428-e03b-44a5-b079-67fcfd8b7351 
+}
+
+ECA Phasor TVA_TVA_PACC2_PMU2_PACC_ST_IC_pos_I {
+    Magnitude: e077bff8-ff7c-4050-830e-0aa964dfbe95 
+    Angle: b3d1573c-ba70-4d27-898d-b17028dd0a89 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU1_I1_Murfreesboro_pos_I {
+    Magnitude: f5c56e5f-5fc3-4eb5-ad1e-31f4178c00c2 
+    Angle: e428e4f1-6158-42d2-a0a5-3a7246a4cbbe 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU1_Ia_Murfreesboro_pos_I {
+    Magnitude: 43e4a5b9-1734-4754-995c-cac09aeeaadd 
+    Angle: d545602a-54da-48dc-97f2-f75fc65f3127 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU1_Ib_Murfreesboro_neg_I {
+    Magnitude: 5897ac9c-8c91-4696-bd72-820ff1eb4fc3 
+    Angle: 1940370e-ff22-4d43-92e6-2597d1b81cf5 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU1_Ic_Murfreesboro_0_I {
+    Magnitude: c1658d81-3436-4a8b-93ec-2f63eb702c55 
+    Angle: e6841eee-41f6-49c6-9da4-97021a70c11b 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU2_I1_Hurricane_Cre_pos_I {
+    Magnitude: 7a41a7fa-c095-4038-942e-1480cbd7c66d 
+    Angle: 719d77c4-b482-4420-970f-5a2b1a768327 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU2_Ia_Hurricane_Cre_pos_I {
+    Magnitude: 76d2978f-1c6c-426f-b23a-72882d571322 
+    Angle: c3e8786e-034c-4a4f-90fb-0c75e0d63972 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU2_Ib_Hurricane_Cre_neg_I {
+    Magnitude: a0321ead-584b-4286-b04d-8342530dba55 
+    Angle: 462725f1-23bb-42dd-bddf-f080d40b2dcf 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU2_Ic_Hurricane_Cre_0_I {
+    Magnitude: 451e0a48-c615-4c09-8662-321ae1ff24c5 
+    Angle: ea8dabbb-6f02-415b-a481-9e83a98bba02 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU3_I1_Cane_Ridge_Li_pos_I {
+    Magnitude: a2fd68a3-b9dc-4fd1-8581-0d1ade7275c4 
+    Angle: 92f005f1-08d2-45f5-badf-80af16ff1a3d 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU3_Ia_Cane_Ridge_Li_pos_I {
+    Magnitude: f7d8436a-6cdf-4dbd-b7d0-bcbd6c9a2a3d 
+    Angle: e22c21e6-574c-4776-b516-4da6ed4636a3 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU3_Ib_Cane_Ridge_Li_neg_I {
+    Magnitude: 772d08f2-1702-4ec0-9176-e1f2b6b1d10a 
+    Angle: 5eb2e3f2-daa8-49c3-9c53-35046462e929 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU3_Ic_Cane_Ridge_Li_0_I {
+    Magnitude: 704af95b-514e-44f2-affa-73ed90a0ef26 
+    Angle: 56e80ccf-a596-4069-a91b-92a0c18f4e81 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU4_I1_Smyrna_Line_pos_I {
+    Magnitude: d7611685-8756-4be3-92d5-271b41693bbc 
+    Angle: de4a9282-a1fa-4321-a368-14c79615ad02 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU4_Ia_Smyrna_Line_pos_I {
+    Magnitude: df39a716-13fd-4216-b022-c2d7cd575519 
+    Angle: 4ece1469-1c13-4d51-8979-a7f2338b3146 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU4_Ib_Smyrna_Line_neg_I {
+    Magnitude: cd3b470f-dd85-4254-9747-18a590d4a6b0 
+    Angle: cfac243b-4e18-4149-a359-b3d1806932b2 
+}
+
+ECA Phasor TVA_TVA_PHS1_PMU4_Ic_Smyrna_Line_0_I {
+    Magnitude: 804af273-a19f-4764-a692-c72c7a52eacc 
+    Angle: 847dbc3b-f04e-4c1b-ae0c-2e9d311e544f 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU1_I1_XFMR_161kV_pos_I {
+    Magnitude: 1906af6c-a9e6-4711-a476-ec4311265569 
+    Angle: f9b69bca-e6d7-4e2a-95c7-58d84be350c1 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU1_Ia_XFMR_161kV_pos_I {
+    Magnitude: 407362a5-15c3-4f92-861f-4f9015df0204 
+    Angle: 94a99bf5-2f0b-4ca2-afba-4301e330c212 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU1_Ib_XFMR_161kV_neg_I {
+    Magnitude: c4f01193-6500-44c2-afcb-cbec5ac1a964 
+    Angle: d31d1898-3737-47dd-8010-2088e062efec 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU1_Ic_XFMR_161kV_0_I {
+    Magnitude: 1838ef25-792b-44b7-a644-c1fbc9014284 
+    Angle: cb91cc3a-6ea2-4e14-a3ce-a2ac8f2f282b 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU2_I1_948_1046_Wils_pos_I {
+    Magnitude: c34b82d1-6793-4582-8c46-414bde1d68c3 
+    Angle: f2c095e2-3319-4712-838b-d63fa498eabb 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU2_Ia_948_1046_Wils_pos_I {
+    Magnitude: cbeef609-80de-467e-8c2d-6e92d28c8e4d 
+    Angle: 2404ba58-f9b8-45be-a4af-ba156dd8fb23 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU2_Ib_948_1046_Wils_neg_I {
+    Magnitude: f6232e36-eec2-4b80-bb72-dc05e2a934c7 
+    Angle: c1dc37ea-2df2-43f6-8534-1a4076c6ece9 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU2_Ic_948_1046_Wils_0_I {
+    Magnitude: a8782667-7cb2-4427-b22c-ee709f27bd30 
+    Angle: 165ce21c-60bc-4479-a716-6fa7d6ec1264 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU3_I1_5028_5038_Dav_pos_I {
+    Magnitude: 640fd323-fa7c-4463-8609-e878b7302ed5 
+    Angle: 54f199a6-90a0-4039-a9ab-21efdc1ba064 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU3_Ia_5028_5038_Dav_pos_I {
+    Magnitude: 3bfe82d0-7f06-45e4-b525-6ca09689a0a2 
+    Angle: a6e7d591-c86d-4a57-99e1-0096bfdc0445 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU3_Ib_5028_5038_Dav_neg_I {
+    Magnitude: de284d24-57e8-40f0-a997-bd294e2abd8e 
+    Angle: eb565870-fd25-45d4-81b8-62870b442ffd 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU3_Ic_5028_5038_Dav_0_I {
+    Magnitude: c48d8afc-9b57-4d25-a4a3-b3871bf559a9 
+    Angle: 5eee3055-6449-4d49-8495-a5222a02c459 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU4_I1_XFMR_500kV_pos_I {
+    Magnitude: d6c99383-fd8d-4380-9602-4f65320bb088 
+    Angle: b9f5172e-1fdc-414d-83d5-19fe4f36471f 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU4_Ia_XFMR_500kV_pos_I {
+    Magnitude: 3405501d-4a51-4aec-a584-54a4c38c9cd8 
+    Angle: e4dd2867-a462-421f-9133-e0ff1c15a06a 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU4_Ib_XFMR_500kV_neg_I {
+    Magnitude: 23316ede-bd79-45cd-8e07-a198e09d65ef 
+    Angle: 0d8abc4c-3de2-4553-aa2e-12b4cc4aa472 
+}
+
+ECA Phasor TVA_TVA_PHS2_PMU4_Ic_XFMR_500kV_0_I {
+    Magnitude: 4b3bb172-0aae-4e8d-a323-e5898a50bf0e 
+    Angle: ba86fad6-6205-4ffa-99c0-0f47a128694a 
+}
+
+ECA Phasor TVA_TVA_PICKWICK_Phasor3_pos_I {
+    Magnitude: cafedeea-31c4-43af-9a4e-1d5d7674e7b5 
+    Angle: ef7e05fa-0f5e-4eb0-a90e-b8e817cdfe3f 
+}
+
+ECA Phasor TVA_TVA_PICKWICK_Phasor4_pos_I {
+    Magnitude: e12c6bb5-092d-4b62-bedd-dc4a77f0dd64 
+    Angle: 8cea08b6-bf2c-4214-ba05-dc68644aba1a 
+}
+
+ECA Phasor TVA_TVA_PICKWICK_Phasor5_pos_I {
+    Magnitude: 171e5ada-b181-4aab-bb25-7281c9df86c4 
+    Angle: 3cba3ec7-986a-43ff-b762-a39a142cd8c6 
+}
+
+ECA Phasor TVA_TVA_PICKWICK_Phasor6_pos_I {
+    Magnitude: 15ac2318-25fd-4aa5-a5c7-e2893b74c26e 
+    Angle: c038c55a-6a68-484f-aa77-1144fec1fccd 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_I0_pos_I {
+    Magnitude: 85c90eb6-e6be-4139-95a3-7e674875a9dd 
+    Angle: e971d781-35f6-447b-b8db-325da89277b7 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_I1_pos_I {
+    Magnitude: 023fe0ba-90e6-4f27-a301-2ec78cce64df 
+    Angle: d3f3c51d-d341-4f84-9746-84b5dfe19c7a 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_I2_pos_I {
+    Magnitude: 42ca3746-d34a-4a63-ac1d-b2e2deed2ab6 
+    Angle: ac810f67-1add-40bd-b03a-2a114a4624eb 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_IA_pos_I {
+    Magnitude: 543237bb-6570-4286-bca8-aecfb74a57cf 
+    Angle: 0a1c5baa-a8ae-44c7-895e-0e18eb4e31dc 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_IB_pos_I {
+    Magnitude: 7180bf1a-e8b8-4151-be6b-e5cc347e635d 
+    Angle: 665d98fe-fc54-4d0a-b547-9226b12b8c1c 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_1_MOCC1_IC_pos_I {
+    Magnitude: 61d4aad9-46a1-467d-b9ca-ae3b9f238252 
+    Angle: df6d5e1a-599b-43a3-a4c8-3450d551a5f7 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_I0_pos_I {
+    Magnitude: e7a78f42-7180-4e7b-bd9d-2c1d416d4bc2 
+    Angle: fac0f73f-596b-450b-b475-242a9b3a19a8 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_I1_pos_I {
+    Magnitude: fcdc82d3-b6a9-4a3b-9de9-21430acdf780 
+    Angle: 199722e5-c357-4986-940d-9d6af6a414bb 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_I2_pos_I {
+    Magnitude: 71a208e5-99d0-4aa1-8fb2-948dbff18b39 
+    Angle: 78f9c514-08bf-44c8-87d0-1885b636c546 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_IA_pos_I {
+    Magnitude: 0bc63184-52c9-4ae6-9bba-54702cee7c1a 
+    Angle: 3619bc3a-5bea-49a8-b9ca-c6ac31e2efc2 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_IB_pos_I {
+    Magnitude: cbbdcf88-09e0-4a93-908f-1599bfcbfc2c 
+    Angle: 8cd9500a-84a6-4d6e-afea-d08a33e3770b 
+}
+
+ECA Phasor TVA_TVA_RCS1_MOCC_2_MOCC2_IC_pos_I {
+    Magnitude: 85b4b3f2-30d8-4630-837f-236356cad783 
+    Angle: ffc79630-5447-4342-9030-8d726db7b6a8 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_I0_pos_I {
+    Magnitude: 90de1ca9-aa37-4a37-9974-44e036dc7ca5 
+    Angle: a4b70a75-550a-44f8-ab3d-479099359036 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_I1_pos_I {
+    Magnitude: aa5c4713-aab6-4a5c-a58a-347931f75337 
+    Angle: ded76490-7b56-4e2f-8562-70c9b6332af2 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_I2_pos_I {
+    Magnitude: 5c6e82f6-6bba-4b87-ae18-199490fd03c1 
+    Angle: 86053ccf-3c69-4bed-8de6-9ca7834dadef 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_IA_pos_I {
+    Magnitude: d4bbaaad-72cd-465b-b8db-a011231a3a83 
+    Angle: 7383dbd0-f1b9-4a5d-a0ef-96b117255905 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_IB_pos_I {
+    Magnitude: 10935154-02ca-4afa-8742-bd012a2bdcd8 
+    Angle: c0efc692-1ab5-46bd-8466-1f6a98fa11af 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_3_UNIT3_IC_pos_I {
+    Magnitude: 9eac5afd-03b5-4d4c-b584-fe6de6e5bb10 
+    Angle: 2afbd6a3-2e29-49e3-a86c-5e3afd5a5cec 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_I0_pos_I {
+    Magnitude: 8b883870-35d7-4e20-917c-7fd10f91c462 
+    Angle: 32f17678-cad6-419e-96ff-3e266cc96ccf 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_I1_pos_I {
+    Magnitude: bda01e95-4d42-4588-9b1d-f94db2d771f6 
+    Angle: 34ed2260-acf2-4028-9970-83664349fa65 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_I2_pos_I {
+    Magnitude: 9ac8e784-d6ee-47f3-9579-17c54ad19f5f 
+    Angle: 0a185825-096b-433a-9644-6f7d2d1ea712 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_IA_pos_I {
+    Magnitude: 70922bdd-e92a-426e-acb9-e5017d61c64e 
+    Angle: eb6faf07-7aec-4a42-ab99-706f34ee0a60 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_IB_pos_I {
+    Magnitude: e63227e6-0733-43b2-9f1d-345e09b026d1 
+    Angle: 81b887ea-2ae9-49d5-bc10-7b27e6358fde 
+}
+
+ECA Phasor TVA_TVA_RCS1_UNIT_4_UNIT4_IC_pos_I {
+    Magnitude: 471f317d-34a7-46a8-b539-3b14f132fff6 
+    Angle: 37206fb0-8c2c-4d55-9776-d29759a60575 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_I0_pos_I {
+    Magnitude: d8714633-1c72-4c4c-9c76-f7599faef0f2 
+    Angle: 0cfb907f-495c-49ef-9d5f-5bfea76fda6b 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_I1_pos_I {
+    Magnitude: 08cdbe6a-cf7e-41c4-b874-103275d6969e 
+    Angle: 9293d062-ab80-481d-95d7-ebabfee7c61e 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_I2_pos_I {
+    Magnitude: ba1571ef-fee0-4dad-80a6-9e80304676d3 
+    Angle: ac4e4e2e-238a-4338-a43f-03cf0cebe0c9 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_IA_pos_I {
+    Magnitude: bb9eefaa-0b26-4526-9537-6faff342f883 
+    Angle: 81aadeb7-67f2-48de-a975-1fc95aa33c32 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_IB_pos_I {
+    Magnitude: 53d2b2a5-a772-4d5a-9e0d-f0505b08b070 
+    Angle: 1592fe5d-d3b6-4922-983d-77eb1afdc647 
+}
+
+ECA Phasor TVA_TVA_RCS2_BANK_5_BANK5_IC_pos_I {
+    Magnitude: e5f12c97-954a-4b3c-b680-5c8ad780efb6 
+    Angle: 68edda83-fd92-422b-9a82-beb38abacf8c 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC_IC_pos_I {
+    Magnitude: 171d993b-2e27-42cd-9607-108027b44bcb 
+    Angle: a42d4fa0-2ccc-4548-911f-fdc4cf8a8301 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_I0_pos_I {
+    Magnitude: ed2d529e-36b0-4cf5-a59a-d61ea6cc98c0 
+    Angle: 76c85086-24c8-48cd-bfc8-550b6e23f1db 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_I1_pos_I {
+    Magnitude: efd78dba-5458-4ff0-9847-cf32dd5a28df 
+    Angle: 53a63c99-0509-441f-bac6-c698e6a617bc 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_I2_pos_I {
+    Magnitude: a5bbcf67-23a1-4da2-ada5-626454e52f25 
+    Angle: 0ced42c5-75c6-4dac-b5a2-753b3a2b02a6 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_IA_pos_I {
+    Magnitude: 40b127f0-409b-4780-8750-7b641a8f59cf 
+    Angle: da4f0fe6-93ed-48da-a890-06ab0d1d3e44 
+}
+
+ECA Phasor TVA_TVA_RCS2_MOCC_3_MOCC3_IB_pos_I {
+    Magnitude: 63c102bd-2ece-42ec-a67e-4c8ae79dffc7 
+    Angle: 29127321-6bcf-4d50-90da-2e7d8eba85ae 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_I0_pos_I {
+    Magnitude: 79fbbb08-7180-4e5f-834c-f0d64453fa6d 
+    Angle: fb6d51fa-61b9-4403-907a-32de133d2bec 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_I1_pos_I {
+    Magnitude: b63e73f9-73b3-4c59-a9a3-65aca52a7c68 
+    Angle: c32cfa2f-39f5-472a-8685-e62ff0ef46a6 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_I2_pos_I {
+    Magnitude: e2cfd859-5ec4-47c9-8d17-d0fcc69505c1 
+    Angle: c2a5adc7-5898-4ec9-9f5a-2422341519ba 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_IA_pos_I {
+    Magnitude: 5080613a-b04b-4315-a847-1430ea2a3839 
+    Angle: c1983292-2dcc-4bbf-81e4-f298ea1705f3 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_IB_pos_I {
+    Magnitude: a9ceb18a-8601-4453-8758-02ce3f662f4f 
+    Angle: a41f2726-7705-48fe-9e8d-825b44826451 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_1_UNIT1_IC_pos_I {
+    Magnitude: b3f6e66c-35d8-4aaf-85fe-e08ff44ea6de 
+    Angle: 2714e5f5-8ec3-4047-8159-6655842f34d9 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_I0_pos_I {
+    Magnitude: 39a802f2-c69e-4f74-a537-b70f2a955062 
+    Angle: e2cfcd58-a430-4b37-801a-8a4f3ea04380 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_I1_pos_I {
+    Magnitude: c83a85f6-688e-4401-9e73-39faadf42deb 
+    Angle: f3612185-15b0-4a48-87b6-e6f2217c00f2 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_I2_pos_I {
+    Magnitude: 4ab18053-3b89-4d71-b05a-8ccc51cddde9 
+    Angle: a906d577-9ffd-4cf5-b3a2-8004bc3b324a 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_IA_pos_I {
+    Magnitude: abeb290a-aefc-4854-a55a-4e34540b3844 
+    Angle: a3ddb5aa-1849-4bf6-a4ad-f7c5caa24204 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_IB_pos_I {
+    Magnitude: 0a7297a8-3c29-40f2-b4d9-6a97cd307008 
+    Angle: 4f94bf41-4d68-4552-9749-b8ea327addd7 
+}
+
+ECA Phasor TVA_TVA_RCS2_UNIT_2_UNIT2_IC_pos_I {
+    Magnitude: 7dbae349-21c4-47cb-bd4a-eb76bcbfa96c 
+    Angle: 0dfb50eb-0423-429e-88c0-9c4acfe07051 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_I0_pos_I {
+    Magnitude: c7e9d7ee-51ec-4332-bc4b-39d73219d0ce 
+    Angle: 1ed07e3f-c078-4d5d-988e-d20c8af6ec29 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_I1_pos_I {
+    Magnitude: 2466c27a-f709-4e18-ba06-9861b1fd40b7 
+    Angle: 05f2b0a0-f899-4869-ab0a-4abb83fd5f6f 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_I2_pos_I {
+    Magnitude: 3e593d98-4745-424d-9a54-0fabebe3652b 
+    Angle: a8fa82f1-14e2-4e30-9ba3-1340f7723908 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_IA_pos_I {
+    Magnitude: 1acdd3dd-5cc4-497c-8809-debcdc3e7e05 
+    Angle: c1cd92b8-bde2-4bc9-a152-d4060dff2755 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_IB_neg_I {
+    Magnitude: 37006f4a-b324-47b1-afe7-8de93d8dc180 
+    Angle: be911eee-aa59-4f23-a48e-242a73f93a68 
+}
+
+ECA Phasor TVA_TVA_RIVERBEND_SOLAR_PMU1_PMU1_IC_0_I {
+    Magnitude: e8af0e9a-461a-494c-9c7d-ccdafa52298e 
+    Angle: 270db8c1-0a62-4d78-9c0b-e54cf9a320c1 
+}
+
+ECA Phasor TVA_TVA_SEBASTOPOL_Homewood_pos_I {
+    Magnitude: 5da6e9b5-7ae5-493a-9d01-65296c60652d 
+    Angle: 6f9e623d-b7a9-4dc7-9145-a0e8142a7290 
+}
+
+ECA Phasor TVA_TVA_SEBASTOPOL_Leake_1_pos_I {
+    Magnitude: 93828ac4-e98b-4e4e-9fa3-987d7ebafbc4 
+    Angle: 43043f11-e575-48e5-a86f-737145924281 
+}
+
+ECA Phasor TVA_TVA_SEBASTOPOL_Leake_2_pos_I {
+    Magnitude: d3b55a68-f7d5-4777-8884-e7119d437499 
+    Angle: 7eb5c2b4-aa09-4f65-8a36-9ec5994dec14 
+}
+
+ECA Phasor TVA_TVA_SEBASTOPOL_Philadelphia_pos_I {
+    Magnitude: 01de40c1-dceb-4b82-a0b7-c55b377941f9 
+    Angle: 675b4309-5079-4050-b073-bc5a2bddaa0d 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU1_I1_West_Adamsvil_pos_I {
+    Magnitude: b08c8a64-3b5d-4209-8447-d9a57b72ec3b 
+    Angle: 78831fdd-2635-47f3-96ef-5fd938314192 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU1_Ia_West_Adamsvil_pos_I {
+    Magnitude: e220d338-4538-4562-bfb3-d3e775223f11 
+    Angle: e07ad239-742a-41d3-bf3d-11c278682075 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU1_Ib_West_Adamsvil_pos_I {
+    Magnitude: 058e55a7-e752-4103-b73a-817d7ccfa02a 
+    Angle: 1fc0036f-b9ec-4161-8acd-342e364d06a5 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU1_Ic_West_Adamsvil_pos_I {
+    Magnitude: 99b25105-84be-4340-ba65-5c706f83b1a9 
+    Angle: fa1fd5c0-3469-4555-a32e-704e1074e52f 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU2_I1_Colbert_pos_I {
+    Magnitude: 1d7011ae-c538-46a8-a7ea-4daabc43af52 
+    Angle: 62a63405-14bc-4fea-8089-23b203e5d9aa 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU2_Ia_Colbert_pos_I {
+    Magnitude: b4587983-eec6-4d0a-8125-c46f3c685773 
+    Angle: cf95150e-66e9-4a34-92ed-e3d01fdaaff9 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU2_Ib_Colbert_pos_I {
+    Magnitude: 9421bed5-11ea-4e0a-aa21-e39893898e85 
+    Angle: 47dd5073-07d5-42db-901a-7196937507af 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU2_Ic_Colbert_pos_I {
+    Magnitude: df7779c7-29c9-44b7-98c1-e08a4bb3e785 
+    Angle: 15e9b157-a96a-4c3f-a31c-539c16f8862c 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU3_I1_Forest_Hill_pos_I {
+    Magnitude: 5703548f-037d-40d0-8d80-16017fd953f3 
+    Angle: 4f0be7c7-5260-4b17-b14e-43e51f031c82 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU3_Ia_Forest_Hill_pos_I {
+    Magnitude: f1f56963-d451-42d2-96a8-4bc83a165c82 
+    Angle: 09b19990-42d7-4d35-a9ba-820cad584f11 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU3_Ib_Forest_Hill_pos_I {
+    Magnitude: 65c9c58d-ae38-40f7-a1df-ecb603590b55 
+    Angle: d41a156e-4bb2-462d-862f-498cdc153563 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU3_Ic_Forest_Hill_pos_I {
+    Magnitude: daaef15b-2d93-4ed8-8174-7dfc2cebbe59 
+    Angle: 429b121a-b8b6-4897-9fc4-91f2fad310c8 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU4_I1_Bolivar_pos_I {
+    Magnitude: 1169bb51-9114-4b92-b942-5c48b0197fbf 
+    Angle: 38cb9504-e44b-401e-96ee-4c4f74caf598 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU4_Ia_Bolivar_pos_I {
+    Magnitude: 25ce088b-972f-4efe-b0c3-82c03a471f53 
+    Angle: d5c2f59c-2101-4fd2-abab-66a5ebbfad19 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU4_Ib_Bolivar_pos_I {
+    Magnitude: e08265e5-9df4-48d6-81d7-2f8bfbef6e9f 
+    Angle: 3e75a040-ffe9-4d0c-8fda-2c2d7ff9ef10 
+}
+
+ECA Phasor TVA_TVA_SELMER_PMU4_Ic_Bolivar_pos_I {
+    Magnitude: 7f16b102-d46d-4d1c-8376-5d70f488ae7a 
+    Angle: 2a4f68ef-3f35-42bf-931c-f30bf5974887 
+}
+
+ECA Phasor TVA_TVA_SHELBY_Cordova_pos_I {
+    Magnitude: 08fc24dd-3d50-46bf-b2b7-ceb97fe89b41 
+    Angle: 22160b20-d726-4a99-b5d1-90025a70cf49 
+}
+
+ECA Phasor TVA_TVA_SHELBY_Dell_pos_I {
+    Magnitude: ab2d5588-46ae-4ebc-8892-3ba034d4bd3e 
+    Angle: 7ed3d402-1d90-4016-bd4f-139ef33ae834 
+}
+
+ECA Phasor TVA_TVA_SHELBY_Lagoon_Creek_pos_I {
+    Magnitude: ed9a3b23-198b-4edb-800d-6a3122038daa 
+    Angle: 63b02d25-b068-4035-9c07-effd6577976a 
+}
+
+ECA Phasor TVA_TVA_SLS_PMU1_Bank_1_500kV_pos_I {
+    Magnitude: 130bd1a4-c794-4644-ae37-155d0b243dd4 
+    Angle: d4463773-6534-44aa-ae2c-326490f8adaf 
+}
+
+ECA Phasor TVA_TVA_SLS_PMU1_Bank_3_500kV_pos_I {
+    Magnitude: 5f7892ab-e3f1-4336-b21d-1f9f0b36943b 
+    Angle: fed8fadd-27fa-40f9-aa0e-8999079e4248 
+}
+
+ECA Phasor TVA_TVA_SLS_PMU1_Broadford_pos_I {
+    Magnitude: f6f9da3a-eb06-4460-b498-f54fa18ec19f 
+    Angle: 8e3aa6f7-6159-4adc-a1dc-87ece6e3a5ff 
+}
+
+ECA Phasor TVA_TVA_SLS_PMU1_Nagel_pos_I {
+    Magnitude: 705765f1-da3f-4201-bb56-50cfc38f40e3 
+    Angle: 7f4d1dda-bce3-4e82-9ffc-2a24afc34765 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU1_I1_918_Craighead_pos_I {
+    Magnitude: 426b8206-e469-4d10-94a4-a1571ea58f8a 
+    Angle: 5bc63a76-ca28-4904-bad1-3b62cd933ca1 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU1_Ia_918_Craighead_pos_I {
+    Magnitude: fdef4ec9-efdd-44d4-9227-a75906748dc6 
+    Angle: cc9f8675-6ab5-477e-8fd2-a015a103f302 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU1_Ib_918_Craighead_neg_I {
+    Magnitude: efc68985-9772-485b-98a7-3da2545fdef9 
+    Angle: 3d27beba-2f59-4005-9087-8154f53dc60e 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU1_Ic_918_Craighead_0_I {
+    Magnitude: ae729e2c-ff1a-4262-a1f8-c90554bd57e7 
+    Angle: de0fc630-08d4-416d-9fa1-6a6ddb135f0e 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU2_I1_928_Airport_L_pos_I {
+    Magnitude: 495715d8-a2c4-47ea-b37d-775d216bdbba 
+    Angle: 6ba3e744-5ad8-4075-9219-a69c5c10bc83 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU2_Ia_928_Airport_L_pos_I {
+    Magnitude: 3cfc6c4e-6575-4387-90fd-bd2c2f792274 
+    Angle: 39b9da96-ed8f-4d62-bd40-6d0a9d449e61 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU2_Ib_928_Airport_L_neg_I {
+    Magnitude: a8eaba6c-9d94-4bcc-9441-af1757cd6adc 
+    Angle: 7ecff7dc-f052-429f-963e-25efd7e02445 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU2_Ic_928_Airport_L_0_I {
+    Magnitude: fccc25a5-f01b-4580-94f2-c11c62af89de 
+    Angle: 20c41e3c-777c-4e17-88f9-219ebf69606d 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU3_I1_938_Donelson_pos_I {
+    Magnitude: a64de46c-27b9-4942-b511-7ef1ff66c7df 
+    Angle: 51c54161-9fad-4d00-937c-13051889eecb 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU3_Ia_938_Donelson_pos_I {
+    Magnitude: b7890af5-eec3-4ac3-bec2-f36e44281ac0 
+    Angle: 235a31e1-c79c-486f-a53f-004bdd116f49 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU3_Ib_938_Donelson_neg_I {
+    Magnitude: b775234e-c87f-4b39-9322-07c80691be9c 
+    Angle: 84a4f84c-eb5d-4eeb-bbae-4ecd91e070af 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU3_Ic_938_Donelson_0_I {
+    Magnitude: 81c736ca-d3df-4a16-bf26-db3c82005a7f 
+    Angle: 6a288cee-6ab1-4d4b-96a4-8db1df6156a9 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU4_I1_964_Trinity_H_pos_I {
+    Magnitude: 1fa935af-4d06-4eb9-b4d5-9fc7d953091e 
+    Angle: 773075b0-1698-4ff9-8a4f-f393205b5e92 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU4_Ia_964_Trinity_H_pos_I {
+    Magnitude: 8e0229e7-cd0d-4872-8e59-030842d2cb09 
+    Angle: 39193d58-ac0b-4eea-86a8-d78ba2137c26 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU4_Ib_964_Trinity_H_neg_I {
+    Magnitude: e3205342-a33a-4f13-b4d0-4a3e7e1b421b 
+    Angle: 64cc1b1e-8c9a-4e5d-a350-f6caca791156 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU4_Ic_964_Trinity_H_0_I {
+    Magnitude: f026c2eb-cefe-4465-87d5-ef90b2c03875 
+    Angle: 6818cc8e-496d-4d91-80e5-8e9975594a56 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU5_I1_974_Gallatin_pos_I {
+    Magnitude: 00079756-2ed4-402e-8cde-1ffcd3f9e2ca 
+    Angle: 64202577-2037-4a2d-9e58-ea8e59e1dc2d 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU5_Ia_974_Gallatin_pos_I {
+    Magnitude: 46790483-9bbc-41c9-8084-6741acbc9179 
+    Angle: 180ca785-38dd-4a39-982b-cc28c59ae5b1 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU5_Ib_974_Gallatin_neg_I {
+    Magnitude: 28027dac-4372-4582-86e7-8b4eb4c95ff2 
+    Angle: a56d6940-efdd-4dda-8e2f-49ee6df18608 
+}
+
+ECA Phasor TVA_TVA_SNS1_PMU5_Ic_974_Gallatin_0_I {
+    Magnitude: b5aa42a8-009d-482b-8909-b3b1383e0a38 
+    Angle: 8e87661b-1602-4e0c-a27c-57d10b9800fd 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_I0_pos_I {
+    Magnitude: 4275395b-6790-4388-a09a-61bf49bbe08b 
+    Angle: e6bb4c02-3aa6-4d70-a844-61c75ce9ea96 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_I1_pos_I {
+    Magnitude: 5589a4ce-ad2d-40c0-be3d-4a436ca413c2 
+    Angle: 454dc02b-7047-4f07-b2cd-f332d550ab21 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_I2_pos_I {
+    Magnitude: 55e2719e-1155-41e6-859c-230254191e52 
+    Angle: 0306e061-8498-4947-9e84-0b7e7a07c048 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_IA_pos_I {
+    Magnitude: a7942696-ac10-41b6-b1cb-d9a4f46bedea 
+    Angle: 5453afe6-52ef-4a92-bdb6-fb7f29ff7e7b 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_IB_neg_I {
+    Magnitude: adcf2310-4c6d-4851-a36a-dc9498cc117b 
+    Angle: 21d4077b-4a5e-4f62-82a1-c87737285610 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQN_GEN1_PMU1_IC_0_I {
+    Magnitude: e7ec3b52-8436-4f8a-8a56-aa91cc08835c 
+    Angle: 1080fdd0-d2d8-4393-bcb0-7aaf4b739355 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_I0_pos_I {
+    Magnitude: 039dafbb-aee3-4ed1-bbb7-5d883c4726a1 
+    Angle: 270990b1-ebfa-4817-9f77-24a5e3f82e43 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_I1_pos_I {
+    Magnitude: b244d497-addc-4420-883e-049a3cdbd53d 
+    Angle: bbd7e40d-4f0e-44ae-8a08-130ee9575c70 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_I2_pos_I {
+    Magnitude: 03501dc1-3ee2-4d85-a8d3-48e780b2e372 
+    Angle: 961e231e-f114-4121-982d-0c18e60e9be8 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_IA_pos_I {
+    Magnitude: e07264fc-01f6-49af-a794-c882765e3c42 
+    Angle: ca4d39e3-4730-4602-b41f-ddcda0478951 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_IB_neg_I {
+    Magnitude: d59eb020-9350-4ad6-a478-541a3228c0c8 
+    Angle: 09b79cdd-a9a9-4588-a7a2-13a82e43ab4e 
+}
+
+ECA Phasor TVA_TVA_SQN1_SQNXFMR5H_PMU2_IC_0_I {
+    Magnitude: 80f53368-20cc-47f5-b3ad-299b4417e37b 
+    Angle: d9f90d09-a103-4f36-abb0-67221eda0ae3 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_I0_pos_I {
+    Magnitude: a4ff898a-d8c8-4c60-9b5a-65fc4904c000 
+    Angle: 481ecbc1-ec3f-4608-8ac4-ae4bf0bd2131 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_I1_pos_I {
+    Magnitude: 56c1001b-08a2-45ee-ba3e-3e58e9d1e1a3 
+    Angle: bc81a34d-b556-467c-9221-74ccb8aaaa74 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_I2_pos_I {
+    Magnitude: 06f13147-0c14-43d7-9735-b2fdd08738d3 
+    Angle: d408ed7e-7abb-4afb-8fde-be56287cc437 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_IA_pos_I {
+    Magnitude: 0e1a6be4-dd3f-458c-95ca-95d135a39a0f 
+    Angle: e19ad2e8-941a-4c20-bc6a-93da03888784 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_IB_neg_I {
+    Magnitude: a19ed97a-7129-4763-97e6-9b72b59dbd1d 
+    Angle: bc07f1db-b0e1-477d-bffd-20feca702409 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQN_GEN2_PMU1_IC_0_I {
+    Magnitude: 69af9357-e083-4c49-b23a-f5e0e3a78a55 
+    Angle: 8c24e57c-d118-4ec5-b30a-c25a7a1bcf18 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_I0_pos_I {
+    Magnitude: 05adb4c9-b266-4b76-8120-2ac03a94fe94 
+    Angle: 8c943c43-5e6c-4ec4-ac32-a5bb641243be 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_I1_pos_I {
+    Magnitude: 5a21f0a5-4768-4197-901e-c79250ca7801 
+    Angle: ba0789bd-b2dc-4404-a36c-93e62b9c36a0 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_I2_pos_I {
+    Magnitude: 83b805d5-8874-44c4-9864-34fd74db8ae7 
+    Angle: 39532ae7-2fa7-445b-8f6e-07c0aba5bdbc 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_IA_pos_I {
+    Magnitude: 7b173229-03dd-426f-8598-fdb26dcbe76a 
+    Angle: 6e9f73d9-9d73-4ef2-bfdb-8b9340bdf1f5 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_IB_neg_I {
+    Magnitude: 8f2dcd0b-3407-41e0-a110-b4ced0b6fef0 
+    Angle: 6d31acd1-60e6-4920-827c-ae52c0cf42b3 
+}
+
+ECA Phasor TVA_TVA_SQN2_SQNXFMR5L_PMU2_IC_0_I {
+    Magnitude: 7e4fa295-9559-4ced-b721-7c3437e415b6 
+    Angle: 894e742a-29a4-48fa-8176-bf9cb5050392 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU1_I1_828_Wolf_Cree_pos_I {
+    Magnitude: c1399694-237a-478a-8d40-3ecbc33ada12 
+    Angle: d667f945-5688-481b-b0cc-744496160a9d 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU1_Ia_828_Wolf_Cree_pos_I {
+    Magnitude: ee714592-4c6d-4c0d-9dad-6180929b83d3 
+    Angle: aad5a971-cceb-4eb3-af19-e5cbfe3d7e3a 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU1_Ib_828_Wolf_Cree_neg_I {
+    Magnitude: 68e5cc87-f2cb-4e97-b5c0-7c91b19fcab0 
+    Angle: dbebccb2-4d91-4d0c-b064-86cb0a8240c0 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU1_Ic_828_Wolf_Cree_0_I {
+    Magnitude: 252de32d-08d3-48d5-87cf-a7ec8ea00f75 
+    Angle: 8d7e0b2a-46b0-484e-9362-5912557615b5 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU2_I1_818_Lafayette_pos_I {
+    Magnitude: e1493004-20e3-468f-b983-598913b3049d 
+    Angle: 28a0d893-12e5-4154-9463-04cc1c513fe5 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU2_Ia_818_Lafayette_pos_I {
+    Magnitude: 82fd3f82-c097-4595-8b9d-6aa167f398fe 
+    Angle: 135eee9b-def1-4bc5-b144-c8172b71a92c 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU2_Ib_818_Lafayette_neg_I {
+    Magnitude: ed845521-fe1e-4fb3-990f-6a9a864106c6 
+    Angle: b8d8b0b2-6623-42c3-b418-33913aaa7ca9 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU2_Ic_818_Lafayette_0_I {
+    Magnitude: 1853095e-6079-4151-a0cb-50ee393ec2c9 
+    Angle: 5452b900-9c8d-44cd-a30b-5d4d2d6ee28b 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU3_I1_988_Blue_Lick_pos_I {
+    Magnitude: 5e118565-4385-4def-b286-03c51f5cb500 
+    Angle: c6f64a40-46e5-4956-b2ed-f02b30f56e89 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU3_Ia_988_Blue_Lick_pos_I {
+    Magnitude: 691ae8a6-9524-4dfe-88b9-fa2bbe0e7b1e 
+    Angle: 6640df32-afb3-4201-bd91-7c46af2f0072 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU3_Ib_988_Blue_Lick_neg_I {
+    Magnitude: 3247cc3c-4513-4fbf-ab5b-64fbe3223b0e 
+    Angle: 9c5c6020-76ef-4a08-80bd-f4eeca00cc59 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU3_Ic_988_Blue_Lick_0_I {
+    Magnitude: 681cdaeb-01a5-49fd-8997-875c7983568c 
+    Angle: 4d3b5cf8-c2da-4ff8-acf9-ec85c3311a1c 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU4_I1_924_EKPC_161k_pos_I {
+    Magnitude: 4bfe1584-4223-4aec-a12f-f0fbba317a8e 
+    Angle: d42b6468-98e6-4d6a-90f3-467160d875ca 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU4_Ia_924_EKPC_161k_pos_I {
+    Magnitude: 1a530f64-770a-44ee-8de7-77f5f152de01 
+    Angle: 04cf8460-f091-46ae-bbb5-03d280ebf608 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU4_Ib_924_EKPC_161k_neg_I {
+    Magnitude: f13881dc-0b53-44f7-bf2f-b8d656c56e8f 
+    Angle: 8c738783-97ac-4bc6-8015-ced5ee30d640 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU4_Ic_924_EKPC_161k_0_I {
+    Magnitude: d0114e52-a78e-46d7-9705-c37e2dec5bf0 
+    Angle: 647867c6-4c93-4a2d-90e3-ad34ae5668e9 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU5_I1_964_Wolf_Cree_pos_I {
+    Magnitude: 2e6ea8d8-74e0-4e2c-8ff2-63bfdf31d671 
+    Angle: 7dc314c9-c717-43cc-8e9e-49ea09b85bf4 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU5_Ia_964_Wolf_Cree_pos_I {
+    Magnitude: fcf4f79a-c269-4c3d-bf63-950019093d35 
+    Angle: 96d1f5ee-13e8-4e36-b660-25cab5586ed4 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU5_Ib_964_Wolf_Cree_neg_I {
+    Magnitude: e3381a0b-1f4d-467d-be06-a1705eecb1fa 
+    Angle: 8b50c9fa-36ca-48da-96ff-97ac5b5a01ba 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU5_Ic_964_Wolf_Cree_0_I {
+    Magnitude: 78758a7e-f6f3-4cf5-b5ae-29fbc27483e0 
+    Angle: 1f507461-8f86-4e44-8002-1f3b4748dcff 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU6_I1_954_Paddys_R_pos_I {
+    Magnitude: 8f371ca3-7b2d-43c1-a4b3-0bcd9a3435d2 
+    Angle: 7507bf03-ac4e-4cb9-9c0d-e64a2a073698 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU6_Ia_954_Paddys_R_pos_I {
+    Magnitude: 46442413-3ec5-4417-9ece-97c39a9fbe4c 
+    Angle: 81854f22-7eaf-48b1-a851-390204e4a0d2 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU6_Ib_954_Paddys_R_neg_I {
+    Magnitude: 130aaeb7-b73d-43fd-af5d-4018f1aa239e 
+    Angle: d8905518-082c-45dc-8faf-3ce27ba98693 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU6_Ic_954_Paddys_R_0_I {
+    Magnitude: c334e216-624e-4b13-a2b7-23df00b1ecf2 
+    Angle: 0b4a8983-dfd2-469e-81bb-70a4eb034d18 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU7_I1_934_E_Bowling_pos_I {
+    Magnitude: a375a082-9d51-4130-b0fe-274ebc3ba7d5 
+    Angle: e190c1cf-0063-4e5a-bfc2-e82fe9cfe57d 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU7_Ia_934_E_Bowling_pos_I {
+    Magnitude: 2322d6cc-c03a-4e5d-bc23-1eaa9a4d07ea 
+    Angle: 58e9d0a4-2a36-40cc-9686-1eb448f3e665 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU7_Ib_934_E_Bowling_neg_I {
+    Magnitude: 8cf59f18-5fa3-414b-a2a3-1aebe242bf60 
+    Angle: b80aead6-3f1a-4aea-8181-f0078333390b 
+}
+
+ECA Phasor TVA_TVA_SSS1_PMU7_Ic_934_E_Bowling_0_I {
+    Magnitude: 2f8bd260-d88a-499c-ac0e-e7e736b2f234 
+    Angle: 22cbc076-589a-4929-a386-f1bd7468f9a5 
+}
+
+ECA Phasor TVA_TVA_VOLUNTEER_Bull_Run_pos_I {
+    Magnitude: 1f89c008-88ca-4885-a7c9-cc507e288454 
+    Angle: 2a54fb81-71df-469b-a475-63343d083976 
+}
+
+ECA Phasor TVA_TVA_VOLUNTEER_Phipps_Bend_pos_I {
+    Magnitude: 096afa98-b631-48d7-938f-a17b508151a7 
+    Angle: 0b746d40-d004-4a0b-8fc7-ffc6700f0190 
+}
+
+ECA Phasor TVA_TVA_VOLUNTEER_Watts_Bar_pos_I {
+    Magnitude: a97bd697-b3a3-4b0f-b34f-2d55ac5eb861 
+    Angle: 652d3a00-4448-4e8f-a1cd-5ca66437ee41 
+}
+
+ECA Phasor TVA_TVA_VOLUNTEER_XFMR_Bank_1_pos_I {
+    Magnitude: cccfccc1-29b8-4e4c-babf-bb19ecb5e675 
+    Angle: 9b6c9a5a-a6c3-425e-ac95-dec6e7a4a669 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR1_MainBank2_pos_I {
+    Magnitude: 5acebf52-4100-45f7-bdbc-06e626c7d5de 
+    Angle: 43af6388-0c81-4df9-a74b-4242f16e7ba9 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR1_Roane_pos_I {
+    Magnitude: a257900f-c260-4fe6-956b-a2c3308892a6 
+    Angle: 638623db-1cf9-4a99-a12b-afdd8fd731a4 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR1_Sequoyah_pos_I {
+    Magnitude: f411f8c9-4312-4e72-b35a-a247b59c6c3d 
+    Angle: 4fb5c01e-72b8-4b1f-8a0e-30a55ee0d7ba 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR1_undefined_pos_I {
+    Magnitude: 750ed01d-49ac-46ce-b223-2082bc334d3a 
+    Angle: a071bf19-2973-4377-8fd2-5697993d073a 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR2_Bullrun_pos_I {
+    Magnitude: 9f0e364f-27f7-481e-ab5a-9683cc14b6fd 
+    Angle: 91a7dab0-7bc9-4777-bd64-f23a88fdbca4 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR2_Sequoyah_pos_I {
+    Magnitude: 95f1b28c-5223-4649-b929-c30b902f7795 
+    Angle: 0c40b6be-e8df-4934-97fd-a62bd20e8062 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR2_Unit2_pos_I {
+    Magnitude: ff2f90d4-cf3c-4bac-b722-8a0dfd246310 
+    Angle: e0618f87-7dce-4fa3-b80c-6b5de591a632 
+}
+
+ECA Phasor TVA_TVA_WATTSBAR2_Vol_pos_I {
+    Magnitude: 0884ad29-7126-4ae4-83aa-0b1ed3b60770 
+    Angle: c3f2adcc-ee3e-4ed5-bf2d-2e445367436b 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU1_I1_914_Severcorr_pos_I {
+    Magnitude: b37399e5-58a8-4521-b9a5-427484ea50eb 
+    Angle: c3e3d21b-2164-4090-aaa0-fe6f0cc05894 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU1_Ia_914_Severcorr_pos_I {
+    Magnitude: aa0c2f31-569d-45f9-be33-1e61b0d31cbc 
+    Angle: 84c1849f-0f1e-4f06-97ba-f591b27a6036 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU1_Ib_914_Severcorr_neg_I {
+    Magnitude: 30902ea0-06bd-485b-8722-79821b46c1b0 
+    Angle: 6b3f262f-d5f9-4440-8c0c-5a6e3cb444fa 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU1_Ic_914_Severcorr_0_I {
+    Magnitude: 7beb31f2-de45-45d7-8081-8f4cb9e0c648 
+    Angle: 4ef3a138-1ec0-4817-a65f-7c0b9bed0e6d 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU2_I1_924_West_Poin_pos_I {
+    Magnitude: 00dd1945-3b2b-4bc7-9b74-1df3645305ec 
+    Angle: a6c929ce-c373-4142-97ed-838a67068ddd 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU2_Ia_924_West_Poin_pos_I {
+    Magnitude: 86057fb8-1789-4ad4-abd3-701019dc381c 
+    Angle: 0559153d-d90d-4bfa-b985-f8a0ae949b82 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU2_Ib_924_West_Poin_neg_I {
+    Magnitude: df18e3a6-7db5-4a23-a28c-05e05ee7db66 
+    Angle: d2d086f1-2a36-44de-a4fc-d84d997989dc 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU2_Ic_924_West_Poin_0_I {
+    Magnitude: 5aa241ef-d770-4d1d-9627-4e83fb8e108b 
+    Angle: 500d01c9-dfbd-4717-9caf-90b73c1b4a3a 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU3_I1_934_Columbus_pos_I {
+    Magnitude: 1ba4767b-9f7a-4a51-a419-30f650cf2aa7 
+    Angle: aac6687f-40b8-415b-9421-b49e94e40921 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU3_Ia_934_Columbus_pos_I {
+    Magnitude: db76330b-f1ce-4310-b0aa-c4db1cd15ea4 
+    Angle: 2704d69d-3132-4792-a301-fdfdbbc6426f 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU3_Ib_934_Columbus_neg_I {
+    Magnitude: 4ecfc4d0-e001-4b0e-a469-4e8d0714cbab 
+    Angle: 338cf438-5ecf-4570-8cd9-b4bc9fa70424 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU3_Ic_934_Columbus_0_I {
+    Magnitude: 7454cdd3-7698-4a79-8f46-7faf8fd118c1 
+    Angle: 6c96b3b1-7361-43a1-ac28-ebe8a6a4065d 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU4_I1_944_Columbus_pos_I {
+    Magnitude: 730e66cd-ce4b-4c9e-994e-54819f694f09 
+    Angle: 23c4b0b3-0781-4a00-821d-d3b52e560455 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU4_Ia_944_Columbus_pos_I {
+    Magnitude: 0b0a753a-cb7b-4991-8b5a-f432c684bc67 
+    Angle: e1b45c23-357d-4f30-b404-404c3572f4e6 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU4_Ib_944_Columbus_neg_I {
+    Magnitude: e5ada782-502c-4ad9-aad1-90864c2d93e8 
+    Angle: a4248c62-1688-4d6a-9a36-1c3d35695fd5 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU4_Ic_944_Columbus_0_I {
+    Magnitude: f33ede80-38f7-4f43-becc-963cdd553bfb 
+    Angle: 1495148f-5b5f-4a6b-ae0d-9bde32eb2c2e 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU5_I1_954_CAFB_pos_I {
+    Magnitude: f9ad99ef-225f-4dab-929f-1ad2e202bcfa 
+    Angle: e646b6aa-df2a-4f44-91f7-aed63c4e0982 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU5_Ia_954_CAFB_pos_I {
+    Magnitude: 432728a2-6ecd-4416-8b1a-98cf8a8a7eb4 
+    Angle: a1e6163b-8770-4340-b069-c4b8d90f13de 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU5_Ib_954_CAFB_neg_I {
+    Magnitude: f55316e0-fc8a-4fdd-9731-526e612d41fe 
+    Angle: 694d0a13-1f0b-42f3-a84c-0ce041597d4f 
+}
+
+ECA Phasor TVA_TVA_WEC_PMU5_Ic_954_CAFB_0_I {
+    Magnitude: bd166965-29dc-48b3-9744-0d9ec1ce29e3 
+    Angle: 39840be8-03ad-462e-ae74-83baa3b4ea78 
+}
+
+ECA Phasor TVA_TVA_WIDOWSCREEK_East_Point_pos_I {
+    Magnitude: efbcb483-4a5f-41ed-a224-3c42b6fce9e2 
+    Angle: a2d90062-57ad-40c6-8038-692f6212cd2b 
+}
+
+ECA Phasor TVA_TVA_WIDOWSCREEK_Madison_Line_pos_I {
+    Magnitude: b14ef788-cf1d-46ea-b68b-0a79a65e426e 
+    Angle: 7abf242a-da15-487f-9498-c8595b530ffc 
+}
+
+ECA Phasor TVA_TVA_WIDOWSCREEK_Raccoon_MTN_pos_I {
+    Magnitude: ba47c29d-d66d-4e1c-acca-8ccec20b4b14 
+    Angle: 0ae858a0-970e-411c-a89f-e8f15dcd64c5 
+}
+
+ECA Phasor TVA_TVA_WIDOWSCREEK_Sequoyah_Line_pos_I {
+    Magnitude: f5f2b8c1-4cb0-40b4-8ec6-9ab5c417d7c7 
+    Angle: 6e91eacd-8401-4380-9f98-070827daf5ec 
+}
+
+LSE NullOutput NullOutput {
+    Value: LSE_NullOutput:Value 
+}
+

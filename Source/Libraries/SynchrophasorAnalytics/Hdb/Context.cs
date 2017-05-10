@@ -13,13 +13,18 @@ namespace SynchrophasorAnalytics.Hdb
         private ModelFiles m_modelFiles;
         private List<Area> m_areas;
         private List<CircuitBreaker> m_circuitBreakers;
+        private List<CircuitBreakerExtension> m_circuitBreakerExtensions;
         private List<Company> m_companies;
         private List<Division> m_divisions;
         private List<LineSegment> m_lineSegments;
+        private List<LineSegmentExtension> m_lineSegmentExtensions;
         private List<Node> m_nodes;
+        private List<NodeExtension> m_nodeExtensions;
         private List<Shunt> m_shunts;
+        private List<ShuntExtension> m_shuntExtensions;
         private List<Station> m_stations;
         private List<Transformer> m_transformers;
+        private List<TransformerExtension> m_transformerExtensions;
         private List<ParentTransformer> m_parentTransformers;
         private List<TransformerTap> m_transformerTaps;
         private List<TransmissionLine> m_transmissionLines;
@@ -60,6 +65,18 @@ namespace SynchrophasorAnalytics.Hdb
             }
         }
 
+        public List<CircuitBreakerExtension> CircuitBreakerExtensions
+        {
+            get
+            {
+                return m_circuitBreakerExtensions;
+            }
+            set
+            {
+                m_circuitBreakerExtensions = value;
+            }
+        }
+
         public List<Company> Companies
         {
             get
@@ -96,6 +113,18 @@ namespace SynchrophasorAnalytics.Hdb
             }
         }
 
+        public List<LineSegmentExtension> LineSegmentExtensions
+        {
+            get
+            {
+                return m_lineSegmentExtensions;
+            }
+            set
+            {
+                m_lineSegmentExtensions = value;
+            }
+        }
+
         public List<Node> Nodes
         {
             get
@@ -108,6 +137,18 @@ namespace SynchrophasorAnalytics.Hdb
             }
         }
 
+        public List<NodeExtension> NodeExtensions
+        {
+            get
+            {
+                return m_nodeExtensions;
+            }
+            set
+            {
+                m_nodeExtensions = value;
+            }
+        }
+
         public List<Shunt> Shunts
         {
             get
@@ -117,6 +158,18 @@ namespace SynchrophasorAnalytics.Hdb
             set
             {
                 m_shunts = value;
+            }
+        }
+
+        public List<ShuntExtension> ShuntExtensions
+        {
+            get
+            {
+                return m_shuntExtensions;
+            }
+            set
+            {
+                m_shuntExtensions = value;
             }
         }
 
@@ -141,6 +194,18 @@ namespace SynchrophasorAnalytics.Hdb
             set
             {
                 m_transformers = value;
+            }
+        }
+
+        public List<TransformerExtension> TransformerExtensions
+        {
+            get
+            {
+                return m_transformerExtensions;
+            }
+            set
+            {
+                m_transformerExtensions = value;
             }
         }
 
@@ -190,13 +255,18 @@ namespace SynchrophasorAnalytics.Hdb
         {
             m_areas = HdbReader.ReadAreaFile(m_modelFiles.AreaFile);
             m_circuitBreakers = HdbReader.ReadCircuitBreakerFile(m_modelFiles.CircuitBreakerFile);
+            m_circuitBreakerExtensions = HdbReader.ReadCircuitBreakerExtensionFile(m_modelFiles.CircuitBreakerExtensionFile);
             m_companies = HdbReader.ReadCompanyFile(m_modelFiles.CompanyFile);
             m_divisions = HdbReader.ReadDivisionFile(m_modelFiles.DivisionFile);
             m_lineSegments = HdbReader.ReadLineSegmentFile(m_modelFiles.LineSegmentFile);
+            m_lineSegmentExtensions = HdbReader.ReadLineSegmentExtensionFile(m_modelFiles.LineSegmentExtensionFile);
             m_nodes = HdbReader.ReadNodeFile(m_modelFiles.NodeFile);
+            m_nodeExtensions = HdbReader.ReadNodeExtensionFile(m_modelFiles.NodeExtensionFile);
             m_shunts = HdbReader.ReadShuntFile(m_modelFiles.ShuntFile);
+            m_shuntExtensions = HdbReader.ReadShuntExtensionFile(m_modelFiles.ShuntExtensionFile);
             m_stations = HdbReader.ReadStationFile(m_modelFiles.StationFile);
             m_transformers = HdbReader.ReadTransformerFile(m_modelFiles.TransformerFile);
+            m_transformerExtensions = HdbReader.ReadTransformerExtensionFile(m_modelFiles.TransformerExtensionFile);
             m_parentTransformers = HdbReader.ReadParentTransformerFile(m_modelFiles.ParentTransformerFile);
             m_transformerTaps = HdbReader.ReadTransformerTapFile(m_modelFiles.TransformerTapFile);
             m_transmissionLines = HdbReader.ReadTransmissionLineFile(m_modelFiles.TransmissionLineFile);

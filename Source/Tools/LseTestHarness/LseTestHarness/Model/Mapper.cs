@@ -35,7 +35,7 @@ namespace LseTestHarness.Model
             LseTestHarness.Model.ECA.PhasorCollection inputData = CreateECAPhasorCollection(inputMapping);
             KeyIndex = 0;
             LseTestHarness.Model.ECA._PhasorCollectionMeta inputMeta = CreateECA_PhasorCollectionMeta(inputMapping);
-
+            MainWindow.WriteMessage("Executing..");
             Algorithm.Output algorithmOutput = Algorithm.Execute(inputData, inputMeta);
 
             // TODO: Later versions will publish output to the openECA server

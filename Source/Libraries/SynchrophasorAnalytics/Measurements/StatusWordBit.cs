@@ -36,7 +36,13 @@ namespace SynchrophasorAnalytics.Measurements
     /// <seealso cref="StatusWord"/>
     [Serializable()]
     public enum StatusWordBit
-    {     
+    {    
+        DataDiscarded,
+        DataIsValid,
+        SynchronizationIsValid,
+        DataSortingType,
+        DeviceError,
+         
         /// <summary>
         /// <b>DataValid</b> bit. The most significant bit of the status word.
         /// </summary>

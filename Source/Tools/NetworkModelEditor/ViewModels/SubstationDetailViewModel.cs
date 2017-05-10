@@ -142,6 +142,66 @@ namespace NetworkModelEditor.ViewModels
             }
         }
 
+        public double AngleDeltaThresholdInDegrees
+        {
+            get
+            {
+                return m_substation.AngleDeltaThresholdInDegrees;
+            }
+            set
+            {
+                m_substation.AngleDeltaThresholdInDegrees = value;
+            }
+        }
+
+        public double PerUnitMagnitudeDeltaThreshold
+        {
+            get
+            {
+                return m_substation.PerUnitMagnitudeDeltaThreshold;
+            }
+            set
+            {
+                m_substation.PerUnitMagnitudeDeltaThreshold = value;
+            }
+        }
+
+        public double TotalVectorDeltaThreshold
+        {
+            get
+            {
+                return m_substation.TotalVectorDeltaThreshold;
+            }
+            set
+            {
+                m_substation.TotalVectorDeltaThreshold = value;
+            }
+        }
+
+        public VoltageCoherencyDetectionMethod CoherencyDetectionMethod
+        {
+            get
+            {
+                return m_substation.CoherencyDetectionMethod;
+            }
+            set
+            {
+                m_substation.CoherencyDetectionMethod = value;
+            }
+        }
+
+        public string ObservedBusCountKey
+        {
+            get
+            {
+                return m_substation.ObservedBusCountKey;
+            }
+            set
+            {
+                m_substation.ObservedBusCountKey = value;
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]

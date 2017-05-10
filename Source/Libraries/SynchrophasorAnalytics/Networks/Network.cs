@@ -920,6 +920,7 @@ namespace SynchrophasorAnalytics.Networks
         {
             // Initialize children
             m_networkModel.Initialize();
+            m_performanceMetrics.SetNetwork(this);
             InitializePastDiscreteStates();
         }
 
@@ -959,50 +960,50 @@ namespace SynchrophasorAnalytics.Networks
         private void UpdatePastDiscreteStates()
         {
 
-            for (int i = 0; i < m_networkModel.Voltages.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedVoltages.Count(); i++)
             {
                 if (m_networkModel.PhaseConfiguration == PhaseSelection.ThreePhase)
                 {
-                    m_pastDiscreteVoltagePhasorState[i] = m_networkModel.Voltages[i].IncludeInEstimator;
+                    m_pastDiscreteVoltagePhasorState[i] = m_networkModel.ExpectedVoltages[i].IncludeInEstimator;
                 }
                 else if (m_networkModel.PhaseConfiguration == PhaseSelection.PositiveSequence)
                 {
-                    m_pastDiscreteVoltagePhasorState[i] = m_networkModel.Voltages[i].IncludeInPositiveSequenceEstimator;
+                    m_pastDiscreteVoltagePhasorState[i] = m_networkModel.ExpectedVoltages[i].IncludeInPositiveSequenceEstimator;
                 }
             }
 
-            for (int i = 0; i < m_networkModel.CurrentFlows.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedCurrentFlows.Count(); i++)
             {
                 if (m_networkModel.PhaseConfiguration == PhaseSelection.ThreePhase)
                 {
-                    m_pastDiscreteCurrentPhasorState[i] = m_networkModel.CurrentFlows[i].IncludeInEstimator;
+                    m_pastDiscreteCurrentPhasorState[i] = m_networkModel.ExpectedCurrentFlows[i].IncludeInEstimator;
                 }
                 else if (m_networkModel.PhaseConfiguration == PhaseSelection.PositiveSequence)
                 {
-                    m_pastDiscreteCurrentPhasorState[i] = m_networkModel.CurrentFlows[i].IncludeInPositiveSequenceEstimator;
+                    m_pastDiscreteCurrentPhasorState[i] = m_networkModel.ExpectedCurrentFlows[i].IncludeInPositiveSequenceEstimator;
                 }
             }
 
-            for (int i = 0; i < m_networkModel.CurrentInjections.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedCurrentInjections.Count(); i++)
             {
                 if (m_networkModel.PhaseConfiguration == PhaseSelection.ThreePhase)
                 {
-                    m_pastDiscreteShuntCurrentPhasorState[i] = m_networkModel.CurrentInjections[i].IncludeInEstimator;
+                    m_pastDiscreteShuntCurrentPhasorState[i] = m_networkModel.ExpectedCurrentInjections[i].IncludeInEstimator;
                 }
                 else if (m_networkModel.PhaseConfiguration == PhaseSelection.PositiveSequence)
                 {
-                    m_pastDiscreteShuntCurrentPhasorState[i] = m_networkModel.CurrentInjections[i].IncludeInPositiveSequenceEstimator;
+                    m_pastDiscreteShuntCurrentPhasorState[i] = m_networkModel.ExpectedCurrentInjections[i].IncludeInPositiveSequenceEstimator;
                 }
             }
 
-            for (int i = 0; i < m_networkModel.BreakerStatuses.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedBreakerStatuses.Count(); i++)
             {
-                m_pastBreakerStatusState[i] = m_networkModel.BreakerStatuses[i].BinaryValue;
+                m_pastBreakerStatusState[i] = m_networkModel.ExpectedBreakerStatuses[i].BinaryValue;
             }
 
-            for (int i = 0; i < m_networkModel.StatusWords.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedStatusWords.Count(); i++)
             {
-                m_pastStatusWordState[i] = m_networkModel.StatusWords[i].BinaryValue;
+                m_pastStatusWordState[i] = m_networkModel.ExpectedStatusWords[i].BinaryValue;
             }
 
         }
@@ -1010,11 +1011,11 @@ namespace SynchrophasorAnalytics.Networks
         private void InitializePastDiscreteStates()
         {
 
-            m_pastDiscreteVoltagePhasorState = new bool[m_networkModel.Voltages.Count()];
-            m_pastDiscreteCurrentPhasorState = new bool[m_networkModel.CurrentFlows.Count()];
-            m_pastDiscreteShuntCurrentPhasorState = new bool[m_networkModel.CurrentInjections.Count()];
-            m_pastBreakerStatusState = new int[m_networkModel.BreakerStatuses.Count()];
-            m_pastStatusWordState = new double[m_networkModel.StatusWords.Count()];
+            m_pastDiscreteVoltagePhasorState = new bool[m_networkModel.ExpectedVoltages.Count()];
+            m_pastDiscreteCurrentPhasorState = new bool[m_networkModel.ExpectedCurrentFlows.Count()];
+            m_pastDiscreteShuntCurrentPhasorState = new bool[m_networkModel.ExpectedCurrentInjections.Count()];
+            m_pastBreakerStatusState = new int[m_networkModel.ExpectedBreakerStatuses.Count()];
+            m_pastStatusWordState = new double[m_networkModel.ExpectedStatusWords.Count()];
 
             for (int i = 0; i < m_pastDiscreteVoltagePhasorState.Length; i++)
             {
@@ -1056,71 +1057,71 @@ namespace SynchrophasorAnalytics.Networks
 
         private bool ComparePresentAndPastDiscreteStates()
         {
-            for (int i = 0; i < m_networkModel.Voltages.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedVoltages.Count(); i++)
             {
                 if (m_networkModel.PhaseConfiguration == PhaseSelection.ThreePhase)
                 {
-                    if (m_pastDiscreteVoltagePhasorState[i] != m_networkModel.Voltages[i].IncludeInEstimator)
+                    if (m_pastDiscreteVoltagePhasorState[i] != m_networkModel.ExpectedVoltages[i].IncludeInEstimator)
                     {
                         return true;
                     }
                 }
                 else if (m_networkModel.PhaseConfiguration == PhaseSelection.PositiveSequence)
                 {
-                    if (m_pastDiscreteVoltagePhasorState[i] != m_networkModel.Voltages[i].IncludeInPositiveSequenceEstimator)
+                    if (m_pastDiscreteVoltagePhasorState[i] != m_networkModel.ExpectedVoltages[i].IncludeInPositiveSequenceEstimator)
                     {
                         return true;
                     }
                 }
             }
 
-            for (int i = 0; i < m_networkModel.CurrentFlows.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedCurrentFlows.Count(); i++)
             {
                 if (m_networkModel.PhaseConfiguration == PhaseSelection.ThreePhase)
                 {
-                    if (m_pastDiscreteCurrentPhasorState[i] != m_networkModel.CurrentFlows[i].IncludeInEstimator)
+                    if (m_pastDiscreteCurrentPhasorState[i] != m_networkModel.ExpectedCurrentFlows[i].IncludeInEstimator)
                     {
                         return true;
                     }
                 }
                 else if (m_networkModel.PhaseConfiguration == PhaseSelection.PositiveSequence)
                 {
-                    if (m_pastDiscreteCurrentPhasorState[i] != m_networkModel.CurrentFlows[i].IncludeInPositiveSequenceEstimator)
+                    if (m_pastDiscreteCurrentPhasorState[i] != m_networkModel.ExpectedCurrentFlows[i].IncludeInPositiveSequenceEstimator)
                     {
                         return true;
                     }
                 }
             }
 
-            for (int i = 0; i < m_networkModel.CurrentInjections.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedCurrentInjections.Count(); i++)
             {
                 if (m_networkModel.PhaseConfiguration == PhaseSelection.ThreePhase)
                 {
-                    if (m_pastDiscreteCurrentPhasorState[i] != m_networkModel.CurrentInjections[i].IncludeInEstimator)
+                    if (m_pastDiscreteCurrentPhasorState[i] != m_networkModel.ExpectedCurrentInjections[i].IncludeInEstimator)
                     {
                         return true;
                     }
                 }
                 else if (m_networkModel.PhaseConfiguration == PhaseSelection.PositiveSequence)
                 {
-                    if (m_pastDiscreteCurrentPhasorState[i] != m_networkModel.CurrentInjections[i].IncludeInPositiveSequenceEstimator)
+                    if (m_pastDiscreteCurrentPhasorState[i] != m_networkModel.ExpectedCurrentInjections[i].IncludeInPositiveSequenceEstimator)
                     {
                         return true;
                     }
                 }
             }
 
-            for (int i = 0; i < m_networkModel.BreakerStatuses.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedBreakerStatuses.Count(); i++)
             {
-                if (m_pastBreakerStatusState[i] != m_networkModel.BreakerStatuses[i].BinaryValue)
+                if (m_pastBreakerStatusState[i] != m_networkModel.ExpectedBreakerStatuses[i].BinaryValue)
                 {
                     return true;
                 }
             }
 
-            for (int i = 0; i < m_networkModel.StatusWords.Count(); i++)
+            for (int i = 0; i < m_networkModel.ExpectedStatusWords.Count(); i++)
             {
-                if (m_pastStatusWordState[i] != m_networkModel.StatusWords[i].BinaryValue)
+                if (m_pastStatusWordState[i] != m_networkModel.ExpectedStatusWords[i].BinaryValue)
                 {
                     return true;
                 }
@@ -2102,15 +2103,15 @@ namespace SynchrophasorAnalytics.Networks
 
                 Impedance impedance = new Impedance()
                 {
-                    R1 = context.LineSegments[i].Resistance,
-                    X1 = context.LineSegments[i].Reactance,
-                    B1 = context.LineSegments[i].LineCharging,
-                    R3 = context.LineSegments[i].Resistance,
-                    X3 = context.LineSegments[i].Reactance,
-                    B3 = context.LineSegments[i].LineCharging,
-                    R6 = context.LineSegments[i].Resistance,
-                    X6 = context.LineSegments[i].Reactance,
-                    B6 = context.LineSegments[i].LineCharging,
+                    R1 = context.LineSegments[i].Resistance / 100,
+                    X1 = context.LineSegments[i].Reactance / 100,
+                    B1 = context.LineSegments[i].LineCharging / 100,
+                    R3 = context.LineSegments[i].Resistance / 100,
+                    X3 = context.LineSegments[i].Reactance / 100,
+                    B3 = context.LineSegments[i].LineCharging / 100,
+                    R6 = context.LineSegments[i].Resistance / 100,
+                    X6 = context.LineSegments[i].Reactance / 100,
+                    B6 = context.LineSegments[i].LineCharging / 100,
                 };
 
                 LineSegment lineSegment = new LineSegment()
@@ -2261,18 +2262,18 @@ namespace SynchrophasorAnalytics.Networks
 
                 Impedance impedance = new Impedance()
                 {
-                    R1 = context.Transformers[i].Resistance,
-                    X1 = context.Transformers[i].Reactance,
-                    G1 = context.Transformers[i].MagnetizingConductance,
-                    B1 = context.Transformers[i].MagnetizingSusceptance,
-                    R3 = context.Transformers[i].Resistance,
-                    X3 = context.Transformers[i].Reactance,
-                    G3 = context.Transformers[i].MagnetizingConductance,
-                    B3 = context.Transformers[i].MagnetizingSusceptance,
-                    R6 = context.Transformers[i].Resistance,
-                    X6 = context.Transformers[i].Reactance,
-                    G6 = context.Transformers[i].MagnetizingConductance,
-                    B6 = context.Transformers[i].MagnetizingSusceptance,
+                    R1 = context.Transformers[i].Resistance / 100,
+                    X1 = context.Transformers[i].Reactance / 100,
+                    G1 = context.Transformers[i].MagnetizingConductance / 100,
+                    B1 = context.Transformers[i].MagnetizingSusceptance / 100,
+                    R3 = context.Transformers[i].Resistance / 100,
+                    X3 = context.Transformers[i].Reactance / 100,
+                    G3 = context.Transformers[i].MagnetizingConductance / 100,
+                    B3 = context.Transformers[i].MagnetizingSusceptance / 100,
+                    R6 = context.Transformers[i].Resistance / 100,
+                    X6 = context.Transformers[i].Reactance / 100,
+                    G6 = context.Transformers[i].MagnetizingConductance / 100,
+                    B6 = context.Transformers[i].MagnetizingSusceptance / 100,
                 };
 
 

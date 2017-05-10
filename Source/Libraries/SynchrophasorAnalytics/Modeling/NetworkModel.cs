@@ -51,6 +51,8 @@ namespace SynchrophasorAnalytics.Modeling
     [Serializable()]
     public class NetworkModel : INetworkDescribable
     {
+        private const string UNDEFINED_KEY = "Undefined";
+
         #region [ Private Members ]
 
         #region [ INetworkDescribable fields ]
@@ -94,10 +96,15 @@ namespace SynchrophasorAnalytics.Modeling
         /// Network Measurements
         /// </summary>
         private List<VoltagePhasorGroup> m_voltages;
+        private List<VoltagePhasorGroup> m_expectedVoltages;
         private List<CurrentFlowPhasorGroup> m_currentFlows;
+        private List<CurrentFlowPhasorGroup> m_expectedCurrentFlows;
         private List<CurrentInjectionPhasorGroup> m_currentInjections;
+        private List<CurrentInjectionPhasorGroup> m_expectedCurrentInjections;
         private List<BreakerStatus> m_breakerStatuses;
+        private List<BreakerStatus> m_expectedBreakerStatuses;
         private List<StatusWord> m_statusWords;
+        private List<StatusWord> m_expectedStatusWords;
         private List<CurrentFlowPhasorGroup> m_activeCurrentFlows;
         private List<CurrentFlowPhasorGroup> m_potentiallyActiveCurrentFlows;
         private List<CurrentInjectionPhasorGroup> m_activeCurrentInjections;
@@ -270,59 +277,108 @@ namespace SynchrophasorAnalytics.Modeling
             {
                 Dictionary<string, double> rawEstimateKeyValuePairs = new Dictionary<string, double>();
 
+                #region [ State Estimate ]
+
                 if (m_inputOutputSettings.ReturnsStateEstimate)
                 {
                     AddVoltageEstimatesToOutput(rawEstimateKeyValuePairs);
                 }
+
+                #endregion
+
+                #region [ Current Flow Estimates ] 
 
                 if (m_inputOutputSettings.ReturnsCurrentFlow)
                 {
                     AddCurrentFlowEstimatesToOutput(rawEstimateKeyValuePairs);
                 }
 
+                #endregion
+
+                #region [ Current Injection Estimates ] 
+
                 if (m_inputOutputSettings.ReturnsCurrentInjection)
                 {
                     AddCurrentInjectionsToOutput(rawEstimateKeyValuePairs);
                 }
+
+                #endregion
+
+                #region [ Voltage Residuals ] 
 
                 if (m_inputOutputSettings.ReturnsVoltageResiduals)
                 {
                     AddVoltageMeasurementResidualsToOutput(rawEstimateKeyValuePairs);
                 }
 
+                #endregion
+
+                #region [ Current Residuals ] 
+
                 if (m_inputOutputSettings.ReturnsCurrentResiduals)
                 {
                     AddCurrentMeasurementResidualsToOutput(rawEstimateKeyValuePairs);
                 }
+
+                #endregion
+
+                #region [ Circuit Breaker Status ] 
 
                 if (m_inputOutputSettings.ReturnsCircuitBreakerStatus)
                 {
                     AddCircuitBreakerStatusesToOutput(rawEstimateKeyValuePairs);
                 }
 
+                #endregion
+
+                #region [ Switch Status ] 
+
                 if (m_inputOutputSettings.ReturnsSwitchStatus)
                 {
                     AddSwitchStatusesToOutput(rawEstimateKeyValuePairs);
                 }
+
+                #endregion
+
+                #region [ Performance Metrics ] 
 
                 if (m_inputOutputSettings.ReturnsPerformanceMetrics)
                 {
                     AddPerformanceMetricsToOutput(rawEstimateKeyValuePairs);
                 }
 
+                #endregion
+
+                #region [ Topology Profiling Information ] 
+
                 if (m_inputOutputSettings.ReturnsTopologyProfilingInformation)
                 {
                     AddTopologyProfilingInformationToOutput(rawEstimateKeyValuePairs);
                 }
+
+                #endregion
+
+                #region [ Measurement Validation Flags ] 
 
                 if (m_inputOutputSettings.ReturnsMeasurementValidationFlags)
                 {
                     AddMeasurementValidationFlagsToOutput(rawEstimateKeyValuePairs);
                 }
 
+                #endregion
+
                 return rawEstimateKeyValuePairs;
             }
         }
+
+        //[XmlIgnore()]
+        //public Dictionary<string, double> PerformanceMetricOutput
+        //{
+        //    get
+        //    {
+
+        //    }
+        //}
 
         /// <summary>
         /// A list of input measurements keys that are expectd by the modeled network elements.
@@ -357,6 +413,96 @@ namespace SynchrophasorAnalytics.Modeling
                 outputMeasurementKeys += "}";
 
                 return outputMeasurementKeys;
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> StateEstimateOutput
+        {
+            get
+            {
+                return GetVoltageEstimatesOutput();
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> CurrentFlowEstimateOutput
+        {
+            get
+            {
+                return GetCurrentFlowEstimatesOutput();
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> CurrentInjectionEstimateOutput
+        {
+            get
+            {
+                return GetCurrentInjectionEstimatesOutput();
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> VoltageResidualOutput
+        {
+            get
+            {
+                return GetVoltageMeasurementResidualsOutput();
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> CurrentResidualOutput
+        {
+            get
+            {
+                return GetCurrentMeasurementResidualsOutput();
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> CircuitBreakerStatusOutput
+        {
+            get
+            {
+                return GetCircuitBreakerStatusesOutput();
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> SwitchStatusOutput
+        {
+            get
+            {
+                return GetSwitchStatusesOutput();
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> PerformanceMetricOutput
+        {
+            get
+            {
+                return GetPerformanceMetricsOutput();
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> TopologyProfilingOutput
+        {
+            get
+            {
+                return GetTopologyProfilingInformationOutput();
+            }
+        }
+
+        [XmlIgnore()]
+        public List<OutputMeasurement> MeasurementValidationFlagOutput
+        {
+            get
+            {
+                return GetMeasurementValidationFlagsOutput();
             }
         }
 
@@ -923,6 +1069,19 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        [XmlIgnore()]
+        public List<BreakerStatus> ExpectedBreakerStatuses
+        {
+            get
+            {
+                return m_expectedBreakerStatuses;
+            }
+            set
+            {
+                m_expectedBreakerStatuses = value;
+            }
+        }
+
         /// <summary>
         /// A list of all of the status words from all of the devices streaming phasor measurements in the network.
         /// </summary>
@@ -939,6 +1098,19 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        [XmlIgnore()]
+        public List<StatusWord> ExpectedStatusWords
+        {
+            get
+            {
+                return m_expectedStatusWords;
+            }
+            set
+            {
+                m_expectedStatusWords = value;
+            }
+        }
+
         /// <summary>
         /// A list of all of the voltage phasor measurements which have been modeled to accept measurements. (measurement keys not equal to the 'Undefined' keyword)
         /// </summary>
@@ -947,24 +1119,11 @@ namespace SynchrophasorAnalytics.Modeling
         {
             get
             {
-                if (m_phaseSelection == PhaseSelection.PositiveSequence)
-                {
-                    return m_voltages.FindAll(voltage => voltage.PositiveSequence.Measurement.MagnitudeKey != "Undefined" &&
-                                                         voltage.PositiveSequence.Measurement.AngleKey != "Undefined");
-                }
-                else if (m_phaseSelection == PhaseSelection.ThreePhase)
-                {
-                    return m_voltages.FindAll(voltage => voltage.PhaseA.Measurement.MagnitudeKey != "Undefined" &&
-                                                         voltage.PhaseA.Measurement.AngleKey != "Undefined" &&
-                                                         voltage.PhaseB.Measurement.MagnitudeKey != "Undefined" &&
-                                                         voltage.PhaseB.Measurement.AngleKey != "Undefined" &&
-                                                         voltage.PhaseC.Measurement.MagnitudeKey != "Undefined" &&
-                                                         voltage.PhaseC.Measurement.AngleKey != "Undefined");
-                }
-                else
-                {
-                    return new List<VoltagePhasorGroup>();
-                }
+                return m_expectedVoltages;
+            }
+            set
+            {
+                m_expectedVoltages = value;
             }
         }
 
@@ -976,24 +1135,11 @@ namespace SynchrophasorAnalytics.Modeling
         {
             get
             {
-                if (m_phaseSelection == PhaseSelection.PositiveSequence)
-                {
-                    return m_currentFlows.FindAll(current => current.PositiveSequence.Measurement.MagnitudeKey != "Undefined" &&
-                                                             current.PositiveSequence.Measurement.AngleKey != "Undefined");
-                }
-                else if (m_phaseSelection == PhaseSelection.ThreePhase)
-                {
-                    return m_currentFlows.FindAll(current => current.PhaseA.Measurement.MagnitudeKey != "Undefined" &&
-                                                             current.PhaseA.Measurement.AngleKey != "Undefined" &&
-                                                             current.PhaseB.Measurement.MagnitudeKey != "Undefined" &&
-                                                             current.PhaseB.Measurement.AngleKey != "Undefined" &&
-                                                             current.PhaseC.Measurement.MagnitudeKey != "Undefined" &&
-                                                             current.PhaseC.Measurement.AngleKey != "Undefined");
-                }
-                else
-                {
-                    return new List<CurrentFlowPhasorGroup>();
-                }
+                return m_expectedCurrentFlows;
+            }
+            set
+            {
+                m_expectedCurrentFlows = value;
             }
         }
 
@@ -1005,24 +1151,11 @@ namespace SynchrophasorAnalytics.Modeling
         {
             get
             {
-                if (m_phaseSelection == PhaseSelection.PositiveSequence)
-                {
-                    return m_currentInjections.FindAll(current => current.PositiveSequence.Measurement.MagnitudeKey != "Undefined" &&
-                                                                  current.PositiveSequence.Measurement.AngleKey != "Undefined");
-                }
-                else if (m_phaseSelection == PhaseSelection.ThreePhase)
-                {
-                    return m_currentInjections.FindAll(current => current.PhaseA.Measurement.MagnitudeKey != "Undefined" &&
-                                                                  current.PhaseA.Measurement.AngleKey != "Undefined" &&
-                                                                  current.PhaseB.Measurement.MagnitudeKey != "Undefined" &&
-                                                                  current.PhaseB.Measurement.AngleKey != "Undefined" &&
-                                                                  current.PhaseC.Measurement.MagnitudeKey != "Undefined" &&
-                                                                  current.PhaseC.Measurement.AngleKey != "Undefined");
-                }
-                else
-                {
-                    return new List<CurrentInjectionPhasorGroup>();
-                }
+                return m_expectedCurrentInjections;
+            }
+            set
+            {
+                m_expectedCurrentInjections = value;
             }
         }
 
@@ -1161,10 +1294,13 @@ namespace SynchrophasorAnalytics.Modeling
             LinkTapConfigurationReferences();
             ListNetworkComponents();
             ListNetworkMeasurements();
+            ListExpectedBreakerStatuses();
+            ListExpectedStatusWords();
             LinkBreakerStatusToCircuitBreakers();
             LinkStatusWordsToPhasorGroups();
             LinkVoltageLevelsToPhasorGroups();
             InitializeComplexPowerCalculations();
+            InitializeSubstationVoltageLevelGroups();
             m_observedBuses = new List<ObservedBus>();
             m_potentiallyObservedBuses = new List<ObservedBus>();
             m_activeCurrentFlows = new List<CurrentFlowPhasorGroup>();
@@ -1172,6 +1308,55 @@ namespace SynchrophasorAnalytics.Modeling
             m_activeCurrentInjections = new List<CurrentInjectionPhasorGroup>();
             m_potentiallyActiveCurrentInjections = new List<CurrentInjectionPhasorGroup>();
 
+        }
+
+        public void ListExpectedBreakerStatuses()
+        {
+            m_expectedBreakerStatuses = new List<BreakerStatus>();
+
+            foreach (CircuitBreaker breaker in CircuitBreakers)
+            {
+                if (breaker.Status != null && BreakerStatuses.Contains(breaker.Status))
+                {
+                    m_expectedBreakerStatuses.Add(breaker.Status);
+                }
+            }
+        }
+
+        public void ListExpectedStatusWords()
+        {
+            m_expectedStatusWords = new List<StatusWord>();
+            
+            foreach (VoltagePhasorGroup voltage in ExpectedVoltages)
+            {
+                if (voltage.Status != null && StatusWords.Contains(voltage.Status))
+                {
+                    if (!m_expectedStatusWords.Contains(voltage.Status))
+                    {
+                        m_expectedStatusWords.Add(voltage.Status);
+                    }
+                }
+            }
+            foreach (CurrentFlowPhasorGroup current in ExpectedCurrentFlows)
+            {
+                if (current.Status != null && StatusWords.Contains(current.Status))
+                {
+                    if (!m_expectedStatusWords.Contains(current.Status))
+                    {
+                        m_expectedStatusWords.Add(current.Status);
+                    }
+                }
+            }
+            foreach (CurrentInjectionPhasorGroup current in ExpectedCurrentInjections)
+            {
+                if (current.Status != null && StatusWords.Contains(current.Status))
+                {
+                    if (!m_expectedStatusWords.Contains(current.Status))
+                    {
+                        m_expectedStatusWords.Add(current.Status);
+                    }
+                }
+            }
         }
 
         public void Unkeyify()
@@ -1220,6 +1405,16 @@ namespace SynchrophasorAnalytics.Modeling
             {
                 seriesCompensator.Unkeyify();
             }
+
+            foreach (Substation substation in m_substations)
+            {
+                substation.UnKeyify();
+            }
+
+            foreach (Node node in m_nodes)
+            {
+                node.Unkeyify();
+            }
         }
 
         /// <summary>
@@ -1227,27 +1422,27 @@ namespace SynchrophasorAnalytics.Modeling
         /// </summary>
         public void ClearValues()
         {
-            foreach (VoltagePhasorGroup voltagePhasorGroup in m_voltages)
+            foreach (VoltagePhasorGroup voltagePhasorGroup in ExpectedVoltages)
             {
                 voltagePhasorGroup.ClearValues();
             }
 
-            foreach (CurrentFlowPhasorGroup currentPhasorGroup in m_currentFlows)
+            foreach (CurrentFlowPhasorGroup currentPhasorGroup in ExpectedCurrentFlows)
             {
                 currentPhasorGroup.ClearValues();
             }
 
-            foreach (CurrentInjectionPhasorGroup currentInjectionPhasorGroup in m_currentInjections)
+            foreach (CurrentInjectionPhasorGroup currentInjectionPhasorGroup in ExpectedCurrentInjections)
             {
                 currentInjectionPhasorGroup.ClearValues();
             }
 
-            foreach (BreakerStatus breakerStatus in m_breakerStatuses)
+            foreach (BreakerStatus breakerStatus in ExpectedBreakerStatuses)
             {
                 breakerStatus.ClearValues();
             }
 
-            foreach (StatusWord statusWord in m_statusWords)
+            foreach (StatusWord statusWord in ExpectedStatusWords)
             {
                 statusWord.ClearValues();
             }
@@ -1289,17 +1484,56 @@ namespace SynchrophasorAnalytics.Modeling
         {
             m_observedBuses.Clear();
 
+            List<List<ObservedBus>> substationBuses = new List<List<ObservedBus>>();
+
             foreach (Substation substation in m_substations)
             {
                 substation.InitializeSubstationGraph();
                 substation.Graph.ResolveDirectlyConnectedAdjacencies();
-                List<ObservedBus> substationObservedBusses = CheckObservability(substation.Graph.ResolveToObservedBuses());
-                if (substationObservedBusses != null)
+                List<ObservedBus> observedBuses = substation.Graph.ResolveToObservedBuses();
+                if (observedBuses != null)
                 {
-                    foreach (ObservedBus observedBus in substationObservedBusses)
-                    {
-                        m_observedBuses.Add(observedBus);
-                    }
+                    substationBuses.Add(observedBuses);
+                }
+            }
+            foreach (List<ObservedBus> observedBuses in substationBuses)
+            {
+                MarkDirectObservability(observedBuses);
+            }
+            foreach (List<ObservedBus> observedBuses in substationBuses)
+            {
+                MarkDirectObservabilityByCurrentInjection(observedBuses);
+            }
+            foreach (List<ObservedBus> observedBuses in substationBuses)
+            {
+                MarkIndirectObservabilityByVoltage(observedBuses);
+            }
+            foreach (List<ObservedBus> observedBuses in substationBuses)
+            {
+                MarkIndirectObservabilityByCurrentFlow(observedBuses);
+            }
+            foreach (List<ObservedBus> observedBuses in substationBuses)
+            {
+                RemoveUnobservedBuses(observedBuses);
+            }
+            //foreach (Substation substation in m_substations)
+            //{
+            //    substation.InitializeSubstationGraph();
+            //    substation.Graph.ResolveDirectlyConnectedAdjacencies();
+            //    List<ObservedBus> substationObservedBusses = CheckObservability(substation.Graph.ResolveToObservedBuses());
+            //    if (substationObservedBusses != null)
+            //    {
+            //        foreach (ObservedBus observedBus in substationObservedBusses)
+            //        {
+            //            m_observedBuses.Add(observedBus);
+            //        }
+            //    }
+            //}
+            foreach (List<ObservedBus> observedBuses in substationBuses)
+            {
+                foreach (ObservedBus bus in observedBuses)
+                {
+                    m_observedBuses.Add(bus);
                 }
             }
 
@@ -1329,7 +1563,7 @@ namespace SynchrophasorAnalytics.Modeling
 
             if (m_phaseSelection == PhaseSelection.PositiveSequence)
             {
-                foreach (CurrentFlowPhasorGroup currentPhasorGroup in m_currentFlows)
+                foreach (CurrentFlowPhasorGroup currentPhasorGroup in ExpectedCurrentFlows)
                 {
                     if (currentPhasorGroup.IncludeInPositiveSequenceEstimator)
                     {
@@ -1339,7 +1573,7 @@ namespace SynchrophasorAnalytics.Modeling
             }
             else if (m_phaseSelection == PhaseSelection.ThreePhase)
             {
-                foreach (CurrentFlowPhasorGroup currentPhasorGroup in m_currentFlows)
+                foreach (CurrentFlowPhasorGroup currentPhasorGroup in ExpectedCurrentFlows)
                 {
                     if (currentPhasorGroup.IncludeInEstimator)
                     {
@@ -1359,7 +1593,7 @@ namespace SynchrophasorAnalytics.Modeling
 
             if (m_phaseSelection == PhaseSelection.PositiveSequence)
             {
-                foreach (CurrentInjectionPhasorGroup currentPhasorGroup in m_currentInjections)
+                foreach (CurrentInjectionPhasorGroup currentPhasorGroup in ExpectedCurrentInjections)
                 {
                     if (currentPhasorGroup.IncludeInPositiveSequenceEstimator)
                     {
@@ -1369,7 +1603,7 @@ namespace SynchrophasorAnalytics.Modeling
             }
             else if (m_phaseSelection == PhaseSelection.ThreePhase)
             {
-                foreach (CurrentInjectionPhasorGroup currentPhasorGroup in m_currentInjections)
+                foreach (CurrentInjectionPhasorGroup currentPhasorGroup in ExpectedCurrentInjections)
                 {
                     if (currentPhasorGroup.IncludeInEstimator)
                     {
@@ -1894,10 +2128,6 @@ namespace SynchrophasorAnalytics.Modeling
                         {
                             substations.Add(substation.InternalID, substation);
                         }
-                        else
-                        {
-                            Console.WriteLine($"{substation.InternalID} - {substation.Name}");
-                        }
                     }
                 }
             }
@@ -2261,8 +2491,11 @@ namespace SynchrophasorAnalytics.Modeling
         private void ListNetworkMeasurements()
         {
             m_voltages = new List<VoltagePhasorGroup>();
+            m_expectedVoltages = new List<VoltagePhasorGroup>();
             m_currentFlows = new List<CurrentFlowPhasorGroup>();
+            m_expectedCurrentFlows = new List<CurrentFlowPhasorGroup>();
             m_currentInjections = new List<CurrentInjectionPhasorGroup>();
+            m_expectedCurrentInjections = new List<CurrentInjectionPhasorGroup>();
 
             foreach (Company company in m_companies)
             {
@@ -2273,6 +2506,10 @@ namespace SynchrophasorAnalytics.Modeling
                         foreach (Node node in substation.Nodes)
                         {
                             m_voltages.Add(node.Voltage);
+                            if (node.Voltage.ExpectsMeasurements)
+                            {
+                                m_expectedVoltages.Add(node.Voltage);
+                            }
                         }
 
                         foreach (Transformer transformer in substation.Transformers)
@@ -2284,6 +2521,15 @@ namespace SynchrophasorAnalytics.Modeling
                             // Set the measured branch of each current phasor group
                             transformer.FromNodeCurrent.MeasuredBranch = transformer;
                             transformer.ToNodeCurrent.MeasuredBranch = transformer;
+
+                            if (transformer.FromNodeCurrent.ExpectsMeasurements)
+                            {
+                                m_expectedCurrentFlows.Add(transformer.FromNodeCurrent);
+                            }
+                            if (transformer.ToNodeCurrent.ExpectsMeasurements)
+                            {
+                                m_expectedCurrentFlows.Add(transformer.ToNodeCurrent);
+                            }
                         }
 
                         foreach (ShuntCompensator shunt in substation.Shunts)
@@ -2291,6 +2537,11 @@ namespace SynchrophasorAnalytics.Modeling
                             m_currentInjections.Add(shunt.Current);
 
                             shunt.Current.MeasuredBranch = shunt;
+
+                            if (shunt.Current.ExpectsMeasurements)
+                            {
+                                m_expectedCurrentInjections.Add(shunt.Current);
+                            }
                         }
                     }
                     foreach (TransmissionLine transmissionLine in division.TransmissionLines)
@@ -2303,11 +2554,25 @@ namespace SynchrophasorAnalytics.Modeling
                         transmissionLine.FromSubstationCurrent.MeasuredBranch = transmissionLine;
                         transmissionLine.ToSubstationCurrent.MeasuredBranch = transmissionLine;
 
+                        if (transmissionLine.FromSubstationCurrent.ExpectsMeasurements)
+                        {
+                            m_expectedCurrentFlows.Add(transmissionLine.FromSubstationCurrent);
+                        }
+                        if (transmissionLine.ToSubstationCurrent.ExpectsMeasurements)
+                        {
+                            m_expectedCurrentFlows.Add(transmissionLine.ToSubstationCurrent);
+                        }
+
                         foreach (Node node in transmissionLine.Nodes)
                         {
                             if (!m_voltages.Contains(node.Voltage))
                             {
                                 m_voltages.Add(node.Voltage);
+                                if (node.Voltage.ExpectsMeasurements)
+                                {
+                                    m_expectedVoltages.Add(node.Voltage);
+                                }
+
                             }
                         }
                     }
@@ -2732,6 +2997,146 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        private void MarkDirectObservability(List<ObservedBus> observedBuses)
+        {
+            // Mark the nodes that are directly observed by a voltage phasor
+            foreach (ObservedBus observedBus in observedBuses)
+            {
+                if (m_phaseSelection == PhaseSelection.PositiveSequence)
+                {
+                    foreach (Node node in observedBus.Nodes)
+                    {
+                        if (node.Voltage.IncludeInPositiveSequenceEstimator)
+                        {
+                            node.Observability = ObservationState.DirectlyObserved;
+                        }
+                        else
+                        {
+                            node.Observability = ObservationState.Unobserved;
+                        }
+                    }
+                }
+                else if (m_phaseSelection == PhaseSelection.ThreePhase)
+                {
+                    foreach (Node node in observedBus.Nodes)
+                    {
+                        if (node.Voltage.IncludeInEstimator)
+                        {
+                            node.Observability = ObservationState.DirectlyObserved;
+                        }
+                        else
+                        {
+                            node.Observability = ObservationState.Unobserved;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void MarkIndirectObservabilityByVoltage(List<ObservedBus> observedBuses)
+        {
+            foreach (ObservedBus observedBus in observedBuses)
+            {
+                bool busHasDirectObservation = false;
+                foreach (Node node in observedBus.Nodes)
+                {
+                    if (node.Observability == ObservationState.DirectlyObserved)
+                    {
+                        busHasDirectObservation = true;
+                    }
+                }
+                if (busHasDirectObservation)
+                {
+                    foreach (Node node in observedBus.Nodes)
+                    {
+                        if (node.Observability != ObservationState.DirectlyObserved)
+                        {
+                            node.Observability = ObservationState.IndirectlyObserved;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void MarkIndirectObservabilityByCurrentFlow(List<ObservedBus> observedBuses)
+        {
+            foreach (ObservedBus observedBus in observedBuses)
+            {
+                foreach (Node node in observedBus.Nodes)
+                {
+                    if (node.Observability == ObservationState.Unobserved)
+                    {
+                        foreach (CurrentFlowPhasorGroup current in m_activeCurrentFlows)
+                        {
+                            if (node == current.MeasuredToNode && current.MeasuredFromNode.Observability != ObservationState.Unobserved)
+                            {
+                                node.Observability = ObservationState.IndirectlyObserved;
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (ObservedBus observedBus in observedBuses)
+            {
+                bool busIsObserved = false;
+                foreach (Node node in observedBus.Nodes)
+                {
+                    if (node.Observability != ObservationState.Unobserved)
+                    {
+                        busIsObserved = true;
+                    }
+                }
+                if (busIsObserved)
+                {
+                    foreach (Node node in observedBus.Nodes)
+                    {
+                        if (node.Observability != ObservationState.DirectlyObserved)
+                        {
+                            node.Observability = ObservationState.IndirectlyObserved;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void MarkDirectObservabilityByCurrentInjection(List<ObservedBus> observedBuses)
+        {
+            foreach (ObservedBus observedBus in observedBuses)
+            {
+                foreach (Node node in observedBus.Nodes)
+                {
+                    if (node.Observability != ObservationState.DirectlyObserved)
+                    {
+                        foreach (CurrentInjectionPhasorGroup current in m_activeCurrentInjections)
+                        {
+                            if (node == current.MeasuredConnectedNode)
+                            {
+                                node.Observability = ObservationState.DirectlyObserved;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RemoveUnobservedBuses(List<ObservedBus> observedBuses)
+        {
+            List<ObservedBus> unobservedBuses = new List<ObservedBus>();
+            foreach (ObservedBus observedBus in observedBuses)
+            {
+                List<Node> unobservedNodes = observedBus.Nodes.FindAll(x => x.Observability == ObservationState.Unobserved);
+                if (unobservedNodes.Count > 0)
+                {
+                    unobservedBuses.Add(observedBus);
+                }
+            }
+
+            foreach (ObservedBus unobservedBus in unobservedBuses)
+            {
+                observedBuses.Remove(unobservedBus);
+            }
+        }
+
         public List<ObservedBus> CheckPotentialObservability(List<ObservedBus> observedBuses)
         {
             int numberOfDirectlyObservedNodes = 0;
@@ -2832,6 +3237,14 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        public void InitializeSubstationVoltageLevelGroups()
+        {
+            foreach (Substation substation in m_substations)
+            {
+                substation.InitializeVoltageLevelGroups();
+            }
+        }
+
         /// <summary>
         /// Takes the <see cref="Node.Voltage"/> from all of the <see cref="Node"/> objects in the model
         /// and collects them into one list to make updating values much easier.
@@ -2914,7 +3327,7 @@ namespace SynchrophasorAnalytics.Modeling
         /// </summary>
         private void InsertVoltageMeasurements()
         {
-            foreach (VoltagePhasorGroup voltagePhasorGroup in m_voltages)
+            foreach (VoltagePhasorGroup voltagePhasorGroup in ExpectedVoltages)
             {
                 double value = 0;
 
@@ -3055,7 +3468,7 @@ namespace SynchrophasorAnalytics.Modeling
         /// </summary>
         private void InsertCurrentFlowMeasurements()
         {
-            foreach (CurrentFlowPhasorGroup currentPhasorGroup in m_currentFlows)
+            foreach (CurrentFlowPhasorGroup currentPhasorGroup in ExpectedCurrentFlows)
             {
                 double value = 0;
 
@@ -3192,7 +3605,7 @@ namespace SynchrophasorAnalytics.Modeling
         /// </summary>
         private void InsertCurrentInjectionMeasurements()
         {
-            foreach (CurrentInjectionPhasorGroup currentPhasorGroup in m_currentInjections)
+            foreach (CurrentInjectionPhasorGroup currentPhasorGroup in ExpectedCurrentInjections)
             {
                 double value = 0;
 
@@ -3329,7 +3742,7 @@ namespace SynchrophasorAnalytics.Modeling
         /// </summary>
         private void InsertBreakerStatuses()
         {
-            foreach (BreakerStatus breakerStatus in m_breakerStatuses)
+            foreach (BreakerStatus breakerStatus in ExpectedBreakerStatuses)
             {
                 double value = 0;
                 // Breaker Statuses
@@ -3346,7 +3759,7 @@ namespace SynchrophasorAnalytics.Modeling
         /// </summary>
         private void InsertStatusWords()
         {
-            foreach (StatusWord statusWord in m_statusWords)
+            foreach (StatusWord statusWord in StatusWords)
             {
                 double value = 0;
 
@@ -3372,6 +3785,41 @@ namespace SynchrophasorAnalytics.Modeling
                     transformer.TapPositionMeasurement = Convert.ToInt32(value);
                 }
             }
+        }
+
+        private List<OutputMeasurement> GetVoltageEstimatesOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            foreach (VoltagePhasorGroup voltage in m_voltages)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = voltage.InternalID,
+                    SubstationName = voltage.MeasuredNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Node,
+                    OutputType = OutputType.VoltageMagnitudeEstimate,
+                    DeviceId = voltage.MeasuredNode.Name,
+                    DeviceSuffix = voltage.MeasuredNode.ParentSubstation.Name,
+                    Key = voltage.PositiveSequence.Estimate.MagnitudeKey,
+                    Value = voltage.PositiveSequence.Estimate.Magnitude,
+                    Description = $"{voltage.Description} Positive Sequence Magnitude"
+                });
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = voltage.InternalID,
+                    SubstationName = voltage.MeasuredNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Node,
+                    OutputType = OutputType.VoltageAngleEstimate,
+                    DeviceId = voltage.MeasuredNode.Name,
+                    DeviceSuffix = voltage.MeasuredNode.ParentSubstation.Name,
+                    Key = voltage.PositiveSequence.Estimate.AngleKey,
+                    Value = voltage.PositiveSequence.Estimate.AngleInDegrees,
+                    Description = $"{voltage.Description} Positive Sequence Angle In Degrees"
+                });
+            }
+
+            return output;
         }
 
         /// <summary>
@@ -3428,6 +3876,41 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        private List<OutputMeasurement> GetCurrentFlowEstimatesOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            foreach (CurrentFlowPhasorGroup current in m_currentFlows)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredFromNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Line,
+                    OutputType = OutputType.CurrentFlowMagnitudeEstimate,
+                    DeviceId = (current.MeasuredBranch as INetworkDescribable).Name,
+                    DeviceSuffix = current.MeasuredFromNode.ParentSubstation.Name,
+                    Key = current.PositiveSequence.Estimate.MagnitudeKey,
+                    Value = current.PositiveSequence.Estimate.Magnitude,
+                    Description = $"{current.Description} Positive Sequence Magnitude"
+                });
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredFromNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Line,
+                    OutputType = OutputType.CurrentFlowAngleEstimate,
+                    DeviceId = (current.MeasuredBranch as INetworkDescribable).Name,
+                    DeviceSuffix = current.MeasuredFromNode.ParentSubstation.Name,
+                    Key = current.PositiveSequence.Estimate.AngleKey,
+                    Value = current.PositiveSequence.Estimate.AngleInDegrees,
+                    Description = $"{current.Description} Positive Sequence Angle In Degrees"
+                });
+            }
+
+            return output;
+        }
+
         /// <summary>
         /// Adds the estimated current flow phasor components to the output with their associated keys.
         /// </summary>
@@ -3480,6 +3963,41 @@ namespace SynchrophasorAnalytics.Modeling
                     }
                 }
             }
+        }
+
+        private List<OutputMeasurement> GetCurrentInjectionEstimatesOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            foreach (CurrentInjectionPhasorGroup current in m_currentInjections)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Shunt,
+                    OutputType = OutputType.CurrentInjectionMagnitudeEstimate,
+                    DeviceId = (current.MeasuredBranch as INetworkDescribable).Name,
+                    DeviceSuffix = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    Key = current.PositiveSequence.Estimate.MagnitudeKey,
+                    Value = current.PositiveSequence.Estimate.Magnitude,
+                    Description = $"{current.Description} Positive Sequence Magnitude"
+                });
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Shunt,
+                    OutputType = OutputType.CurrentInjectionAngleEstimate,
+                    DeviceId = (current.MeasuredBranch as INetworkDescribable).Name,
+                    DeviceSuffix = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    Key = current.PositiveSequence.Estimate.AngleKey,
+                    Value = current.PositiveSequence.Estimate.AngleInDegrees,
+                    Description = $"{current.Description} Positive Sequence Angle In Degrees"
+                });
+            }
+
+            return output;
         }
 
         /// <summary>
@@ -3536,6 +4054,41 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        private List<OutputMeasurement> GetVoltageMeasurementResidualsOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            foreach (VoltagePhasorGroup voltage in m_voltages)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = voltage.InternalID,
+                    SubstationName = voltage.MeasuredNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Node,
+                    OutputType = OutputType.VoltageMagnitudeResidual,
+                    DeviceId = voltage.MeasuredNode.Name,
+                    DeviceSuffix = voltage.MeasuredNode.ParentSubstation.Name,
+                    Key = voltage.PositiveSequence.MagnitudeResidualKey,
+                    Value = voltage.PositiveSequence.MagnitudeResidual,
+                    Description = $"{voltage.Description} Positive Sequence Magnitude Residual"
+                });
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = voltage.InternalID,
+                    SubstationName = voltage.MeasuredNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Node,
+                    OutputType = OutputType.VoltageAngleEstimate,
+                    DeviceId = voltage.MeasuredNode.Name,
+                    DeviceSuffix = voltage.MeasuredNode.ParentSubstation.Name,
+                    Key = voltage.PositiveSequence.AngleResidualKey,
+                    Value = voltage.PositiveSequence.AngleResidualInDegrees,
+                    Description = $"{voltage.Description} Positive Sequence Angle Residual In Degrees"
+                });
+            }
+
+            return output;
+        }
+
         /// <summary>
         /// Adds the voltage measurement residual components to the output with their associated keys.
         /// </summary>
@@ -3583,6 +4136,68 @@ namespace SynchrophasorAnalytics.Modeling
                     }
                 }
             }
+        }
+
+        private List<OutputMeasurement> GetCurrentMeasurementResidualsOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            foreach (CurrentFlowPhasorGroup current in m_currentFlows)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredFromNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Line,
+                    OutputType = OutputType.CurrentFlowMagnitudeResidual,
+                    DeviceId = (current.MeasuredBranch as INetworkDescribable).Name,
+                    DeviceSuffix = current.MeasuredFromNode.ParentSubstation.Name,
+                    Key = current.PositiveSequence.MagnitudeResidualKey,
+                    Value = current.PositiveSequence.MagnitudeResidual,
+                    Description = $"{current.Description} Positive Sequence Magnitude Residual"
+                });
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredFromNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Line,
+                    OutputType = OutputType.CurrentFlowAngleResidual,
+                    DeviceId = (current.MeasuredBranch as INetworkDescribable).Name,
+                    DeviceSuffix = current.MeasuredFromNode.ParentSubstation.Name,
+                    Key = current.PositiveSequence.AngleResidualKey,
+                    Value = current.PositiveSequence.AngleResidualInDegrees,
+                    Description = $"{current.Description} Positive Sequence Angle Residual In Degrees"
+                });
+            }
+
+            foreach (CurrentInjectionPhasorGroup current in m_currentInjections)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Shunt,
+                    OutputType = OutputType.CurrentInjectionMagnitudeResidual,
+                    DeviceId = (current.MeasuredBranch as INetworkDescribable).Name,
+                    DeviceSuffix = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    Key = current.PositiveSequence.MagnitudeResidualKey,
+                    Value = current.PositiveSequence.MagnitudeResidual,
+                    Description = $"{current.Description} Positive Sequence Magnitude Residual"
+                });
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Shunt,
+                    OutputType = OutputType.CurrentInjectionAngleResidual,
+                    DeviceId = (current.MeasuredBranch as INetworkDescribable).Name,
+                    DeviceSuffix = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    Key = current.PositiveSequence.AngleResidualKey,
+                    Value = current.PositiveSequence.AngleResidualInDegrees,
+                    Description = $"{current.Description} Positive Sequence Angle Residual In Degrees"
+                });
+            }
+            return output;
         }
 
         /// <summary>
@@ -3633,7 +4248,30 @@ namespace SynchrophasorAnalytics.Modeling
                 }
             }
         }
-        
+
+        private List<OutputMeasurement> GetCircuitBreakerStatusesOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            foreach (CircuitBreaker breaker in m_circuitBreakers)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = breaker.InternalID,
+                    SubstationName = breaker.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.CircuitBreaker,
+                    OutputType = OutputType.CircuitBreakerStatus,
+                    DeviceId = breaker.Name,
+                    DeviceSuffix = breaker.ParentSubstation.Name,
+                    Key = breaker.MeasurementKey,
+                    Value = (double)breaker.ActualState,
+                    Description = $"{breaker.Description} Actual State"
+                });
+            }
+
+            return output;
+        }
+
         /// <summary>
         /// Adds the status of the circuit breakers with their associated keys.
         /// </summary>
@@ -3652,6 +4290,29 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        private List<OutputMeasurement> GetSwitchStatusesOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            foreach (Switch switchingDevice in m_switches)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = switchingDevice.InternalID,
+                    SubstationName = switchingDevice.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Switch,
+                    OutputType = OutputType.SwitchStatus,
+                    DeviceId = switchingDevice.Name,
+                    DeviceSuffix = switchingDevice.ParentSubstation.Name,
+                    Key = switchingDevice.MeasurementKey,
+                    Value = (double)switchingDevice.ActualState,
+                    Description = $"{switchingDevice.Description} Actual State"
+                });
+            }
+
+            return output;
+        }
+
         /// <summary>
         /// Adds the status of the circuit switches with their associated keys.
         /// </summary>
@@ -3668,6 +4329,160 @@ namespace SynchrophasorAnalytics.Modeling
                     }
                 }
             }
+        }
+
+        private List<OutputMeasurement> GetPerformanceMetricsOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            PerformanceMetrics metrics = m_parentNetwork.PerformanceMetrics;
+
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 1,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "ACTIVE_VOLTAGE_COUNT",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.ActiveVoltageCountKey,
+                Value = metrics.ActiveVoltageCount,
+                Description = "Active Voltage Count"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 2,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "ACTIVE_FLOW_COUNT",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.ActiveCurrentFlowCountKey,
+                Value = metrics.ActiveCurrentFlowCount,
+                Description = "Active Current Flow Count"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 3,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "ACTIVE_INJECTION_COUNT",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.ActiveCurrentInjectionCountKey,
+                Value = metrics.ActiveCurrentInjectionCount,
+                Description = "Active Current Injection Count"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 4,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "OBSERVED_BUS_COUNT",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.ObservedBusCountKey,
+                Value = metrics.ObservedBusCount,
+                Description = "Observed Bus Count"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 5,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "REFRESH_TIME",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.RefreshExecutionTimeKey,
+                Value = metrics.RefreshExecutionTime,
+                Description = "Refresh Time"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 6,
+                SubstationName = "PERFORMANCE_METRICS",
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "PARSING_TIME",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.ParsingExecutionTimeKey,
+                Value = metrics.ParsingExecutionTime,
+                Description = "Parsing Time"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 7,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "MEASUREMENT_MAPPING_TIME",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.MeasurementMappingExecutionTimeKey,
+                Value = metrics.MeasurementMappingExecutionTime,
+                Description = "Measurement Mapping Time"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 8,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "ACTIVE_CURRENT_DETERMINATION_TIME",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.ActiveCurrentPhasorDeterminationExecutionTimeKey,
+                Value = metrics.ActiveCurrentPhasorDeterminationExecutionTime,
+                Description = "Active Current Determination Time"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 9,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "OBSERVABILITY_ANALYSIS_TIME",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.ObservabilityAnalysisExecutionTimeKey,
+                Value = metrics.ObservabilityAnalysisExecutionTime,
+                Description = "Observability Analysis Time"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 10,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "STATE_COMPUTATION_TIME",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.StateComputationExecutionTimeKey,
+                Value = metrics.StateComputationExecutionTime,
+                Description = "State Computation Time"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 11,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "OUTPUT_PREP_TIME",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.OutputPreparationExecutionTimeKey,
+                Value = metrics.OutputPreparationExecutionTime,
+                Description = "Output Preparation Time"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 12,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "TIME_IN_TICKS",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.TotalExecutionTimeInTicksKey,
+                Value = metrics.TotalExecutionTimeInTicks,
+                Description = "Total Time in Ticks"
+            });
+            output.Add(new OutputMeasurement()
+            {
+                InternalId = 13,
+                MeasuredDeviceType = MeasuredDeviceType.PerformanceMetric,
+                OutputType = OutputType.PerformanceMetric,
+                DeviceId = "TIME_IN_MS",
+                DeviceSuffix = "PERFORMANCE_METRICS",
+                Key = metrics.TotalExecutionTimeInMillisecondsKey,
+                Value = metrics.TotalExecutionTimeInMilliseconds,
+                Description = "Total Time in Miliseconds"
+            });
+
+            return output;
         }
 
         private void AddPerformanceMetricsToOutput(Dictionary<string, double> output)
@@ -3689,6 +4504,55 @@ namespace SynchrophasorAnalytics.Modeling
             output.Add(metrics.TotalExecutionTimeInMillisecondsKey, metrics.TotalExecutionTimeInMilliseconds);
         }
 
+        private List<OutputMeasurement> GetTopologyProfilingInformationOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            foreach (Substation substation in m_substations)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = substation.InternalID,
+                    SubstationName = substation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Substation,
+                    OutputType = OutputType.TopologyProfiling,
+                    DeviceId = $"{substation.Name}",
+                    DeviceSuffix = substation.Name,
+                    Key = substation.ObservedBusCountKey,
+                    Value = substation.ObservedBusCount,
+                    Description = $"{substation.Name} Observed Bus Count"
+                });
+                foreach (Node node in substation.Nodes)
+                {
+                    output.Add(new OutputMeasurement()
+                    {
+                        InternalId = node.InternalID,
+                        SubstationName = substation.Name,
+                        MeasuredDeviceType = MeasuredDeviceType.Node,
+                        OutputType = OutputType.TopologyProfiling,
+                        DeviceId = $"{node.Name}_TOPOOGY_STATE",
+                        DeviceSuffix = substation.Name,
+                        Key = node.ObservationStateKey,
+                        Value = (double)node.Observability,
+                        Description = $"{node.Name} Observation State"
+                    });
+                    output.Add(new OutputMeasurement()
+                    {
+                        InternalId = node.InternalID,
+                        SubstationName = substation.Name,
+                        MeasuredDeviceType = MeasuredDeviceType.Node,
+                        OutputType = OutputType.TopologyProfiling,
+                        DeviceId = $"{node.Name}_TOPOLOGY_ID",
+                        DeviceSuffix = substation.Name,
+                        Key = node.ObservedBusIdKey,
+                        Value = (double)node.ObservedBusId,
+                        Description = $"{node.Name} Observed Bus Id"
+                    });
+                }
+            }
+            return output;
+        }
+
         private void AddTopologyProfilingInformationToOutput(Dictionary<string, double> output)
         {
             foreach (Substation substation in m_substations)
@@ -3700,6 +4564,59 @@ namespace SynchrophasorAnalytics.Modeling
                     output.Add(node.ObservedBusIdKey, node.ObservedBusId);
                 }
             }
+        }
+
+        private List<OutputMeasurement> GetMeasurementValidationFlagsOutput()
+        {
+            List<OutputMeasurement> output = new List<OutputMeasurement>();
+
+            foreach (VoltagePhasorGroup voltage in m_voltages)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = voltage.InternalID,
+                    SubstationName = voltage.MeasuredNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Node,
+                    OutputType = OutputType.VoltageMeasurementValidationFlag,
+                    DeviceId = voltage.MeasuredNode.Name,
+                    DeviceSuffix = voltage.MeasuredNode.ParentSubstation.Name,
+                    Key = voltage.MeasurementIsIncludedKey,
+                    Value = Convert.ToDouble(voltage.IncludeInPositiveSequenceEstimator),
+                    Description = $"{voltage.Description} Measurement Validation Flag"
+                });
+            }
+            foreach (CurrentFlowPhasorGroup current in m_currentFlows)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredFromNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Node,
+                    OutputType = OutputType.CurrentFlowMeasurementValidationFlag,
+                    DeviceId = current.MeasuredFromNode.Name,
+                    DeviceSuffix = current.MeasuredFromNode.ParentSubstation.Name,
+                    Key = current.MeasurementIsIncludedKey,
+                    Value = Convert.ToDouble(current.IncludeInPositiveSequenceEstimator),
+                    Description = $"{current.Description} Measurement Validation Flag"
+                });
+            }
+            foreach (CurrentInjectionPhasorGroup current in m_currentInjections)
+            {
+                output.Add(new OutputMeasurement()
+                {
+                    InternalId = current.InternalID,
+                    SubstationName = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    MeasuredDeviceType = MeasuredDeviceType.Node,
+                    OutputType = OutputType.CurrentInjectionMeasurementValidationFlag,
+                    DeviceId = current.MeasuredConnectedNode.Name,
+                    DeviceSuffix = current.MeasuredConnectedNode.ParentSubstation.Name,
+                    Key = current.MeasurementIsIncludedKey,
+                    Value = Convert.ToDouble(current.IncludeInPositiveSequenceEstimator),
+                    Description = $"{current.Description} Measurement Validation Flag"
+                });
+            }
+
+            return output;
         }
 
         private void AddMeasurementValidationFlagsToOutput(Dictionary<string, double> output)

@@ -185,6 +185,42 @@ namespace NetworkModelEditor.ViewModels
             }
         }
 
+        public double CrossDeviceAngleDeltaThresholdInDegrees
+        {
+            get
+            {
+                return m_circuitBreaker.CrossDeviceAngleDeltaThresholdInDegrees;
+            }
+            set
+            {
+                m_circuitBreaker.CrossDeviceAngleDeltaThresholdInDegrees = value;
+            }
+        }
+
+        public double CrossDevicePerUnitMagnitudeDeltaThreshold
+        {
+            get
+            {
+                return m_circuitBreaker.CrossDevicePerUnitMagnitudeDeltaThreshold;
+            }
+            set
+            {
+                m_circuitBreaker.CrossDevicePerUnitMagnitudeDeltaThreshold = value;
+            }
+        }
+
+        public double CrossDeviceTotalVectorDeltaThreshold
+        {
+            get
+            {
+                return m_circuitBreaker.CrossDeviceTotalVectorDeltaThreshold;
+            }
+            set
+            {
+                m_circuitBreaker.CrossDeviceTotalVectorDeltaThreshold = value;
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]

@@ -200,6 +200,18 @@ namespace NetworkModelEditor.ViewModels
             }
         }
 
+        public string MeasurementIsIncludedKey
+        {
+            get
+            {
+                return m_current.MeasurementIsIncludedKey;
+            }
+            set
+            {
+                m_current.MeasurementIsIncludedKey = value;
+            }
+        }
+
         #region [ Positive Sequence ]
 
         public string PositiveSequenceMagnitudeMeasurementKey

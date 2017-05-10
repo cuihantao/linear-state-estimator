@@ -241,7 +241,7 @@ namespace NetworkModelEditor.ViewModels
                 m_model.ReturnsSwitchStatus = value;
             }
         }
-        
+
         public bool ReturnsTapPositions
         {
             get
@@ -265,7 +265,7 @@ namespace NetworkModelEditor.ViewModels
                 m_model.ReturnsSeriesCompensatorStatus = value;
             }
         }
-        
+
         public bool ReturnsPerformanceMetrics
         {
             get
@@ -277,7 +277,7 @@ namespace NetworkModelEditor.ViewModels
                 m_model.ReturnsPerformanceMetrics = value;
             }
         }
-        
+
         public bool ReturnsTopologyProfilingInformation
         {
             get
@@ -289,7 +289,7 @@ namespace NetworkModelEditor.ViewModels
                 m_model.ReturnsTopologyProfilingInformation = value;
             }
         }
-        
+
         public bool ReturnsMeasurementValidationFlags
         {
             get

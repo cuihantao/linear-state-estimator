@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using SynchrophasorAnalytics.Measurements;
 
@@ -197,6 +198,31 @@ namespace SynchrophasorAnalytics.Modeling
             }
         }
 
+        public Complex AveragePerUnitComplexVoltage
+        {
+            get
+            {
+                return ComputeAverageComplexVoltage();
+            }
+        }
+
+        public double AveragePerUnitVoltageMagnitude
+        {
+            get
+            {
+                return ComputeAveragePerUnitMagnitude();
+            }
+        }
+
+        public double AverageVoltageAngle
+        {
+            get
+            {
+                return ComputeAverageVoltageAngle();
+            }
+        }
+
+
         #endregion
 
         #region [ Constructors ]
@@ -235,6 +261,79 @@ namespace SynchrophasorAnalytics.Modeling
         #endregion
 
         #region [ Public Methods ]
+
+        public bool IsCoherentWith(Node node)
+        {
+            foreach (Node observedNode in m_observedNodes)
+            {
+
+                if (node.ParentSubstation.CoherencyDetectionMethod == VoltageCoherencyDetectionMethod.AngleDelta)
+                {
+                    double a_cos = Math.Cos(AveragePerUnitComplexVoltage.Phase);
+                    double a_sin = Math.Sin(AveragePerUnitComplexVoltage.Phase);
+                    double b_cos = Math.Cos(node.Voltage.PositiveSequence.Measurement.AngleInRadians);
+                    double b_sin = Math.Sin(node.Voltage.PositiveSequence.Measurement.AngleInRadians);
+                    Complex a = new Complex(a_cos, a_sin);
+                    Complex b = new Complex(b_cos, b_sin);
+                    Complex delta = a - b;
+                    if ((delta.Phase * 180 / Math.PI) <= node.ParentSubstation.AngleDeltaThresholdInDegrees)
+                    {
+                        return true;
+                    }
+                }
+                else if (node.ParentSubstation.CoherencyDetectionMethod == VoltageCoherencyDetectionMethod.MagnitudeDelta)
+                {
+                    double a = AveragePerUnitVoltageMagnitude;
+                    double b = node.Voltage.PositiveSequence.Measurement.PerUnitMagnitude;
+                    double delta = a - b;
+                    if (delta <= node.ParentSubstation.PerUnitMagnitudeDeltaThreshold)
+                    {
+                        return true;
+                    }
+                }
+                else if (node.ParentSubstation.CoherencyDetectionMethod == VoltageCoherencyDetectionMethod.TotalVectorDelta)
+                {
+                    Complex a = AveragePerUnitComplexVoltage;
+                    Complex b = node.Voltage.PositiveSequence.Measurement.PerUnitComplexPhasor;
+                    Complex delta = a - b;
+                    if (delta.Magnitude <= node.ParentSubstation.TotalVectorDeltaThreshold)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
+
+        public Complex ComputeAverageComplexVoltage()
+        {
+            double nodeCount = (double)m_observedNodes.Count;
+            Complex totalValue = new Complex(0.0, 0.0);
+
+            foreach (Node node in m_observedNodes)
+            {
+                totalValue += node.Voltage.PositiveSequence.Measurement.PerUnitComplexPhasor;
+            }
+
+            return new Complex((totalValue.Real)/nodeCount, totalValue.Imaginary/nodeCount);
+        }
+
+        public double ComputeAveragePerUnitMagnitude()
+        {
+            return ComputeAverageComplexVoltage().Magnitude;
+        }
+
+        public double ComputeAverageVoltageAngle()
+        {
+            return ComputeAverageComplexVoltage().Phase;
+        }
+
+
+        public void MergeWith(ObservedBus bus)
+        {
+            m_observedNodes.AddRange(bus.Nodes);
+        }
 
         /// <summary>
         /// A string representation of the instance of the <see cref="LinearStateEstimator.Modeling.ObservedBus"/> class and each of its <see cref="LinearStateEstimator.Modeling.Node"/> objects.

@@ -84,11 +84,15 @@ namespace SynchrophasorAnalytics.Modeling
         private List<Switch> m_childrenSwitches;
 
         private SubstationGraph m_graph;
-
+        private List<VoltageLevelGroup> m_voltageLevelGroups;
+        private double m_angleDeltaThresholdInDegrees;
+        private double m_perUnitMagnitudeThreshold;
+        private double m_totalVectorDeltaThreshold;
+        private VoltageCoherencyDetectionMethod m_coherencyDetectionMethod;
         #endregion
 
         #region [ Properties ] 
-        
+
         /// <summary>
         /// A statistically unique identifier for the instance of the class.
         /// </summary>
@@ -384,9 +388,80 @@ namespace SynchrophasorAnalytics.Modeling
         {
             get
             {
-                return m_graph.ObservedBuses.Count;
+                if (m_graph != null && m_graph.ObservedBuses != null)
+                {
+                    return m_graph.ObservedBuses.Count;
+                }
+                return 0;
             }
         }
+
+        [XmlIgnore()]
+        public List<VoltageLevelGroup> VoltageLevelGroups
+        {
+            get
+            {
+                return m_voltageLevelGroups;
+            }
+            set
+            {
+                m_voltageLevelGroups = value;
+            }
+        }
+
+        [XmlAttribute("CoherencyMethod")]
+        public VoltageCoherencyDetectionMethod CoherencyDetectionMethod
+        {
+            get
+            {
+                return m_coherencyDetectionMethod;
+            }
+            set
+            {
+                m_coherencyDetectionMethod = value;
+            }
+        }
+
+        [XmlAttribute("AngleDeltaThresholdInDegrees")]
+        public double AngleDeltaThresholdInDegrees
+        {
+            get
+            {
+                return m_angleDeltaThresholdInDegrees;
+            }
+            set
+            {
+                m_angleDeltaThresholdInDegrees = value;
+            }
+        }
+
+        [XmlAttribute("PerUnitMagnitudeDeltaThreshold")]
+        public double PerUnitMagnitudeDeltaThreshold
+        {
+            get
+            {
+                return m_perUnitMagnitudeThreshold;
+            }
+            set
+            {
+                m_perUnitMagnitudeThreshold = value;
+            }
+        }
+
+        [XmlAttribute("TotalVectorDeltaThreshold")]
+        public double TotalVectorDeltaThreshold
+        {
+            get
+            {
+                return m_totalVectorDeltaThreshold;
+            }
+            set
+            {
+                m_totalVectorDeltaThreshold = value;
+            }
+        }
+
+
 
         #endregion
 
@@ -439,6 +514,11 @@ namespace SynchrophasorAnalytics.Modeling
             m_childrenCircuitBreakers = circuitBreakers;
             m_childrenSwitches = switches;
             m_observedBusCountKey = "Undefined";
+            m_voltageLevelGroups = new List<VoltageLevelGroup>();
+            m_perUnitMagnitudeThreshold = 0.03;
+            m_angleDeltaThresholdInDegrees = 0.2;
+            m_totalVectorDeltaThreshold = 0.03;
+            m_coherencyDetectionMethod = VoltageCoherencyDetectionMethod.AngleDelta;
         }
 
         #endregion
@@ -451,6 +531,30 @@ namespace SynchrophasorAnalytics.Modeling
         public void InitializeSubstationGraph()
         {
             m_graph = new SubstationGraph(this);
+        }
+
+        public void InitializeVoltageLevelGroups()
+        {
+            List<VoltageLevel> baseKvs = new List<VoltageLevel>();
+
+            foreach (Node node in m_childrenNodes)
+            {
+                if (!baseKvs.Contains(node.BaseKV))
+                {
+                    baseKvs.Add(node.BaseKV);
+                }
+            }
+
+            foreach (VoltageLevel baseKv in baseKvs)
+            {
+                m_voltageLevelGroups.Add(new VoltageLevelGroup(baseKv));
+            }
+
+            foreach (Node node in m_childrenNodes)
+            {
+                VoltageLevelGroup voltageLevelGroup = m_voltageLevelGroups.Find(group => group.BaseKV.InternalID == node.BaseKV.InternalID);
+                voltageLevelGroup.Nodes.Add(node);
+            }
         }
 
         /// <summary>
@@ -597,6 +701,15 @@ namespace SynchrophasorAnalytics.Modeling
             return copy; // Incomplete
         }
 
+        public void Keyify()
+        {
+            m_observedBusCountKey = $"{Name}.ObservedBusCount";
+        }
+
+        public void UnKeyify()
+        {
+            m_observedBusCountKey = "Undefined";
+        }
         #endregion
     }
 }

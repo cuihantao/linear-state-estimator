@@ -25,6 +25,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Xml.Serialization;
 using SynchrophasorAnalytics.Modeling;
@@ -412,8 +413,15 @@ namespace SynchrophasorAnalytics.Modeling
         {
             get
             {
-                ObservedBus observedBus = m_parentSubstation.Graph.ObservedBuses.Find(bus => bus.Nodes.Contains(this));
-                return observedBus.InternalID;
+                if (m_parentSubstation.Graph != null && m_parentSubstation.Graph.ObservedBuses != null)
+                {
+                    ObservedBus observedBus = m_parentSubstation.Graph.ObservedBuses.Find(bus => bus.Nodes.Contains(this));
+                    if (observedBus != null)
+                    {
+                        return observedBus.InternalID;
+                    }
+                }
+                return 0;
             }
         }
 
@@ -466,11 +474,50 @@ namespace SynchrophasorAnalytics.Modeling
             m_parentSubstation = parentSubstation;
             m_parentTransmissionLine = parentTransmissionLine;
             m_observationStateKey = "Undefined";
+            m_observedBusIdKey = "Undefined";
         }
 
         #endregion
 
         #region [ Public Methods ]
+        public bool IsCoherentWith(Node node)
+        {
+            if (m_parentSubstation.CoherencyDetectionMethod == VoltageCoherencyDetectionMethod.AngleDelta)
+            {
+                double a_cos = Math.Cos(m_voltage.PositiveSequence.Measurement.AngleInRadians);
+                double a_sin = Math.Sin(m_voltage.PositiveSequence.Measurement.AngleInRadians);
+                double b_cos = Math.Cos(node.Voltage.PositiveSequence.Measurement.AngleInRadians);
+                double b_sin = Math.Sin(node.Voltage.PositiveSequence.Measurement.AngleInRadians);
+                Complex a = new Complex(a_cos, a_sin);
+                Complex b = new Complex(b_cos, b_sin);
+                Complex delta = a - b;
+                if ((delta.Phase * 180 / Math.PI) <= m_parentSubstation.AngleDeltaThresholdInDegrees)
+                {
+                    return true;
+                }
+            }
+            else if (m_parentSubstation.CoherencyDetectionMethod == VoltageCoherencyDetectionMethod.MagnitudeDelta)
+            {
+                double a = m_voltage.PositiveSequence.Measurement.PerUnitMagnitude;
+                double b = node.Voltage.PositiveSequence.Measurement.PerUnitMagnitude;
+                double delta = a - b;
+                if (delta <= m_parentSubstation.PerUnitMagnitudeDeltaThreshold)
+                {
+                    return true;
+                }
+            }
+            else if (m_parentSubstation.CoherencyDetectionMethod == VoltageCoherencyDetectionMethod.TotalVectorDelta)
+            {
+                Complex a = m_voltage.PositiveSequence.Measurement.PerUnitComplexPhasor;
+                Complex b = node.Voltage.PositiveSequence.Measurement.PerUnitComplexPhasor;
+                Complex delta = a - b;
+                if (delta.Magnitude <= m_parentSubstation.TotalVectorDeltaThreshold)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         /// <summary>
         /// A descriptive string representation of the <see cref="LinearStateEstimator.Modeling.Node"/> class instance. The format is <i>Node,internalId,number,acronym,name,description,parentSubstationInternalID,parentTransmissionLineInternalID,voltagePhasorGroupInternalID</i> and can be used for a rudimentary momento design pattern
@@ -509,6 +556,18 @@ namespace SynchrophasorAnalytics.Modeling
             stringBuilder.AppendFormat(m_voltage.ToVerboseString());
             stringBuilder.AppendLine();
             return stringBuilder.ToString();
+        }
+
+        public void Keyify()
+        {
+            m_observationStateKey = $"{ParentSubstation.Name}.{Name}.ObservationState";
+            m_observedBusIdKey = $"{ParentSubstation.Name}.{Name}.ObservationBusId";
+        }
+
+        public void Unkeyify()
+        {
+            m_observationStateKey = "Undefined";
+            m_observedBusIdKey = "Undefined";
         }
 
         #endregion

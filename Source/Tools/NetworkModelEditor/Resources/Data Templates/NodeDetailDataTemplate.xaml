@@ -44,6 +44,10 @@
                     <RowDefinition Height="5" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10" />
@@ -59,6 +63,8 @@
                 <Label Grid.Row="10" Grid.Column="1" Content="Parent Substation" Style="{StaticResource LabelStyle}"/>
                 <Label Grid.Row="12" Grid.Column="1" Content="Parent Transmission Line" Style="{StaticResource LabelStyle}"/>
                 <Label Grid.Row="14" Grid.Column="1" Content="Base KV" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="16" Grid.Column="1" Content="Observation State Key" Style="{StaticResource LabelStyle}"/>
+                <Label Grid.Row="18" Grid.Column="1" Content="Observed Bus Id Key" Style="{StaticResource LabelStyle}"/>
                 
                 <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding Path=InternalID}" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource IntegerValidationTemplate}"/>
                 <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Path=Number}" Style="{StaticResource TextBoxStyle}" Validation.ErrorTemplate="{StaticResource IntegerValidationTemplate}"/>
@@ -68,6 +74,8 @@
                 <ComboBox Grid.Row="10" Grid.Column="3" ItemsSource="{Binding Path=Substations}" DisplayMemberPath="Name" SelectedValue="{Binding ParentSubstation}" Style="{StaticResource ComboBoxStyle}"/>
                 <ComboBox Grid.Row="12" Grid.Column="3" ItemsSource="{Binding Path=TransmissionLines}" DisplayMemberPath="Name" SelectedValue="{Binding ParentTransmissionLine}" Style="{StaticResource ComboBoxStyle}"/>
                 <ComboBox Grid.Row="14" Grid.Column="3" ItemsSource="{Binding Path=VoltageLevels}" DisplayMemberPath="Name" SelectedValue="{Binding BaseKV}" Style="{StaticResource ComboBoxStyle}"/>
+                <TextBox Grid.Row="16" Grid.Column="3" Text="{Binding Path=ObservationStateKey}" Style="{StaticResource TextBoxStyle}"/>
+                <TextBox Grid.Row="18" Grid.Column="3" Text="{Binding Path=ObservedBusIdKey}" Style="{StaticResource TextBoxStyle}"/>
             </Grid>
         </StackPanel>
     </DataTemplate>

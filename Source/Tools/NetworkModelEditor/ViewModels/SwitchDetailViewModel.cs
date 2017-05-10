@@ -178,6 +178,42 @@ namespace NetworkModelEditor.ViewModels
             }
         }
 
+        public double CrossDeviceAngleDeltaThresholdInDegrees
+        {
+            get
+            {
+                return m_switch.CrossDeviceAngleDeltaThresholdInDegrees;
+            }
+            set
+            {
+                m_switch.CrossDeviceAngleDeltaThresholdInDegrees = value;
+            }
+        }
+
+        public double CrossDevicePerUnitMagnitudeDeltaThreshold
+        {
+            get
+            {
+                return m_switch.CrossDevicePerUnitMagnitudeDeltaThreshold;
+            }
+            set
+            {
+                m_switch.CrossDevicePerUnitMagnitudeDeltaThreshold = value;
+            }
+        }
+
+        public double CrossDeviceTotalVectorDeltaThreshold
+        {
+            get
+            {
+                return m_switch.CrossDeviceTotalVectorDeltaThreshold;
+            }
+            set
+            {
+                m_switch.CrossDeviceTotalVectorDeltaThreshold = value;
+            }
+        }
+
         #endregion
 
         #region [ Constructors ]
@@ -191,7 +227,6 @@ namespace NetworkModelEditor.ViewModels
             if (circuitSwitch != null && circuitSwitch is Switch)
             {
                 m_switch = circuitSwitch as Switch;
-
                 GetSubstations();
             }
         }
